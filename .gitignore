@@ -1,0 +1,34 @@
+# Composer
+/vendor/
+composer.phar
+
+# PHP CS Fixer / PHPCS caches
+.phpcs.cache
+.phpunit.result.cache
+.php-cs-fixer.cache
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# Local env / secrets
+.env
+.env.*
+!.env.example
+
+# Build / release artifacts
+/dist/
+/build/
+*.zip
+*.tar.gz
+node_modules/
+
+# Logs / temp
+*.log
+/tmp/

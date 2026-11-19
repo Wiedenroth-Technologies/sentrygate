@@ -60,6 +60,7 @@ class SentryGate_Security_Headers {
 
 		if ( SentryGate_Options::get( 'header_csp' ) ) {
 			$policy = (string) SentryGate_Options::get( 'header_csp_policy', '' );
+			$policy = trim( str_replace( array( "\r", "\n" ), ' ', $policy ) );
 			$name   = SentryGate_Options::get( 'header_csp_report_only' )
 				? 'Content-Security-Policy-Report-Only'
 				: 'Content-Security-Policy';

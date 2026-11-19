@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$product_url = 'https://wiedenroth.tech/software/wordpess/sentrygate';
+$product_url = 'https://wiedenroth.tech/software/wordpress/sentrygate';
 ?>
 <div class="wrap <?php echo esc_attr( $ui->cls( 'app' ) ); ?>">
 	<div class="wp-header-end"></div>

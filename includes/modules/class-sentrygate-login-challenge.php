@@ -455,7 +455,8 @@ class SentryGate_Login_Challenge {
 
 		$loaded_at = isset( $_POST['sentrygate_loaded_at'] ) ? absint( $_POST['sentrygate_loaded_at'] ) : 0;
 		$min_time  = (int) SentryGate_Options::get( 'challenge_min_time', 2 );
-		if ( $loaded_at > 0 && ( time() - $loaded_at ) < $min_time ) {
+		// Fehlendes/ungültiges Timing-Feld nicht überspringen – sonst Bypass der Mindestzeit.
+		if ( $min_time > 0 && ( $loaded_at <= 0 || ( time() - $loaded_at ) < $min_time ) ) {
 			$this->record_challenge_failure( $ip, '' );
 			return new WP_Error( 'sentrygate_timing', __( 'Bitte etwas langsamer – Formular zu schnell abgesendet.', 'wiedenroth-technologies-sentrygate' ) );
 		}
@@ -532,10 +533,15 @@ class SentryGate_Login_Challenge {
 			if ( empty( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				continue;
 			}
+			$value = wp_unslash( (string) $_REQUEST[ $key ] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$value = 'redirect_to' === $key ? esc_url_raw( $value ) : sanitize_text_field( $value );
+			if ( '' === $value ) {
+				continue;
+			}
 			printf(
 				'<input type="hidden" name="%1$s" value="%2$s" />',
 				esc_attr( $key ),
-				esc_attr( sanitize_text_field( wp_unslash( (string) $_REQUEST[ $key ] ) ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				esc_attr( $value )
 			);
 		}
 	}
@@ -551,7 +557,12 @@ class SentryGate_Login_Challenge {
 			if ( empty( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				continue;
 			}
-			$args[ $key ] = sanitize_text_field( wp_unslash( (string) $_REQUEST[ $key ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$value = wp_unslash( (string) $_REQUEST[ $key ] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$value = 'redirect_to' === $key ? esc_url_raw( $value ) : sanitize_text_field( $value );
+			if ( '' === $value ) {
+				continue;
+			}
+			$args[ $key ] = $value;
 		}
 		return empty( $args ) ? $url : add_query_arg( $args, $url );
 	}

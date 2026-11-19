@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<ruleset name="SentryGate">
+	<description>WordPress Coding Standards for Wiedenroth Technologies SentryGate.</description>
+
+	<file>.</file>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/includes/lib/qrcode.php</exclude-pattern>
+	<exclude-pattern>*/languages/*</exclude-pattern>
+	<exclude-pattern>*/assets/*</exclude-pattern>
+
+	<arg name="basepath" value="."/>
+	<arg name="extensions" value="php"/>
+	<arg name="parallel" value="4"/>
+	<arg value="sp"/>
+	<arg name="colors"/>
+
+	<rule ref="WordPress">
+		<!-- Third-party QR library path already excluded; keep WP rules for plugin code. -->
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="sentrygate"/>
+				<element value="SentryGate"/>
+				<element value="SENTRYGATE"/>
+				<element value="wt_admin"/>
+				<element value="Wt_Admin"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="wiedenroth-technologies-sentrygate"/>
+			</property>
+		</properties>
+	</rule>
+
+	<config name="minimum_supported_wp_version" value="6.4"/>
+
+	<rule ref="PHPCompatibilityWP"/>
+	<config name="testVersion" value="8.1-"/>
+</ruleset>

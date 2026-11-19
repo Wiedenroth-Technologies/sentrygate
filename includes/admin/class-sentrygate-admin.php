@@ -162,9 +162,9 @@ class SentryGate_Admin {
 			return;
 		}
 
-		$product_url = 'https://wiedenroth.tech/software/wordpess/sentrygate';
+		$product_url = 'https://wiedenroth.tech/software/wordpress/sentrygate';
 		$impressum   = 'https://wiedenroth.tech/impressum';
-		$datenschutz = 'https://wiedenroth.tech/software/wordpess/sentrygate/datenschutz';
+		$datenschutz = 'https://wiedenroth.tech/software/wordpress/sentrygate/datenschutz';
 		$brand_url   = 'https://wiedenroth.tech';
 		$brand_img   = '';
 
@@ -256,13 +256,20 @@ class SentryGate_Admin {
 
 		check_admin_referer( 'sentrygate_import_config' );
 
-		if ( empty( $_FILES['sentrygate_import']['tmp_name'] ) ) {
+		if ( empty( $_FILES['sentrygate_import']['tmp_name'] ) || ! is_string( $_FILES['sentrygate_import']['tmp_name'] ) ) {
 			wp_safe_redirect( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG . '&tab=export&import=fail' ) );
 			exit;
 		}
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$raw  = file_get_contents( $_FILES['sentrygate_import']['tmp_name'] );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated via is_uploaded_file().
+		$tmp = wp_normalize_path( wp_unslash( $_FILES['sentrygate_import']['tmp_name'] ) );
+		if ( ! is_uploaded_file( $tmp ) || ! is_readable( $tmp ) ) {
+			wp_safe_redirect( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG . '&tab=export&import=fail' ) );
+			exit;
+		}
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- verified upload tmp path.
+		$raw  = file_get_contents( $tmp );
 		$data = json_decode( is_string( $raw ) ? $raw : '', true );
 
 		if ( ! is_array( $data ) || empty( $data['settings'] ) || ! is_array( $data['settings'] ) ) {
@@ -354,13 +361,13 @@ class SentryGate_Admin {
 		$class = '' === $mod ? $ui->cls( 'input' ) : $ui->cls( 'input', $mod );
 
 		printf(
-			'<input type="number" class="%1$s" id="%2$s" name="%3$s" value="%4$s" min="%5$d" max="%6$d" />',
+			'<input type="number" class="%1$s" id="%2$s" name="%3$s" value="%4$s" min="%5$s" max="%6$s" />',
 			esc_attr( $class ),
 			esc_attr( $id ),
 			esc_attr( self::option_name( $name ) ),
 			esc_attr( (string) (int) $value ),
-			$min,
-			$max
+			esc_attr( (string) $min ),
+			esc_attr( (string) $max )
 		);
 	}
 
