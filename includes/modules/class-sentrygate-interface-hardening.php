@@ -124,7 +124,8 @@ class SentryGate_Interface_Hardening {
 			$rest_route = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_URI'] ) ) : '';
 		}
 
-		if ( preg_match( '#/wp/v2/users(/|$)#', $rest_route ) || preg_match( '#/wp/v2/users(/|$)#', isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : '' ) ) {
+		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_URI'] ) ) : '';
+		if ( preg_match( '#/wp/v2/users(/|$)#', $rest_route ) || preg_match( '#/wp/v2/users(/|$)#', $request_uri ) ) {
 			return new WP_Error(
 				'sentrygate_rest_users_blocked',
 				__( 'Benutzer-Enumeration über die REST-API ist deaktiviert.', 'wiedenroth-technologies-sentrygate' ),
@@ -144,7 +145,8 @@ class SentryGate_Interface_Hardening {
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['author'] ) && (string) absint( $_GET['author'] ) === (string) $_GET['author'] && absint( $_GET['author'] ) > 0 ) {
+		$author_raw = isset( $_GET['author'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['author'] ) ) : '';
+		if ( '' !== $author_raw && (string) absint( $author_raw ) === $author_raw && absint( $author_raw ) > 0 ) {
 			status_header( 403 );
 			nocache_headers();
 			wp_die(

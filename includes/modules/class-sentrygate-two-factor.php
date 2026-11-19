@@ -139,7 +139,8 @@ class SentryGate_Two_Factor {
 	 * Handle setup form POST (PRG).
 	 */
 	public function handle_setup_post(): void {
-		if ( 'POST' !== strtoupper( (string) ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) ) {
+		$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_METHOD'] ) ) ) : '';
+		if ( 'POST' !== $method ) {
 			return;
 		}
 
@@ -580,15 +581,16 @@ class SentryGate_Two_Factor {
 	 */
 	private function request_token(): string {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.NonceVerification.Missing
-		$raw = $_REQUEST['token'] ?? '';
-		return sanitize_text_field( wp_unslash( (string) $raw ) );
+		$raw = isset( $_REQUEST['token'] ) ? sanitize_text_field( wp_unslash( (string) $_REQUEST['token'] ) ) : '';
+		return $raw;
 	}
 
 	/**
 	 * Render TFA challenge form.
 	 */
 	public function render_tfa_form(): void {
-		if ( 'POST' === strtoupper( (string) ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) ) {
+		$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_METHOD'] ) ) ) : '';
+		if ( 'POST' === $method ) {
 			return;
 		}
 
@@ -684,7 +686,8 @@ class SentryGate_Two_Factor {
 	 * Handle TFA form POST.
 	 */
 	public function handle_tfa_submit(): void {
-		if ( 'POST' !== strtoupper( (string) ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) ) {
+		$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_METHOD'] ) ) ) : '';
+		if ( 'POST' !== $method ) {
 			return;
 		}
 

@@ -76,8 +76,11 @@ class SentryGate_Login_Challenge {
 			return;
 		}
 
-		$error = null;
-		if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === strtoupper( (string) $_SERVER['REQUEST_METHOD'] ) && isset( $_POST['sentrygate_gate'] ) ) {
+		$error   = null;
+		$method  = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_METHOD'] ) ) ) : '';
+		// Nonce is verified inside process_challenge_post().
+		$gate_posted = isset( $_POST['sentrygate_gate'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( 'POST' === $method && $gate_posted ) {
 			$error = $this->process_challenge_post( $ip );
 			if ( ! is_wp_error( $error ) ) {
 				$this->issue_gate_cookie();
@@ -437,9 +440,9 @@ class SentryGate_Login_Challenge {
 	 *
 	 * @param string $ip                    Client IP.
 	 * @param bool   $nonce_already_checked Skip form nonce (AJAX already verified).
-	 * @return true|WP_Error
+	 * @return bool|WP_Error True on success.
 	 */
-	private function process_challenge_post( string $ip, bool $nonce_already_checked = false ): true|WP_Error {
+	private function process_challenge_post( string $ip, bool $nonce_already_checked = false ): bool|WP_Error {
 		if ( ! $nonce_already_checked ) {
 			if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( (string) $_POST['_wpnonce'] ) ), 'sentrygate_gate' ) ) {
 				$this->record_challenge_failure( $ip, '' );
@@ -447,7 +450,7 @@ class SentryGate_Login_Challenge {
 			}
 		}
 
-		$honeypot = isset( $_POST['sentrygate_website'] ) ? (string) wp_unslash( $_POST['sentrygate_website'] ) : '';
+		$honeypot = isset( $_POST['sentrygate_website'] ) ? sanitize_text_field( wp_unslash( (string) $_POST['sentrygate_website'] ) ) : '';
 		if ( '' !== trim( $honeypot ) ) {
 			$this->record_challenge_failure( $ip, '' );
 			return new WP_Error( 'sentrygate_bot', __( 'Sicherheitsprüfung fehlgeschlagen.', 'wiedenroth-technologies-sentrygate' ) );
@@ -533,8 +536,9 @@ class SentryGate_Login_Challenge {
 			if ( empty( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				continue;
 			}
-			$value = wp_unslash( (string) $_REQUEST[ $key ] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$value = 'redirect_to' === $key ? esc_url_raw( $value ) : sanitize_text_field( $value );
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized immediately below.
+			$raw   = wp_unslash( (string) $_REQUEST[ $key ] );
+			$value = 'redirect_to' === $key ? esc_url_raw( $raw ) : sanitize_text_field( $raw );
 			if ( '' === $value ) {
 				continue;
 			}
@@ -557,8 +561,9 @@ class SentryGate_Login_Challenge {
 			if ( empty( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				continue;
 			}
-			$value = wp_unslash( (string) $_REQUEST[ $key ] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$value = 'redirect_to' === $key ? esc_url_raw( $value ) : sanitize_text_field( $value );
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized immediately below.
+			$raw          = wp_unslash( (string) $_REQUEST[ $key ] );
+			$value        = 'redirect_to' === $key ? esc_url_raw( $raw ) : sanitize_text_field( $raw );
 			if ( '' === $value ) {
 				continue;
 			}

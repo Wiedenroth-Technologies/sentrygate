@@ -47,4 +47,4 @@ jobs:
         run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Run PHPCS
-        run: vendor/bin/phpcs -q --report=full
+        run: vendor/bin/phpcs --report=full --report-summary

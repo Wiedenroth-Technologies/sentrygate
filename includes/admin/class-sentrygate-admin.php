@@ -242,6 +242,7 @@ class SentryGate_Admin {
 		nocache_headers();
 		header( 'Content-Type: application/json; charset=utf-8' );
 		header( 'Content-Disposition: attachment; filename=sentrygate-config-' . gmdate( 'Ymd-His' ) . '.json' );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON download with application/json Content-Type.
 		echo $json ? $json : '{}';
 		exit;
 	}

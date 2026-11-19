@@ -20,7 +20,8 @@ class SentryGate_IP {
 	 * Get the best-effort client IP.
 	 */
 	public static function get(): string {
-		$remote = self::sanitize_ip( isset( $_SERVER['REMOTE_ADDR'] ) ? (string) $_SERVER['REMOTE_ADDR'] : '' );
+		$remote_raw = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( (string) $_SERVER['REMOTE_ADDR'] ) ) : '';
+		$remote     = self::sanitize_ip( $remote_raw );
 
 		if ( ! SentryGate_Options::get( 'trust_proxy_headers', false ) ) {
 			return $remote !== '' ? $remote : '0.0.0.0';
