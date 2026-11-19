@@ -14,6 +14,9 @@ try {
 	wp( 'plugin activate sentrygate' );
 	wp( 'rewrite structure "/%postname%/" --hard' );
 	wp( 'option update blogname "SentryGate E2E"' );
+	wp(
+		`eval 'echo function_exists( "sentrygate_e2e_capture_mail" ) ? "mail-capture-ok" : "mail-capture-missing";'`
+	);
 	// Challenge-Mindestzeit für deterministische, schnelle Tests.
 	const patch = Buffer.from(
 		JSON.stringify( {

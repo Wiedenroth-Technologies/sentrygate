@@ -14,10 +14,12 @@ const {
 	clearLockouts,
 	clearLastMail,
 	waitForMailCode,
+	mailCaptureLoaded,
 } = require( '../helpers/wp-cli' );
 
 test.describe( '2FA E-Mail', () => {
 	test.beforeEach( () => {
+		expect( mailCaptureLoaded() ).toBe( true );
 		clearLockouts();
 		clearLastMail();
 		resetUserTfa( adminUserId() );

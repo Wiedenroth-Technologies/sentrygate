@@ -9,7 +9,7 @@
 		"SCRIPT_DEBUG": true
 	},
 	"mappings": {
-		"wp-content/mu-plugins/sentrygate-e2e-mail-capture.php": "./tests/e2e/mu-plugins/sentrygate-e2e-mail-capture.php"
+		"wp-content/mu-plugins": "./tests/e2e/mu-plugins"
 	},
 	"lifecycleScripts": {
 		"afterStart": "node ./tests/e2e/bin/after-start.js"

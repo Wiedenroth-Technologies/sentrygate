@@ -1,6 +1,6 @@
 <?php
 /**
- * E2E-only: fängt wp_mail ab (ähnlich WP Mail Logging / Mailpit), speichert die letzte Mail.
+ * E2E-only: fängt wp_mail ab (ähnlich WP Mail Logging / Mailpit).
  *
  * @package SentryGate
  */
@@ -18,8 +18,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array<string, mixed>
  */
 function sentrygate_e2e_capture_mail( array $args ): array {
+	$to = $args['to'] ?? '';
+	if ( is_array( $to ) ) {
+		$to = implode( ', ', $to );
+	}
+
 	$payload = array(
-		'to'          => $args['to'] ?? '',
+		'to'          => (string) $to,
 		'subject'     => isset( $args['subject'] ) ? (string) $args['subject'] : '',
 		'message'     => isset( $args['message'] ) ? (string) $args['message'] : '',
 		'headers'     => $args['headers'] ?? array(),
@@ -31,3 +36,21 @@ function sentrygate_e2e_capture_mail( array $args ): array {
 	return $args;
 }
 add_filter( 'wp_mail', 'sentrygate_e2e_capture_mail', 9999 );
+
+/**
+ * Ensure mail is treated as sent in local/wp-env (no real SMTP).
+ *
+ * @param bool|null $return Short-circuit value.
+ * @param array     $atts   Mail attributes.
+ * @return bool|null
+ */
+function sentrygate_e2e_force_mail_success( $return, $atts ) {
+	if ( null !== $return ) {
+		return $return;
+	}
+	if ( is_array( $atts ) ) {
+		sentrygate_e2e_capture_mail( $atts );
+	}
+	return true;
+}
+add_filter( 'pre_wp_mail', 'sentrygate_e2e_force_mail_success', 10, 2 );

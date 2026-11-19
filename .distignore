@@ -44,9 +44,11 @@ playwright.config.ts
 playwright-report
 test-results
 
-# OS junk
+# OS junk / VCS placeholders (Plugin Check: keine Hidden Files in der ZIP)
 .DS_Store
 Thumbs.db
+.gitkeep
+**/.gitkeep
 *.zip
 *.tar.gz
 *.log

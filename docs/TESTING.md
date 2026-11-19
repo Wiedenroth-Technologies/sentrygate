@@ -81,15 +81,16 @@ Wenn Sie Mails lieber in einer UI prüfen wollen:
 
 ```bash
 npm run build:zip
-# → dist/sentrygate.zip
+# → dist/wiedenroth-technologies-sentrygate.zip
+# Ordnername in der ZIP = Text Domain / WP.org-Slug
 ```
 
-Das Skript `bin/build-release-zip.sh` nutzt bevorzugt `wp dist-archive` (respektiert `.distignore`) und fällt sonst auf rsync+zip zurück.
+Das Skript `bin/build-release-zip.sh` nutzt bevorzugt `wp dist-archive` (respektiert `.distignore`) und fällt sonst auf rsync+zip zurück. Mit `FORCE_RSYNC=1` erzwingen Sie den rsync-Pfad (wie in CI).
 
 Schnell prüfen, dass keine Dev-Dateien enthalten sind:
 
 ```bash
-unzip -Z1 dist/sentrygate.zip | grep -E '(\.github|tests/|docs/|composer\.json|package\.json|node_modules|vendor/|\.wp-env)' && echo 'FEHLER: Dev-Dateien gefunden' || echo 'OK: keine Dev-Pfade'
+unzip -Z1 dist/wiedenroth-technologies-sentrygate.zip | grep -E '(\.github|tests/|docs/|composer\.json|package\.json|node_modules|vendor/|\.wp-env|\.gitkeep)' && echo 'FEHLER: Dev-Dateien gefunden' || echo 'OK: keine Dev-Pfade'
 ```
 
 ## CI (GitHub Actions)

@@ -6,9 +6,10 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-PLUGIN_DIRNAME="${PLUGIN_DIRNAME:-sentrygate}"
+# WP.org-/Plugin-Check-Slug = Text Domain.
+PLUGIN_DIRNAME="${PLUGIN_DIRNAME:-wiedenroth-technologies-sentrygate}"
 OUT_DIR="${OUT_DIR:-dist}"
-ZIP_NAME="${ZIP_NAME:-sentrygate.zip}"
+ZIP_NAME="${ZIP_NAME:-wiedenroth-technologies-sentrygate.zip}"
 DISTIGNORE="${DISTIGNORE:-.distignore}"
 
 mkdir -p "$OUT_DIR"
