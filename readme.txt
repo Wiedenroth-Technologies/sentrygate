@@ -59,6 +59,10 @@ Use the URL shown under SentryGate → Login path, rename/deactivate the plugin 
 == Changelog ==
 
 = 1.1.2 =
+* Form symbol challenge (shared challenge) for connected public forms
+* Frontend login hooks for challenge and 2FA (MemberGate and others)
+* Login path: optional redirect to a frontend login screen
+* Admin UI and stability improvements
 * Metadata, repository foundation, and security review
 
 = 1.0.1 =
