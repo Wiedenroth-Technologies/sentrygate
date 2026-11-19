@@ -77,19 +77,59 @@ function resetUserTfa( userId ) {
 }
 
 /**
+ * Last line of wp-cli stdout (wp-env may prepend noise).
+ *
+ * @param {string} raw
+ * @returns {string}
+ */
+function lastStdoutLine( raw ) {
+	const lines = String( raw || '' )
+		.split( /\r?\n/ )
+		.map( ( line ) => line.trim() )
+		.filter( Boolean );
+	return lines.length ? lines[ lines.length - 1 ] : '';
+}
+
+/**
  * Last captured mail from the E2E mu-plugin.
  *
  * @returns {{ to?: string, subject?: string, message?: string } | null}
  */
 function getLastMail() {
 	try {
-		return /** @type {any} */ (
-			wpCli( [ 'option', 'get', 'sentrygate_e2e_last_mail', '--format=json' ], {
-				json: true,
-			} )
+		const raw = /** @type {string} */ (
+			wpCli( [
+				'eval',
+				'echo wp_json_encode( get_option( "sentrygate_e2e_last_mail" ) );',
+			] )
 		);
+		const json = lastStdoutLine( raw );
+		if ( ! json || json === 'false' || json === 'null' ) {
+			return null;
+		}
+		return JSON.parse( json );
 	} catch {
 		return null;
+	}
+}
+
+/**
+ * Last captured 6-digit code (dedicated option).
+ *
+ * @returns {string}
+ */
+function getLastMailCode() {
+	try {
+		const raw = /** @type {string} */ (
+			wpCli( [
+				'eval',
+				'echo (string) get_option( "sentrygate_e2e_last_code", "" );',
+			] )
+		);
+		const code = lastStdoutLine( raw );
+		return /^\d{6}$/.test( code ) ? code : '';
+	} catch {
+		return '';
 	}
 }
 
@@ -98,14 +138,18 @@ function getLastMail() {
  */
 function clearLastMail() {
 	try {
-		wpCli( [ 'option', 'delete', 'sentrygate_e2e_last_mail' ] );
+		wpCli( [
+			'eval',
+			'delete_option("sentrygate_e2e_last_mail"); delete_option("sentrygate_e2e_last_code"); ' +
+				'@unlink( WP_CONTENT_DIR . "/uploads/sentrygate-e2e-last-mail.json" ); echo "1";',
+		] );
 	} catch {
-		/* option may not exist */
+		/* ignore */
 	}
 }
 
 /**
- * Extract 6-digit code from last mail body.
+ * Extract 6-digit code from last captured mail.
  *
  * @param {{ timeoutMs?: number, intervalMs?: number }} [opts]
  * @returns {string}
@@ -116,6 +160,10 @@ function waitForMailCode( opts = {} ) {
 	const started = Date.now();
 	let last = null;
 	while ( Date.now() - started < timeoutMs ) {
+		const direct = getLastMailCode();
+		if ( direct ) {
+			return direct;
+		}
 		last = getLastMail();
 		const message = last && typeof last.message === 'string' ? last.message : '';
 		const match = message.match( /\b(\d{6})\b/ );
@@ -126,10 +174,9 @@ function waitForMailCode( opts = {} ) {
 	}
 	throw new Error(
 		'Kein 6-stelliger Code in sentrygate_e2e_last_mail gefunden. Letzter Stand: ' +
-			JSON.stringify( last )
+			JSON.stringify( { code: getLastMailCode(), mail: last } )
 	);
 }
-
 /**
  * Whether the E2E mail-capture MU-plugin is loaded.
  *
@@ -162,6 +209,7 @@ module.exports = {
 	clearLockouts,
 	resetUserTfa,
 	getLastMail,
+	getLastMailCode,
 	clearLastMail,
 	waitForMailCode,
 	mailCaptureLoaded,

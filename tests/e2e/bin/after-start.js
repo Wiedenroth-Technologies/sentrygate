@@ -17,6 +17,10 @@ try {
 	wp(
 		`eval 'echo function_exists( "sentrygate_e2e_capture_mail" ) ? "mail-capture-ok" : "mail-capture-missing";'`
 	);
+	// Smoke-Test: Capture speichert Code in Option.
+	wp(
+		`eval 'wp_mail( "admin@example.com", "SentryGate E2E ping", "Ihr Einmalcode lautet: 654321" ); echo get_option("sentrygate_e2e_last_code");'`
+	);
 	// Challenge-Mindestzeit für deterministische, schnelle Tests.
 	const patch = Buffer.from(
 		JSON.stringify( {
