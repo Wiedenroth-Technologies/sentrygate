@@ -1,6 +1,6 @@
 <?php
 /**
- * E2E-only: fängt wp_mail ab (ähnlich WP Mail Logging / Mailpit).
+ * E2E-only: fängt E-Mail-OTP und wp_mail ab (ähnlich Mailpit / WP Mail Logging).
  *
  * @package SentryGate
  */
@@ -12,51 +12,59 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Persist last mail for Playwright / wp-cli.
+ * Persist OTP / mail payload for Playwright / wp-cli.
  *
- * @param array<string, mixed> $args wp_mail args.
+ * @param string               $code    Optional OTP.
+ * @param array<string, mixed> $mail    Optional wp_mail args.
  */
-function sentrygate_e2e_store_mail( array $args ): void {
-	$to = $args['to'] ?? '';
-	if ( is_array( $to ) ) {
-		$to = implode( ', ', array_map( 'strval', $to ) );
+function sentrygate_e2e_store( string $code = '', array $mail = array() ): void {
+	if ( '' !== $code ) {
+		update_option( 'sentrygate_e2e_last_code', $code, false );
 	}
 
-	$message = isset( $args['message'] ) ? (string) $args['message'] : '';
-	$payload = array(
-		'to'          => (string) $to,
-		'subject'     => isset( $args['subject'] ) ? (string) $args['subject'] : '',
-		'message'     => $message,
-		'captured_at' => gmdate( 'c' ),
-	);
+	if ( $mail ) {
+		$to = $mail['to'] ?? '';
+		if ( is_array( $to ) ) {
+			$to = implode( ', ', array_map( 'strval', $to ) );
+		}
+		$message = isset( $mail['message'] ) ? (string) $mail['message'] : '';
+		$payload = array(
+			'to'          => (string) $to,
+			'subject'     => isset( $mail['subject'] ) ? (string) $mail['subject'] : '',
+			'message'     => $message,
+			'captured_at' => gmdate( 'c' ),
+		);
+		update_option( 'sentrygate_e2e_last_mail', $payload, false );
 
-	update_option( 'sentrygate_e2e_last_mail', $payload, false );
-
-	if ( preg_match( '/\b(\d{6})\b/', $message, $match ) ) {
-		update_option( 'sentrygate_e2e_last_code', $match[1], false );
+		if ( '' === $code && preg_match( '/\b(\d{6})\b/', $message, $match ) ) {
+			update_option( 'sentrygate_e2e_last_code', $match[1], false );
+		}
 	}
-
-	$dir = WP_CONTENT_DIR . '/uploads';
-	if ( ! is_dir( $dir ) ) {
-		wp_mkdir_p( $dir );
-	}
-	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- E2E helper only.
-	file_put_contents( $dir . '/sentrygate-e2e-last-mail.json', wp_json_encode( $payload ) );
 }
+
+/**
+ * Primary capture: plaintext OTP from SentryGate (independent of MTA).
+ *
+ * @param string  $code Code.
+ * @param WP_User $user User.
+ */
+function sentrygate_e2e_on_otp( string $code, $user ): void {
+	unset( $user );
+	sentrygate_e2e_store( $code );
+}
+add_action( 'sentrygate_email_otp_generated', 'sentrygate_e2e_on_otp', 10, 2 );
 
 /**
  * @param array<string, mixed> $args wp_mail args.
  * @return array<string, mixed>
  */
 function sentrygate_e2e_capture_mail( array $args ): array {
-	sentrygate_e2e_store_mail( $args );
+	sentrygate_e2e_store( '', $args );
 	return $args;
 }
 add_filter( 'wp_mail', 'sentrygate_e2e_capture_mail', 1 );
 
 /**
- * Short-circuit delivery in Docker (no real MTA) after capture via wp_mail.
- *
  * @param null|bool $return Short-circuit.
  * @param array     $atts   Mail attributes.
  * @return bool
@@ -66,7 +74,7 @@ function sentrygate_e2e_force_mail_success( $return, $atts ) {
 		return (bool) $return;
 	}
 	if ( is_array( $atts ) ) {
-		sentrygate_e2e_store_mail( $atts );
+		sentrygate_e2e_store( '', $atts );
 	}
 	return true;
 }

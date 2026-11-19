@@ -64,7 +64,10 @@ function clearLockouts() {
  * @param {number|string} userId
  */
 function resetUserTfa( userId ) {
-	const id = Number( userId );
+	const id = Number( lastStdoutLine( String( userId ) ) );
+	if ( ! Number.isFinite( id ) || id < 1 ) {
+		throw new Error( `Ungültige User-ID für resetUserTfa: ${ userId }` );
+	}
 	wpCli( [
 		'eval',
 		`$uid=${ id };` +
@@ -72,6 +75,8 @@ function resetUserTfa( userId ) {
 			`foreach($keys as $k){delete_user_meta($uid,$k);}` +
 			`delete_transient('sentrygate_email_code_'.$uid);` +
 			`delete_transient('sentrygate_email_cd_'.$uid);` +
+			`global $wpdb;` +
+			`$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_sentrygate_email_%' OR option_name LIKE '_transient_timeout_sentrygate_email_%'" );` +
 			`echo '1';`,
 	] );
 }
@@ -199,8 +204,12 @@ function mailCaptureLoaded() {
  * @returns {number}
  */
 function adminUserId() {
-	const out = wpCli( [ 'user', 'get', 'admin', '--field=ID' ] );
-	return Number( out );
+	const out = lastStdoutLine( /** @type {string} */ ( wpCli( [ 'user', 'get', 'admin', '--field=ID' ] ) ) );
+	const id = Number( out );
+	if ( ! Number.isFinite( id ) || id < 1 ) {
+		throw new Error( `Konnte Admin-User-ID nicht lesen: ${ out }` );
+	}
+	return id;
 }
 
 module.exports = {
