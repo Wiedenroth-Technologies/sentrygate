@@ -63,7 +63,11 @@ build_with_rsync() {
 	)
 }
 
-if build_with_wp_cli; then
+if [[ "${FORCE_RSYNC:-0}" == "1" ]]; then
+	echo "FORCE_RSYNC=1 – baue mit rsync+zip."
+	build_with_rsync
+	echo "Release-ZIP via rsync+zip: $ZIP_PATH"
+elif build_with_wp_cli; then
 	echo "Release-ZIP via wp dist-archive: $ZIP_PATH"
 else
 	echo "Hinweis: WP-CLI/dist-archive nicht verfügbar – Fallback rsync+zip."

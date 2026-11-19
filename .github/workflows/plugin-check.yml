@@ -20,21 +20,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          coverage: none
-          tools: wp-cli
-
-      - name: Install dist-archive-command
-        run: wp package install wp-cli/dist-archive-command:@stable
-
       - name: Build Release-ZIP (.distignore)
         run: |
           set -euo pipefail
-          mkdir -p dist tmp-build
-          wp dist-archive . ./dist/sentrygate.zip --plugin-dirname=sentrygate
+          # rsync+zip anhand .distignore – vermeidet wp package install
+          # (Composer/GitHub-OAuth-Probleme auf Actions-Runnern).
+          FORCE_RSYNC=1 bash ./bin/build-release-zip.sh
+          mkdir -p tmp-build
           unzip -q ./dist/sentrygate.zip -d tmp-build
           test -f tmp-build/sentrygate/sentrygate.php
           # Dev-/CI-Dateien dürfen nicht in der Release-ZIP landen.

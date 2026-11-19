@@ -45,7 +45,8 @@ test.describe( 'Login-Challenge', () => {
 		}
 
 		await page.goto( '/wp-login.php' );
-		await expect( page.getByText( /Zu viele Fehlversuche|gesperrt|später erneut/i ) ).toBeVisible();
+		await expect( page.locator( '.message, #login_error, body' ).filter( { hasText: /Zu viele Fehlversuche/i } ).first() ).toBeVisible();
 		await expect( page.locator( '#loginform' ) ).toHaveCount( 0 );
+		await expect( page.locator( '#sentrygate-challenge' ) ).toHaveCount( 0 );
 	} );
 } );

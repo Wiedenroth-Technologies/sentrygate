@@ -42,12 +42,13 @@ test.describe( '2FA E-Mail', () => {
 
 		clearLastMail();
 		await page.locator( 'button[name="sentrygate_tfa_action"][value="choose_email"]' ).click();
-		await expect( page.getByText( /Code wurde an|E-Mail einrichten/i ) ).toBeVisible();
+		await expect( page.locator( '#sentrygate_tfa_confirm' ) ).toBeVisible();
+		await expect( page.getByRole( 'heading', { name: /E-Mail einrichten/i } ) ).toBeVisible();
 
 		const setupCode = waitForMailCode();
 		await page.locator( '#sentrygate_tfa_confirm' ).fill( setupCode );
 		await page.locator( 'button[name="sentrygate_tfa_action"][value="confirm_email"]' ).click();
-		await expect( page.getByText( /Einrichtung abgeschlossen|Zwei-Faktor ist aktiv/i ) ).toBeVisible();
+		await expect( page.getByRole( 'status' ).filter( { hasText: /Einrichtung abgeschlossen|Zwei-Faktor ist aktiv/i } ).first() ).toBeVisible();
 
 		await page.context().clearCookies();
 		clearLastMail();
