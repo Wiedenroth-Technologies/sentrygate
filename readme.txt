@@ -2,14 +2,14 @@
 Contributors: wiedenroth
 Tags: security, 2fa, login, hardening, audit-log
 Requires at least: 6.4
-Tested up to: 6.7
+Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Author: Wiedenroth Technologies GmbH
 Author URI: https://wiedenroth.tech
-Plugin URI: https://wiedenroth.tech/software/wordpess/sentrygate
+Plugin URI: https://wiedenroth.tech/software/wordpress/sentrygate
 
 Produktionsreifes WordPress-Security-Plugin von Wiedenroth Technologies GmbH.
 
@@ -21,6 +21,7 @@ SentryGate härtet WordPress modular:
 * WP-Debug-Kontrolle (Hinweise, kein automatisches Überschreiben von wp-config.php)
 * Login-Pfad-Verschleierung (404 auf Originalpfaden)
 * Self-hosted Login-Challenge (Symbolwahl/Honeypot/Timing/Rate-Limit, BFSG-tauglich)
+* Formular-Symbolprüfung für angebundene öffentliche Formulare
 * Zwei-Faktor (Authenticator-App oder E-Mail, eigene Einrichtungsseite, Recovery-Codes, Trusted Device)
 * Security-Header (inkl. CSP Report-Only)
 * Datei-/Server-Hardening (.htaccess-Snippets, Permission-Anzeige)
@@ -51,7 +52,17 @@ Nein – vollständig self-hosted, keine externen Requests/Cookies von Dritten.
 
 Unter Login-Challenge → „Proxy-Header vertrauen“ nur aktivieren, wenn der Proxy vertrauenswürdig ist. Standard: REMOTE_ADDR.
 
+= Login-Adresse geändert und ausgesperrt? =
+
+Login-Pfad-Modul in der Datenbank deaktivieren (`module_login_path` in `sentrygate_settings`) oder Plugin per FTP umbenennen/deaktivieren. Danach erneut unter dem gewünschten Slug einrichten und den Slug sicher notieren.
+
 == Changelog ==
+
+= 1.1.2 =
+* Formular-Symbolprüfung (shared Challenge) für angebundene öffentliche Formulare
+* Frontend-Login-Hooks für Challenge und 2FA (MemberGate u. a.)
+* Login-Pfad: optionale Weiterleitung auf Frontend-Anmeldung
+* Admin-UI- und Stabilitätsverbesserungen
 
 = 1.0.1 =
 * Frontend-Login (MemberGate): Challenge und 2FA per AJAX, ohne wp-login.php

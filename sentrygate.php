@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Wiedenroth Technologies SentryGate
- * Plugin URI:        https://wiedenroth.tech/software/wordpess/sentrygate
+ * Plugin URI:        https://wiedenroth.tech/software/wordpress/sentrygate
  * Description:       Produktionsreifes WordPress-Security-Plugin: Interface-Hardening, Login-Schutz, Formular-Symbolprüfung, 2FA, Security-Header, Audit-Log und Core-Integritätscheck.
  * Version:           1.1.2
  * Requires at least: 6.4

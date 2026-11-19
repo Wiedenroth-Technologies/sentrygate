@@ -139,7 +139,8 @@ class SentryGate_Two_Factor {
 	 * Handle setup form POST (PRG).
 	 */
 	public function handle_setup_post(): void {
-		if ( 'POST' !== strtoupper( (string) ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) ) {
+		$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_METHOD'] ) ) ) : '';
+		if ( 'POST' !== $method ) {
 			return;
 		}
 
@@ -522,6 +523,17 @@ class SentryGate_Two_Factor {
 	public function ajax_resend_email(): void {
 		check_ajax_referer( 'sentrygate_tfa_verify', 'nonce' );
 
+		$ip = SentryGate_IP::get();
+		if ( SentryGate_Rate_Limit::is_locked( $ip ) ) {
+			wp_send_json_error(
+				array(
+					'locked'    => true,
+					'remaining' => SentryGate_Rate_Limit::remaining_seconds( $ip ),
+					'message'   => __( 'Zu viele Fehlversuche. Bitte später erneut versuchen.', 'wiedenroth-technologies-sentrygate' ),
+				)
+			);
+		}
+
 		$token = $this->request_token();
 		$data  = $token ? get_transient( self::TRANSIENT_PENDING . $token ) : false;
 		if ( ! is_array( $data ) ) {
@@ -533,7 +545,10 @@ class SentryGate_Two_Factor {
 			wp_send_json_error( array( 'message' => __( 'Code konnte nicht gesendet werden.', 'wiedenroth-technologies-sentrygate' ) ) );
 		}
 
-		$this->send_email_code( $user );
+		if ( ! $this->send_email_code( $user ) ) {
+			wp_send_json_error( array( 'message' => __( 'Bitte kurz warten, bevor Sie erneut einen Code anfordern.', 'wiedenroth-technologies-sentrygate' ) ) );
+		}
+
 		wp_send_json_success(
 			array(
 				'message' => __( 'Ein Code wurde per E-Mail gesendet (10 Minuten gültig).', 'wiedenroth-technologies-sentrygate' ),
@@ -566,15 +581,16 @@ class SentryGate_Two_Factor {
 	 */
 	private function request_token(): string {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.NonceVerification.Missing
-		$raw = $_REQUEST['token'] ?? '';
-		return sanitize_text_field( wp_unslash( (string) $raw ) );
+		$raw = isset( $_REQUEST['token'] ) ? sanitize_text_field( wp_unslash( (string) $_REQUEST['token'] ) ) : '';
+		return $raw;
 	}
 
 	/**
 	 * Render TFA challenge form.
 	 */
 	public function render_tfa_form(): void {
-		if ( 'POST' === strtoupper( (string) ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) ) {
+		$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_METHOD'] ) ) ) : '';
+		if ( 'POST' === $method ) {
 			return;
 		}
 
@@ -670,7 +686,8 @@ class SentryGate_Two_Factor {
 	 * Handle TFA form POST.
 	 */
 	public function handle_tfa_submit(): void {
-		if ( 'POST' !== strtoupper( (string) ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) ) {
+		$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_METHOD'] ) ) ) : '';
+		if ( 'POST' !== $method ) {
 			return;
 		}
 
@@ -701,7 +718,10 @@ class SentryGate_Two_Factor {
 		);
 
 		if ( ! empty( $_POST['sentrygate_send_email'] ) && 'email' === $this->method_for_user( $user->ID ) ) {
-			$this->send_email_code( $user );
+			if ( ! $this->send_email_code( $user ) ) {
+				wp_safe_redirect( add_query_arg( 'error', '1', $back ) );
+				exit;
+			}
 			wp_safe_redirect( add_query_arg( 'email_sent', '1', $back ) );
 			exit;
 		}
@@ -803,14 +823,21 @@ class SentryGate_Two_Factor {
 	}
 
 	/**
-	 * Send email OTP.
+	 * Send email OTP (with short cooldown against mail flooding).
 	 *
 	 * @param WP_User $user User.
+	 * @return bool False when cooldown is active.
 	 */
-	private function send_email_code( WP_User $user ): void {
+	private function send_email_code( WP_User $user ): bool {
+		$cooldown_key = 'sentrygate_email_cd_' . $user->ID;
+		if ( get_transient( $cooldown_key ) ) {
+			return false;
+		}
+
 		$code = (string) random_int( 100000, 999999 );
 		update_user_meta( $user->ID, self::META_EMAIL_CODES, hash( 'sha256', $code ) );
 		set_transient( self::TRANSIENT_EMAIL . $user->ID, 1, 10 * MINUTE_IN_SECONDS );
+		set_transient( $cooldown_key, 1, MINUTE_IN_SECONDS );
 
 		wp_mail(
 			$user->user_email,
@@ -825,6 +852,8 @@ class SentryGate_Two_Factor {
 				$code
 			)
 		);
+
+		return true;
 	}
 
 	/**

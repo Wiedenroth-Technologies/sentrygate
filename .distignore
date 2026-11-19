@@ -1,0 +1,45 @@
+# Dev / VCS – ausgeschlossen aus WordPress.org Release-ZIP (wp dist-archive / deploy)
+.git
+.gitignore
+.gitattributes
+.github
+.distignore
+.cursor
+.idea
+.vscode
+
+# Composer / tooling
+composer.json
+composer.lock
+composer.phar
+phpcs.xml
+phpcs.xml.dist
+.phpcs.cache
+.phpunit.result.cache
+vendor
+node_modules
+package.json
+package-lock.json
+phpunit.xml
+phpunit.xml.dist
+tests
+bin
+
+# Docs / misc not needed in production plugin zip
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE.md
+.editorconfig
+.eslintrc*
+.prettierrc*
+Makefile
+Dockerfile
+docker-compose.yml
+
+# OS junk
+.DS_Store
+Thumbs.db
+*.zip
+*.tar.gz
+*.log

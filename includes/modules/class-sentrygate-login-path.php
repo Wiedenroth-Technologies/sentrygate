@@ -138,7 +138,8 @@ class SentryGate_Login_Path {
 			if ( empty( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				continue;
 			}
-			$value = wp_unslash( (string) $_REQUEST[ $key ] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per key below.
+			$value        = wp_unslash( (string) $_REQUEST[ $key ] );
 			$args[ $key ] = 'redirect_to' === $key
 				? esc_url_raw( $value )
 				: sanitize_text_field( $value );
@@ -347,7 +348,7 @@ class SentryGate_Login_Path {
 	 * Normalized request path relative to home.
 	 */
 	private function request_path(): string {
-		$uri  = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( (string) $_SERVER['REQUEST_URI'] ) : '/';
+		$uri  = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_URI'] ) ) : '/';
 		$path = (string) wp_parse_url( $uri, PHP_URL_PATH );
 		$home = (string) wp_parse_url( home_url(), PHP_URL_PATH );
 		$home = untrailingslashit( $home );
@@ -402,9 +403,9 @@ class SentryGate_Login_Path {
 			return array(
 				'status'  => 'active',
 				'label'   => __( 'Login-Adresse', 'wiedenroth-technologies-sentrygate' ),
-				/* translators: 1: custom login slug, 2: frontend login path hint */
 				'message' => sprintf(
-					__( '/%1$s/ leitet auf die Frontend-Anmeldung weiter – Originalpfade liefern 404.', 'wiedenroth-technologies-sentrygate' ),
+					/* translators: %s: custom login slug */
+					__( '/%s/ leitet auf die Frontend-Anmeldung weiter – Originalpfade liefern 404.', 'wiedenroth-technologies-sentrygate' ),
 					esc_html( $slug )
 				),
 			);

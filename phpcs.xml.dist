@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<ruleset name="SentryGate">
+	<description>WordPress Coding Standards for Wiedenroth Technologies SentryGate.</description>
+
+	<file>.</file>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/includes/lib/qrcode.php</exclude-pattern>
+	<exclude-pattern>*/languages/*</exclude-pattern>
+	<exclude-pattern>*/assets/*</exclude-pattern>
+	<!-- View templates assign short locals from the including scope; Prefix sniff is noisy here. -->
+	<exclude-pattern>*/includes/admin/views/*</exclude-pattern>
+
+	<arg name="basepath" value="."/>
+	<arg name="extensions" value="php"/>
+	<arg name="parallel" value="4"/>
+	<arg value="sp"/>
+	<arg name="colors"/>
+
+	<!--
+		Full WPCS is the long-term target. For the ZIP import baseline we keep
+		security, i18n, prefixes and PHPCompatibility as hard gates, and mute
+		pure style/docblock noise until a dedicated cleanup pass.
+	-->
+	<rule ref="WordPress">
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment"/>
+		<exclude name="WordPress.Arrays.ArrayDeclarationSpacing"/>
+		<exclude name="WordPress.WhiteSpace.OperatorSpacing"/>
+		<exclude name="Generic.Formatting.MultipleStatementAlignment"/>
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+		<exclude name="Generic.Commenting.DocComment"/>
+		<exclude name="Squiz.Commenting"/>
+		<exclude name="PEAR.NamingConventions.ValidClassName"/>
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames"/>
+		<exclude name="Universal.Operators.DisallowShortTernary"/>
+		<exclude name="WordPress.Files.FileName"/>
+		<exclude name="WordPress.PHP.YodaConditions"/>
+		<exclude name="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode"/>
+		<exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
+		<!-- Intentional when loading custom login under rewritten slug. -->
+		<exclude name="WordPress.WP.GlobalVariablesOverride"/>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="sentrygate"/>
+				<element value="SentryGate"/>
+				<element value="SENTRYGATE"/>
+				<element value="wt_admin"/>
+				<element value="Wt_Admin"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Intentionally fire/define WordPress core hooks and constants. -->
+	<rule ref="WordPress">
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound"/>
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound"/>
+		<!-- Table names from $wpdb->prefix; values remain prepared. -->
+		<exclude name="WordPress.DB.PreparedSQL.InterpolatedNotPrepared"/>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="wiedenroth-technologies-sentrygate"/>
+			</property>
+		</properties>
+	</rule>
+
+	<config name="minimum_supported_wp_version" value="6.4"/>
+
+	<rule ref="PHPCompatibilityWP"/>
+	<config name="testVersion" value="8.1-"/>
+</ruleset>

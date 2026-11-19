@@ -127,9 +127,9 @@ class SentryGate_Form_Challenge {
 	/**
 	 * Verify a submitted token + choice. Records failures against the shared rate limit.
 	 *
-	 * @return true|WP_Error
+	 * @return bool|WP_Error True on success.
 	 */
-	public static function verify( string $token, string $choice ): true|WP_Error {
+	public static function verify( string $token, string $choice ): bool|WP_Error {
 		if ( ! self::is_enabled() ) {
 			return true;
 		}

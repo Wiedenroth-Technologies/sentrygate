@@ -77,9 +77,9 @@ class SentryGate_Symbol_Challenge {
 	/**
 	 * Verify a one-time token + choice. Always consumes a found challenge.
 	 *
-	 * @return true|WP_Error
+	 * @return bool|WP_Error True on success.
 	 */
-	public static function verify( string $token, string $choice ): true|WP_Error {
+	public static function verify( string $token, string $choice ): bool|WP_Error {
 		$data = self::get( $token );
 		if ( null === $data || empty( $data['correct_id'] ) ) {
 			return new WP_Error(

@@ -303,7 +303,9 @@ class SentryGate_Options {
 		}
 
 		if ( isset( $input['header_csp_policy'] ) ) {
-			$output['header_csp_policy'] = sanitize_textarea_field( (string) $input['header_csp_policy'] );
+			// Newlines aus CSP entfernen (Header-Injection über Admin-Einstellung).
+			$csp = sanitize_textarea_field( (string) $input['header_csp_policy'] );
+			$output['header_csp_policy'] = trim( str_replace( array( "\r", "\n" ), ' ', $csp ) );
 		}
 
 		if ( isset( $input['tfa_required_roles'] ) || ! empty( $input['tfa_roles_section'] ) ) {

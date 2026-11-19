@@ -38,9 +38,9 @@ $wpdb->query(
 	"DELETE FROM {$wpdb->options} WHERE option_name LIKE '\_transient\_sentrygate\_%' OR option_name LIKE '\_transient\_timeout\_sentrygate\_%'"
 );
 
-$timestamp = wp_next_scheduled( 'sentrygate_cleanup_logs' );
-if ( $timestamp ) {
-	wp_unschedule_event( $timestamp, 'sentrygate_cleanup_logs' );
+$sentrygate_timestamp = wp_next_scheduled( 'sentrygate_cleanup_logs' );
+if ( $sentrygate_timestamp ) {
+	wp_unschedule_event( $sentrygate_timestamp, 'sentrygate_cleanup_logs' );
 }
 
 flush_rewrite_rules();
