@@ -47,7 +47,7 @@ test.describe( '2FA E-Mail', () => {
 		await expect( page.locator( '#sentrygate_tfa_confirm' ) ).toBeVisible();
 		await expect( page.getByRole( 'heading', { name: /E-Mail einrichten/i } ) ).toBeVisible();
 
-		// OTP wird über do_action(sentrygate_email_otp_generated) + wp_mail-Capture bereitgestellt.
+		// OTP aus abgefangener Mail (MU-Plugin: pre_wp_mail / wp_mail), kein Produktiv-Hook.
 		const setupCode = waitForMailCode( { timeoutMs: 25_000 } );
 		await page.locator( '#sentrygate_tfa_confirm' ).fill( setupCode );
 		await page.locator( 'button[name="sentrygate_tfa_action"][value="confirm_email"]' ).click();

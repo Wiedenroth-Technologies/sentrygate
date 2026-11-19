@@ -67,7 +67,7 @@ Hinweise zur Deterministik:
 
 - Keine festen `waitForTimeout`-Sleeps in den Specs; Assertions und Event-Waits.
 - Symbol-Challenge: Prompt-Text (`#sentrygate-choice-target`) wird mit `aria-label` der Auswahl gematcht.
-- E-Mail-Codes: MU-Plugin `tests/e2e/mu-plugins/sentrygate-e2e-mail-capture.php` speichert die letzte `wp_mail`-Nachricht in der Option `sentrygate_e2e_last_mail` (lokal alternativ Mailpit möglich, siehe unten).
+- E-Mail-Codes: MU-Plugin `tests/e2e/mu-plugins/sentrygate-e2e-mail-capture.php` hängt an Core-`wp_mail` / `pre_wp_mail` (kein Klartext-Hook im Plugin) und legt Code in `sentrygate_e2e_last_code` ab. `SENTRYGATE_E2E` ist in `.wp-env.json` gesetzt.
 
 ### Optional: Mailpit lokal
 

@@ -839,16 +839,6 @@ class SentryGate_Two_Factor {
 		set_transient( self::TRANSIENT_EMAIL . $user->ID, 1, 10 * MINUTE_IN_SECONDS );
 		set_transient( $cooldown_key, 1, MINUTE_IN_SECONDS );
 
-		/**
-		 * Fires when a plaintext email OTP has been generated (before wp_mail).
-		 *
-		 * Useful for test harnesses / mail logging integrations.
-		 *
-		 * @param string  $code One-time code.
-		 * @param WP_User $user User.
-		 */
-		do_action( 'sentrygate_email_otp_generated', $code, $user );
-
 		wp_mail(
 			$user->user_email,
 			sprintf(

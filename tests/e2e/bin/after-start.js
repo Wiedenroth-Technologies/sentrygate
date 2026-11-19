@@ -1,27 +1,41 @@
 /**
- * Lifecycle after wp-env start: Plugin aktiv, Permalinks, Test-Defaults.
+ * Lifecycle after wp-env start: Plugin aktiv, Permalinks, Mail-Capture, Test-Defaults.
  */
 const { execSync } = require( 'node:child_process' );
 
-function wp( args ) {
-	execSync( `npx wp-env run cli wp ${ args }`, {
+function run( command ) {
+	execSync( command, {
 		stdio: 'inherit',
 		env: process.env,
 	} );
 }
 
+function wp( args ) {
+	run( `npx wp-env run cli wp ${ args }` );
+}
+
 try {
+	// MU-Plugin zusätzlich per Copy absichern (Mapping + Datei im Container).
+	run(
+		`npx wp-env run cli bash -lc 'mkdir -p /var/www/html/wp-content/mu-plugins && cp -f /var/www/html/wp-content/plugins/sentrygate/tests/e2e/mu-plugins/*.php /var/www/html/wp-content/mu-plugins/ && ls -la /var/www/html/wp-content/mu-plugins'`
+	);
+
 	wp( 'plugin activate sentrygate' );
 	wp( 'rewrite structure "/%postname%/" --hard' );
 	wp( 'option update blogname "SentryGate E2E"' );
+
 	wp(
 		`eval 'echo function_exists( "sentrygate_e2e_capture_mail" ) ? "mail-capture-ok" : "mail-capture-missing";'`
 	);
-	// Smoke-Test: Capture speichert Code in Option.
 	wp(
-		`eval 'wp_mail( "admin@example.com", "SentryGate E2E ping", "Ihr Einmalcode lautet: 654321" ); echo get_option("sentrygate_e2e_last_code");'`
+		`eval 'echo ( defined( "SENTRYGATE_E2E" ) && SENTRYGATE_E2E ) ? "e2e-const-ok" : "e2e-const-missing";'`
 	);
-	// Challenge-Mindestzeit für deterministische, schnelle Tests.
+
+	// Smoke: Core wp_mail → pre_wp_mail Capture muss 654321 speichern.
+	wp(
+		`eval 'delete_option("sentrygate_e2e_last_code"); wp_mail("admin@example.com","SentryGate E2E ping","Ihr Einmalcode lautet: 654321"); echo get_option("sentrygate_e2e_last_code");'`
+	);
+
 	const patch = Buffer.from(
 		JSON.stringify( {
 			challenge_min_time: 0,

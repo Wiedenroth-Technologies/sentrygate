@@ -1,6 +1,8 @@
 <?php
 /**
- * E2E-only: fängt E-Mail-OTP und wp_mail ab (ähnlich Mailpit / WP Mail Logging).
+ * E2E-only: fängt ausgehende Mail über Core-Hooks ab (wie Mailpit / WP Mail Logging).
+ *
+ * Kein Eingriff in SentryGate-Produktivcode – nur pre_wp_mail / phpmailer_init / wp_mail.
  *
  * @package SentryGate
  */
@@ -12,70 +14,74 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Persist OTP / mail payload for Playwright / wp-cli.
+ * Persist mail payload + extracted 6-digit OTP for Playwright.
  *
- * @param string               $code    Optional OTP.
- * @param array<string, mixed> $mail    Optional wp_mail args.
+ * @param array<string, mixed> $atts wp_mail attributes.
  */
-function sentrygate_e2e_store( string $code = '', array $mail = array() ): void {
-	if ( '' !== $code ) {
-		update_option( 'sentrygate_e2e_last_code', $code, false );
+function sentrygate_e2e_persist_mail_atts( array $atts ): void {
+	$to = $atts['to'] ?? '';
+	if ( is_array( $to ) ) {
+		$to = implode( ', ', array_map( 'strval', $to ) );
 	}
 
-	if ( $mail ) {
-		$to = $mail['to'] ?? '';
-		if ( is_array( $to ) ) {
-			$to = implode( ', ', array_map( 'strval', $to ) );
-		}
-		$message = isset( $mail['message'] ) ? (string) $mail['message'] : '';
-		$payload = array(
-			'to'          => (string) $to,
-			'subject'     => isset( $mail['subject'] ) ? (string) $mail['subject'] : '',
-			'message'     => $message,
-			'captured_at' => gmdate( 'c' ),
-		);
-		update_option( 'sentrygate_e2e_last_mail', $payload, false );
+	$message = isset( $atts['message'] ) ? (string) $atts['message'] : '';
+	$payload = array(
+		'to'          => (string) $to,
+		'subject'     => isset( $atts['subject'] ) ? (string) $atts['subject'] : '',
+		'message'     => $message,
+		'captured_at' => gmdate( 'c' ),
+	);
 
-		if ( '' === $code && preg_match( '/\b(\d{6})\b/', $message, $match ) ) {
-			update_option( 'sentrygate_e2e_last_code', $match[1], false );
-		}
+	update_option( 'sentrygate_e2e_last_mail', $payload, false );
+
+	if ( preg_match( '/(\d{6})/', $message, $match ) ) {
+		update_option( 'sentrygate_e2e_last_code', $match[1], false );
 	}
 }
-
-/**
- * Primary capture: plaintext OTP from SentryGate (independent of MTA).
- *
- * @param string  $code Code.
- * @param WP_User $user User.
- */
-function sentrygate_e2e_on_otp( string $code, $user ): void {
-	unset( $user );
-	sentrygate_e2e_store( $code );
-}
-add_action( 'sentrygate_email_otp_generated', 'sentrygate_e2e_on_otp', 10, 2 );
 
 /**
  * @param array<string, mixed> $args wp_mail args.
  * @return array<string, mixed>
  */
 function sentrygate_e2e_capture_mail( array $args ): array {
-	sentrygate_e2e_store( '', $args );
+	sentrygate_e2e_persist_mail_atts( $args );
 	return $args;
 }
 add_filter( 'wp_mail', 'sentrygate_e2e_capture_mail', 1 );
 
 /**
- * @param null|bool $return Short-circuit.
- * @param array     $atts   Mail attributes.
+ * Short-circuit delivery in Docker (kein MTA) – Capture aus $atts, dann Erfolg melden.
+ *
+ * @param null|bool            $return Short-circuit value.
+ * @param array<string, mixed> $atts   Mail attributes (nach wp_mail-Filter).
  * @return bool
  */
-function sentrygate_e2e_force_mail_success( $return, $atts ) {
+function sentrygate_e2e_pre_wp_mail( $return, $atts ) {
 	if ( null !== $return ) {
 		return (bool) $return;
 	}
 	if ( is_array( $atts ) ) {
-		sentrygate_e2e_store( '', $atts );
+		sentrygate_e2e_persist_mail_atts( $atts );
 	}
 	return true;
 }
-add_filter( 'pre_wp_mail', 'sentrygate_e2e_force_mail_success', 10, 2 );
+add_filter( 'pre_wp_mail', 'sentrygate_e2e_pre_wp_mail', 10, 2 );
+
+/**
+ * Fallback, falls pre_wp_mail nicht greift und PHPMailer doch gebaut wird.
+ *
+ * @param object $phpmailer PHPMailer instance.
+ */
+function sentrygate_e2e_phpmailer_init( $phpmailer ): void {
+	if ( ! is_object( $phpmailer ) || ! isset( $phpmailer->Body ) ) {
+		return;
+	}
+	sentrygate_e2e_persist_mail_atts(
+		array(
+			'to'      => '',
+			'subject' => isset( $phpmailer->Subject ) ? (string) $phpmailer->Subject : '',
+			'message' => (string) $phpmailer->Body,
+		)
+	);
+}
+add_action( 'phpmailer_init', 'sentrygate_e2e_phpmailer_init' );
