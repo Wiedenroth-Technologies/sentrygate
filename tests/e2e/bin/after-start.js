@@ -15,9 +15,10 @@ function wp( args ) {
 }
 
 try {
-	// MU-Plugin zusätzlich per Copy absichern (Mapping + Datei im Container).
+	// MU-Plugin kommt über .wp-env.json-Mapping (wp-content/mu-plugins → tests/e2e/mu-plugins).
+	// Kein cp: Quell- und Zieldatei sind im Container dieselbe gemappte Datei.
 	run(
-		`npx wp-env run cli bash -lc 'mkdir -p /var/www/html/wp-content/mu-plugins && cp -f /var/www/html/wp-content/plugins/sentrygate/tests/e2e/mu-plugins/*.php /var/www/html/wp-content/mu-plugins/ && ls -la /var/www/html/wp-content/mu-plugins'`
+		`npx wp-env run cli bash -lc 'ls -la /var/www/html/wp-content/mu-plugins'`
 	);
 
 	wp( 'plugin activate sentrygate' );
