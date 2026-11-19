@@ -128,7 +128,13 @@ function getLastMailCode() {
 		const raw = /** @type {string} */ (
 			wpCli( [
 				'eval',
-				'echo (string) get_option( "sentrygate_e2e_last_code", "" );',
+				'$c=(string)get_option("sentrygate_e2e_last_code","");' +
+					'if(!preg_match("/^\\d{6}$/",$c)){' +
+					'$f=WP_CONTENT_DIR."/uploads/sentrygate-e2e-last-mail.json";' +
+					'if(is_readable($f)){$j=json_decode((string)file_get_contents($f),true);' +
+					'if(is_array($j)&&preg_match("/^\\d{6}$/",(string)($j["code"]??""))){$c=(string)$j["code"];}}' +
+					'}' +
+					'echo $c;',
 			] )
 		);
 		const code = lastStdoutLine( raw );
@@ -139,14 +145,17 @@ function getLastMailCode() {
 }
 
 /**
- * Clear captured mail.
+ * Clear captured mail and email-OTP cooldowns (sonst blockiert Setup den Login-Versand 60s).
  */
 function clearLastMail() {
 	try {
 		wpCli( [
 			'eval',
 			'delete_option("sentrygate_e2e_last_mail"); delete_option("sentrygate_e2e_last_code"); ' +
-				'@unlink( WP_CONTENT_DIR . "/uploads/sentrygate-e2e-last-mail.json" ); echo "1";',
+				'@unlink( WP_CONTENT_DIR . "/uploads/sentrygate-e2e-last-mail.json" ); ' +
+				'global $wpdb;' +
+				'$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE \'_transient_sentrygate_email_cd_%\' OR option_name LIKE \'_transient_timeout_sentrygate_email_cd_%\' OR option_name LIKE \'_transient_sentrygate_email_code_%\' OR option_name LIKE \'_transient_timeout_sentrygate_email_code_%\'" ); ' +
+				'echo "1";',
 		] );
 	} catch {
 		/* ignore */
@@ -189,10 +198,13 @@ function waitForMailCode( opts = {} ) {
  */
 function mailCaptureLoaded() {
 	try {
-		return wpCli( [
-			'eval',
-			'echo function_exists( "sentrygate_e2e_capture_mail" ) ? "1" : "0";',
-		] ) === '1';
+		const raw = /** @type {string} */ (
+			wpCli( [
+				'eval',
+				'echo function_exists( "sentrygate_e2e_capture_mail" ) ? "1" : "0";',
+			] )
+		);
+		return lastStdoutLine( raw ) === '1';
 	} catch {
 		return false;
 	}

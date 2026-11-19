@@ -34,8 +34,23 @@ function sentrygate_e2e_persist_mail_atts( array $atts ): void {
 
 	update_option( 'sentrygate_e2e_last_mail', $payload, false );
 
+	$code = '';
 	if ( preg_match( '/(\d{6})/', $message, $match ) ) {
-		update_option( 'sentrygate_e2e_last_code', $match[1], false );
+		$code = $match[1];
+		update_option( 'sentrygate_e2e_last_code', $code, false );
+	}
+
+	// Zusätzlich Datei schreiben (Fallback, falls Options-Lesen in CLI verzögert wirkt).
+	$upload = wp_upload_dir( null, false );
+	if ( empty( $upload['error'] ) && ! empty( $upload['basedir'] ) ) {
+		$dir = trailingslashit( (string) $upload['basedir'] );
+		if ( ! is_dir( $dir ) ) {
+			wp_mkdir_p( $dir );
+		}
+		$file_payload = $payload;
+		$file_payload['code'] = $code;
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- E2E-only MU-Plugin.
+		@file_put_contents( $dir . 'sentrygate-e2e-last-mail.json', wp_json_encode( $file_payload ) );
 	}
 }
 
