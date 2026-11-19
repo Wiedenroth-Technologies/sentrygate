@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SentryGate">
+  <defs>
+    <linearGradient id="sg-bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FAFBFC"/>
+      <stop offset="100%" stop-color="#ECEEF2"/>
+    </linearGradient>
+    <linearGradient id="sg-navyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#344078"/>
+      <stop offset="100%" stop-color="#1C2542"/>
+    </linearGradient>
+    <linearGradient id="sg-orangeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFAA72"/>
+      <stop offset="100%" stop-color="#F9873E"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="512" height="512" rx="100" fill="url(#sg-bgGrad)"/>
+  <rect x="4" y="4" width="504" height="504" rx="96" fill="none" stroke="#E1E4EA" stroke-width="2"/>
+  <path d="M256,72 C256,72 170,100 96,120 L96,272 C96,368 166,418 256,438 C346,418 416,368 416,272 L416,120 C342,100 256,72 256,72 Z" fill="url(#sg-navyGrad)"/>
+  <g transform="translate(256,256)">
+    <path d="M-80,0 C-44,-52 44,-52 80,0 C44,52 -44,52 -80,0 Z" fill="url(#sg-orangeGrad)"/>
+    <circle cx="0" cy="0" r="29" fill="#1C2542"/>
+    <circle cx="0" cy="0" r="11" fill="#FAFBFC"/>
+  </g>
+</svg>

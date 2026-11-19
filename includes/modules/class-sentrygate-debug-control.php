@@ -1,0 +1,131 @@
+<?php
+/**
+ * WP_DEBUG control – advisory dashboard warnings, no wp-config rewriting.
+ *
+ * @package SentryGate
+ */
+
+declare(strict_types=1);
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Class SentryGate_Debug_Control
+ */
+class SentryGate_Debug_Control {
+
+	/**
+	 * Register hooks.
+	 *
+	 * @param SentryGate_Loader $loader Loader.
+	 */
+	public function register( SentryGate_Loader $loader ): void {
+		if ( ! SentryGate_Options::module_enabled( 'debug_control' ) ) {
+			return;
+		}
+
+		$loader->add_action( 'admin_notices', $this, 'admin_notice' );
+		$loader->add_action( 'init', $this, 'harden_runtime_display', 0 );
+	}
+
+	/**
+	 * Attempt to suppress public display of errors at runtime (cannot undefine constants).
+	 */
+	public function harden_runtime_display(): void {
+		if ( ! SentryGate_Options::get( 'enforce_production_debug' ) ) {
+			return;
+		}
+
+		if ( defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY && ! WP_DEBUG ) {
+			// Misconfiguration edge case – still hide display.
+			ini_set( 'display_errors', '0' ); // phpcs:ignore WordPress.PHP.IniSet.display_errors_Disallowed
+		}
+
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY ) {
+			// Soften public error display without touching wp-config.php.
+			if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+				ini_set( 'display_errors', '0' ); // phpcs:ignore WordPress.PHP.IniSet.display_errors_Disallowed
+			}
+		}
+	}
+
+	/**
+	 * Show admin notice when debug constants diverge from production recommendations.
+	 */
+	public function admin_notice(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if ( ! SentryGate_Options::get( 'enforce_production_debug' ) ) {
+			return;
+		}
+
+		$issues = self::collect_issues();
+		if ( empty( $issues ) ) {
+			return;
+		}
+
+		echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'SentryGate Debug-Kontrolle:', 'wiedenroth-technologies-sentrygate' ) . '</strong> ';
+		echo esc_html( implode( ' ', $issues ) );
+		echo ' ' . esc_html__( 'wp-config.php wird nicht automatisch überschrieben – bitte manuell prüfen.', 'wiedenroth-technologies-sentrygate' );
+		echo '</p></div>';
+	}
+
+	/**
+	 * Collect configuration issues.
+	 *
+	 * @return array<int, string>
+	 */
+	public static function collect_issues(): array {
+		$issues = array();
+
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			$issues[] = __( 'WP_DEBUG ist aktiv.', 'wiedenroth-technologies-sentrygate' );
+		}
+		if ( defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY ) {
+			$issues[] = __( 'WP_DEBUG_DISPLAY ist aktiv (Fehler können öffentlich sichtbar sein).', 'wiedenroth-technologies-sentrygate' );
+		}
+		if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+			$log_path = is_string( WP_DEBUG_LOG ) ? WP_DEBUG_LOG : ( WP_CONTENT_DIR . '/debug.log' );
+			if ( is_readable( $log_path ) ) {
+				// Check if likely web-accessible under wp-content.
+				$issues[] = __( 'WP_DEBUG_LOG ist aktiv – sicherstellen, dass die Log-Datei nicht öffentlich erreichbar ist.', 'wiedenroth-technologies-sentrygate' );
+			}
+		}
+
+		return $issues;
+	}
+
+	/**
+	 * Module status.
+	 *
+	 * @return array{status: string, label: string, message: string}
+	 */
+	public static function status(): array {
+		if ( ! SentryGate_Options::module_enabled( 'debug_control' ) ) {
+			return array(
+				'status'  => 'inactive',
+				'label'   => __( 'Fehleranzeige', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Modul deaktiviert.', 'wiedenroth-technologies-sentrygate' ),
+			);
+		}
+
+		$issues = self::collect_issues();
+		if ( $issues ) {
+			return array(
+				'status'  => 'warning',
+				'label'   => __( 'Fehleranzeige', 'wiedenroth-technologies-sentrygate' ),
+				'message' => implode( ' ', $issues ),
+			);
+		}
+
+		return array(
+			'status'  => 'active',
+			'label'   => __( 'Fehleranzeige', 'wiedenroth-technologies-sentrygate' ),
+			'message' => __( 'Debug-Konstanten entsprechen der Produktiv-Empfehlung.', 'wiedenroth-technologies-sentrygate' ),
+		);
+	}
+}

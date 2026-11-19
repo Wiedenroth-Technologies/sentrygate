@@ -1,0 +1,149 @@
+/**
+ * SentryGate login challenge – symbol choice.
+ */
+
+.sentrygate-challenge {
+	margin: 0 0 16px;
+}
+
+.sentrygate-hp {
+	position: absolute !important;
+	left: -9999px !important;
+	width: 1px !important;
+	height: 1px !important;
+	overflow: hidden !important;
+	opacity: 0 !important;
+}
+
+.sentrygate-choice {
+	margin: 0 0 12px;
+	padding: 12px 12px 10px;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	background: #fff;
+}
+
+.sentrygate-choice__legend {
+	padding: 0 6px;
+	color: #27335a;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.sentrygate-choice__prompt {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 6px 8px;
+	margin: 6px 0 14px;
+	padding: 12px 14px;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	background: #e9ebf1;
+	color: #1d2327;
+	font-size: 13px;
+	line-height: 1.45;
+	box-sizing: border-box;
+}
+
+#login form .sentrygate-choice__prompt {
+	margin: 6px 0 14px;
+	padding: 12px 14px;
+}
+
+.sentrygate-choice__prompt-text {
+	color: #3c434a;
+}
+
+.sentrygate-choice__target {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 4px;
+	background: #fff;
+	color: #27335a;
+	font-weight: 700;
+}
+
+.sentrygate-choice__grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+}
+
+.sentrygate-choice__item {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 16px 8px;
+	min-height: 76px;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	background: #f6f7f7;
+	cursor: pointer;
+	text-align: center;
+	line-height: 0;
+}
+
+.login .sentrygate-choice__item {
+	display: flex;
+	margin-bottom: 0;
+}
+
+.sentrygate-choice__item:hover {
+	border-color: #27335a;
+	background: #fff;
+}
+
+.sentrygate-choice__item:has(input:focus-visible) {
+	box-shadow: 0 0 0 3px rgba(39, 51, 90, 0.22);
+}
+
+.sentrygate-choice__item.is-selected,
+.sentrygate-choice__item:has(input:checked) {
+	border-color: #27335a;
+	background: #e9ebf1;
+}
+
+.sentrygate-choice__item input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.sentrygate-choice__icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	margin: 0;
+	color: #27335a;
+	line-height: 0;
+}
+
+.sentrygate-choice__icon svg {
+	display: block;
+	margin: 0;
+}
+
+.sentrygate-refresh {
+	width: 100%;
+	margin: 10px 0 0 !important;
+}
+
+#sentrygate-gateform .submit {
+	margin: 4px 0 0;
+}
+
+#sentrygate-gateform #wp-submit {
+	width: 100%;
+	float: none;
+}

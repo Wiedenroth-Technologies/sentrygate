@@ -1,0 +1,24 @@
+/**
+ * SentryGate – WP-Dashboard-Widget.
+ */
+
+.sentrygate-ampel {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	margin-right: 6px;
+	vertical-align: middle;
+}
+
+.sentrygate-ampel--active {
+	background: #1b7a4e;
+}
+
+.sentrygate-ampel--warning {
+	background: #9a6b12;
+}
+
+.sentrygate-ampel--inactive {
+	background: #b42318;
+}
