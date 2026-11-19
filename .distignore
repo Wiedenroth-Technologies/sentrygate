@@ -30,12 +30,19 @@ README.md
 CHANGELOG.md
 CONTRIBUTING.md
 LICENSE.md
+docs
 .editorconfig
 .eslintrc*
 .prettierrc*
 Makefile
 Dockerfile
 docker-compose.yml
+.wp-env.json
+.wp-env.override.json
+playwright.config.js
+playwright.config.ts
+playwright-report
+test-results
 
 # OS junk
 .DS_Store

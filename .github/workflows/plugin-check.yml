@@ -1,0 +1,60 @@
+name: Plugin Check
+
+on:
+  push:
+    branches: [ main, 'cursor/**' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: plugin-check-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  plugin-check:
+    name: WordPress Plugin Check (Release-Build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: wp-cli
+
+      - name: Install dist-archive-command
+        run: wp package install wp-cli/dist-archive-command:@stable
+
+      - name: Build Release-ZIP (.distignore)
+        run: |
+          set -euo pipefail
+          mkdir -p dist tmp-build
+          wp dist-archive . ./dist/sentrygate.zip --plugin-dirname=sentrygate
+          unzip -q ./dist/sentrygate.zip -d tmp-build
+          test -f tmp-build/sentrygate/sentrygate.php
+          # Dev-/CI-Dateien dürfen nicht in der Release-ZIP landen.
+          ! test -e tmp-build/sentrygate/.github
+          ! test -e tmp-build/sentrygate/tests
+          ! test -e tmp-build/sentrygate/docs
+          ! test -e tmp-build/sentrygate/composer.json
+          ! test -e tmp-build/sentrygate/package.json
+          ! test -e tmp-build/sentrygate/.wp-env.json
+          echo "Release-Build Inhalt:"
+          find tmp-build/sentrygate -maxdepth 2 -type f | sort | head -80
+
+      - name: Upload Release-ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sentrygate-release-zip
+          path: dist/sentrygate.zip
+          retention-days: 7
+
+      - name: Run Plugin Check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './tmp-build/sentrygate'

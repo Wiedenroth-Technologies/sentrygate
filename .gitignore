@@ -25,9 +25,17 @@ Thumbs.db
 # Build / release artifacts
 /dist/
 /build/
+/tmp-build/
 *.zip
 *.tar.gz
 node_modules/
+
+# Playwright / wp-env
+/tests/e2e/playwright-report/
+/tests/e2e/test-results/
+/playwright-report/
+/test-results/
+.wp-env.override.json
 
 # Logs / temp
 *.log

@@ -1,0 +1,85 @@
+name: E2E (wp-env + Playwright)
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: e2e-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: E2E WP ${{ matrix.wordpress }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        wordpress: [ '6.4', '7.1' ]
+
+    env:
+      WP_BASE_URL: http://localhost:8888
+      WP_ADMIN_USER: admin
+      WP_ADMIN_PASSWORD: password
+      CI: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Cache Playwright Chromium
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start WordPress (wp-env)
+        run: npx wp-env start
+        env:
+          WP_ENV_CORE: WordPress/WordPress#tags/${{ matrix.wordpress }}
+
+      - name: Verify WordPress is ready
+        run: |
+          set -euo pipefail
+          npx wp-env run cli wp core version
+          curl -sSf -o /dev/null "$WP_BASE_URL/"
+          npx wp-env run cli wp plugin is-active sentrygate
+
+      - name: Run Playwright E2E
+        run: npm run test:e2e
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-wp-${{ matrix.wordpress }}
+          path: |
+            tests/e2e/playwright-report
+            tests/e2e/test-results
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Dump debug.log on failure
+        if: ${{ failure() }}
+        run: npx wp-env run cli bash -c 'test -f /var/www/html/wp-content/debug.log && cat /var/www/html/wp-content/debug.log || echo "no debug.log"'
+
+      - name: Stop WordPress
+        if: ${{ always() }}
+        run: npx wp-env stop || true
