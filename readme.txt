@@ -11,65 +11,66 @@ Author: Wiedenroth Technologies GmbH
 Author URI: https://wiedenroth.tech
 Plugin URI: https://wiedenroth.tech/software/wordpress/sentrygate
 
-Produktionsreifes WordPress-Security-Plugin von Wiedenroth Technologies GmbH.
+Production-ready WordPress security plugin by Wiedenroth Technologies GmbH.
 
 == Description ==
 
-SentryGate härtet WordPress modular:
+SentryGate hardens WordPress with modular protection:
 
-* Interface-Hardening (XML-RPC, User-Enumeration, Datei-Editor, Versionsleaks, REST-Whitelist)
-* WP-Debug-Kontrolle (Hinweise, kein automatisches Überschreiben von wp-config.php)
-* Login-Pfad-Verschleierung (404 auf Originalpfaden)
-* Self-hosted Login-Challenge (Symbolwahl/Honeypot/Timing/Rate-Limit, BFSG-tauglich)
-* Formular-Symbolprüfung für angebundene öffentliche Formulare
-* Zwei-Faktor (Authenticator-App oder E-Mail, eigene Einrichtungsseite, Recovery-Codes, Trusted Device)
-* Security-Header (inkl. CSP Report-Only)
-* Datei-/Server-Hardening (.htaccess-Snippets, Permission-Anzeige)
-* Audit-Log mit optionaler IP-Kürzung und Webhook/E-Mail
-* Core-Integritätscheck gegen api.wordpress.org
+* Interface hardening (XML-RPC, user enumeration, file editor, version leaks, REST whitelist)
+* WP debug checks (warnings only; does not overwrite wp-config.php)
+* Custom login path (404 on the original login URLs)
+* Self-hosted login challenge (symbol choice / honeypot / timing / rate limit)
+* Form symbol challenge for connected public forms
+* Two-factor authentication (authenticator app or email, dedicated setup page, recovery codes, trusted device)
+* Security headers (including CSP report-only)
+* File / server hardening hints (.htaccess snippets, permission display)
+* Audit log with optional IP truncation and webhook / email
+* Core integrity check against api.wordpress.org
 
-Keine harten Drittanbieter-Abhängigkeiten (QR offline via MIT-Bibliothek). Präfixe: sentrygate_ / SentryGate.
+No hard third-party runtime dependencies (offline QR via an MIT library). Prefixes: sentrygate_ / SentryGate.
 
-Nicht in v1: Auto-Updates, Malware-Scanning, Multisite-Network-Management.
+Not in v1: automatic updates, malware scanning, multisite network management.
 
 == Installation ==
 
-1. Ordner `SentryGate` nach `wp-content/plugins/` kopieren (oder als ZIP hochladen).
-2. Plugin unter „Plugins“ aktivieren.
-3. Unter „SentryGate“ Module und Einstellungen konfigurieren.
+1. Upload the `wiedenroth-technologies-sentrygate` folder to `/wp-content/plugins/` (or install the ZIP).
+2. Activate the plugin under Plugins.
+3. Open SentryGate in the admin menu and configure the modules.
 
 == Frequently Asked Questions ==
 
-= Läuft SentryGate parallel zu Orbance? =
+= Does SentryGate work alongside Orbance? =
 
-Ja. Eigene Präfixe und Hook-Namespaces vermeiden Kollisionen.
+Yes. Separate prefixes and hook namespaces avoid collisions.
 
-= Braucht die Login-Challenge ConsentGate? =
+= Does the login challenge need ConsentGate? =
 
-Nein – vollständig self-hosted, keine externen Requests/Cookies von Dritten.
+No. It is fully self-hosted with no third-party requests or cookies.
 
-= Hinter Cloudflare / Proxy? =
+= Behind Cloudflare / a reverse proxy? =
 
-Unter Login-Challenge → „Proxy-Header vertrauen“ nur aktivieren, wenn der Proxy vertrauenswürdig ist. Standard: REMOTE_ADDR.
+Under Login Challenge → “Trust proxy headers”, enable only if the proxy is trusted. Default: REMOTE_ADDR.
 
-= Login-Adresse geändert und ausgesperrt? =
+= I forgot the custom login URL =
 
-Login-Pfad-Modul in der Datenbank deaktivieren (`module_login_path` in `sentrygate_settings`) oder Plugin per FTP umbenennen/deaktivieren. Danach erneut unter dem gewünschten Slug einrichten und den Slug sicher notieren.
+Use the URL shown under SentryGate → Login path, rename/deactivate the plugin via FTP, or run `wp plugin deactivate wiedenroth-technologies-sentrygate` / set `module_login_path` to off and flush permalinks.
 
 == Changelog ==
 
 = 1.1.2 =
-* Formular-Symbolprüfung (shared Challenge) für angebundene öffentliche Formulare
-* Frontend-Login-Hooks für Challenge und 2FA (MemberGate u. a.)
-* Login-Pfad: optionale Weiterleitung auf Frontend-Anmeldung
-* Admin-UI- und Stabilitätsverbesserungen
+* Form symbol challenge (shared challenge) for connected public forms
+* Frontend login hooks for challenge and 2FA (MemberGate and others)
+* Login path: optional redirect to a frontend login screen
+* Admin UI and stability improvements
+* Metadata, repository foundation, and security review
 
 = 1.0.1 =
-* Frontend-Login (MemberGate): Challenge und 2FA per AJAX, ohne wp-login.php
+* Frontend login (MemberGate): challenge and 2FA via AJAX without wp-login.php
 
 = 1.0.0 =
-* Erstveröffentlichung
-* Login-Challenge nach Passwort-Auth (kein Bypass)
-* Funktionierender 2FA-Flow inkl. Offline-QR, E-Mail-Code-Ablauf und Pflicht-Setup
-* Rate-Limit ohne Doppelzählung; sichere IP-Ermittlung
-* REST-Whitelist nur per Prefix; Config-Export/Import; Core-Checksums
+* Initial release
+* Login challenge after password auth (no bypass)
+* Working 2FA flow including offline QR, email code expiry, and required setup
+* Rate limit without double counting; safe IP detection
+* REST whitelist by prefix; config export/import; core checksums

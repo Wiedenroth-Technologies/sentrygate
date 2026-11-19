@@ -73,4 +73,18 @@ $effective_url = '' !== $frontend_url ? $frontend_url : $login_url;
 	<?php SentryGate_Admin::save_actions( $ui ); ?>
 </form>
 
-<?php $ui->notice( 'info', __( 'Falls die neue Adresse nicht greift: unter Einstellungen → Permalinks einmal „Änderungen speichern“ klicken.', 'wiedenroth-technologies-sentrygate' ) ); ?>
+<?php
+$ui->notice(
+	'info',
+	__( 'Falls die neue Adresse nicht greift: unter Einstellungen → Permalinks einmal „Änderungen speichern“ klicken.', 'wiedenroth-technologies-sentrygate' )
+);
+$ui->notice(
+	'warning',
+	sprintf(
+		/* translators: %s: custom login URL */
+		__( 'Wiederherstellung, falls Sie die Login-Adresse vergessen: (1) Notierte URL nutzen (%s). (2) Plugin per FTP/Dateimanager umbenennen oder deaktivieren – danach funktioniert /wp-login.php wieder. (3) Per WP-CLI: wp plugin deactivate sentrygate – oder in der Datenbank die Einstellung module_login_path auf aus setzen und Permalinks speichern.', 'wiedenroth-technologies-sentrygate' ),
+		$login_url
+	),
+	__( 'Wiederherstellungsweg', 'wiedenroth-technologies-sentrygate' )
+);
+?>

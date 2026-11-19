@@ -19,6 +19,8 @@
 	},
 	"scripts": {
 		"phpcs": "phpcs",
-		"phpcbf": "phpcbf"
+		"phpcbf": "phpcbf",
+		"test:e2e": "npm run test:e2e",
+		"build:zip": "bash bin/build-release-zip.sh"
 	}
 }

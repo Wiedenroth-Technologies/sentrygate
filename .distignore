@@ -30,16 +30,25 @@ README.md
 CHANGELOG.md
 CONTRIBUTING.md
 LICENSE.md
+docs
 .editorconfig
 .eslintrc*
 .prettierrc*
 Makefile
 Dockerfile
 docker-compose.yml
+.wp-env.json
+.wp-env.override.json
+playwright.config.js
+playwright.config.ts
+playwright-report
+test-results
 
-# OS junk
+# OS junk / VCS placeholders (Plugin Check: keine Hidden Files in der ZIP)
 .DS_Store
 Thumbs.db
+.gitkeep
+**/.gitkeep
 *.zip
 *.tar.gz
 *.log
