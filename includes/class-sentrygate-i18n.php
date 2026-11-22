@@ -2,6 +2,9 @@
 /**
  * Internationalization.
  *
+ * WordPress.org-hosted plugins have translations loaded automatically since WP 4.6,
+ * so this class no longer calls load_plugin_textdomain().
+ *
  * @package SentryGate
  */
 
@@ -15,15 +18,4 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class SentryGate_i18n
  */
 class SentryGate_i18n {
-
-	/**
-	 * Load the plugin text domain.
-	 */
-	public function load_plugin_textdomain(): void {
-		load_plugin_textdomain(
-			'wiedenroth-technologies-sentrygate',
-			false,
-			dirname( SENTRYGATE_PLUGIN_BASENAME ) . '/languages/'
-		);
-	}
 }

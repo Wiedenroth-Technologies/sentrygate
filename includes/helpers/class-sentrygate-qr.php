@@ -27,12 +27,12 @@ class SentryGate_QR {
 			return '';
 		}
 
-		if ( ! class_exists( 'QRCode', false ) ) {
+		if ( ! class_exists( \SentryGate\Lib\QRCode::class, false ) ) {
 			require_once SENTRYGATE_PLUGIN_DIR . 'includes/lib/qrcode.php';
 		}
 
 		try {
-			$qr = QRCode::getMinimumQRCode( $data, QR_ERROR_CORRECT_LEVEL_M );
+			$qr  = \SentryGate\Lib\QRCode::getMinimumQRCode( $data, \SentryGate\Lib\QR_ERROR_CORRECT_LEVEL_M );
 			$svg = $qr->getSVG( max( 2, min( 8, $module_size ) ) );
 			return is_string( $svg ) ? $svg : '';
 		} catch ( Throwable $e ) {

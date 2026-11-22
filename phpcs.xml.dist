@@ -52,18 +52,14 @@
 				<element value="sentrygate"/>
 				<element value="SentryGate"/>
 				<element value="SENTRYGATE"/>
-				<element value="wt_admin"/>
-				<element value="Wt_Admin"/>
 			</property>
 		</properties>
 	</rule>
 
-	<!-- Intentionally fire/define WordPress core hooks and constants. -->
+		<!-- Intentionally fire/define WordPress core hooks and constants. -->
 	<rule ref="WordPress">
 		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound"/>
 		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound"/>
-		<!-- Table names from $wpdb->prefix; values remain prepared. -->
-		<exclude name="WordPress.DB.PreparedSQL.InterpolatedNotPrepared"/>
 	</rule>
 
 	<rule ref="WordPress.WP.I18n">

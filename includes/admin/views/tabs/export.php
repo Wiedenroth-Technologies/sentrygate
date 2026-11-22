@@ -4,7 +4,7 @@
  *
  * @package SentryGate
  *
- * @var Wt_Admin_Ui $ui
+ * @var SentryGate_Admin_Ui $ui
  */
 
 declare(strict_types=1);

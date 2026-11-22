@@ -58,5 +58,4 @@ jobs:
         with:
           build-dir: './tmp-build/wiedenroth-technologies-sentrygate'
           slug: wiedenroth-technologies-sentrygate
-          # MIT-QR-Bibliothek (Third-Party), nicht Teil unseres eigenen Codes.
-          exclude-directories: includes/lib
+          categories: plugin_repo
