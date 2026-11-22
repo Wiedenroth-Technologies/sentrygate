@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       Wiedenroth Technologies SentryGate
  * Plugin URI:        https://wiedenroth.tech/software/wordpress/sentrygate
- * Description:       Produktionsreifes WordPress-Security-Plugin: Interface-Hardening, Login-Schutz, Formular-Symbolprüfung, 2FA, Security-Header, Audit-Log und Core-Integritätscheck.
- * Version:           1.1.2
+ * Description:       Production-ready WordPress security plugin by Wiedenroth Technologies GmbH.
+ * Version:           1.0.0
  * Requires at least: 6.4
  * Requires PHP:      8.1
  * Author:            Wiedenroth Technologies GmbH
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - Multisite-Network-weites zentrales Management
  */
 
-define( 'SENTRYGATE_VERSION', '1.1.2' );
+define( 'SENTRYGATE_VERSION', '1.0.0' );
 define( 'SENTRYGATE_PLUGIN_FILE', __FILE__ );
 define( 'SENTRYGATE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SENTRYGATE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -38,7 +38,7 @@ define( 'SENTRYGATE_SLUG', 'wiedenroth-technologies-sentrygate' );
 define( 'SENTRYGATE_OPTION_KEY', 'sentrygate_settings' );
 define( 'SENTRYGATE_DB_VERSION', '1.0.0' );
 
-require_once SENTRYGATE_PLUGIN_DIR . 'includes/class-wt-admin-ui.php';
+require_once SENTRYGATE_PLUGIN_DIR . 'includes/class-sentrygate-admin-ui.php';
 require_once SENTRYGATE_PLUGIN_DIR . 'includes/class-sentrygate-autoloader.php';
 SentryGate_Autoloader::register();
 

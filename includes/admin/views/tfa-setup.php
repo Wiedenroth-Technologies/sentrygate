@@ -4,7 +4,7 @@
  *
  * @package SentryGate
  *
- * @var Wt_Admin_Ui        $ui
+ * @var SentryGate_Admin_Ui        $ui
  * @var WP_User            $user
  * @var bool               $enabled
  * @var string             $method
@@ -163,7 +163,7 @@ $show_chooser = '' === $pending;
 					);
 					?>
 					<?php if ( $qr_svg ) : ?>
-						<div class="<?php echo esc_attr( $ui->cls( 'qr' ) ); ?>"><?php echo $qr_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- generated SVG ?></div>
+						<div class="<?php echo esc_attr( $ui->cls( 'qr' ) ); ?>"><?php echo $qr_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- offline-generated SVG from integer module geometry only ?></div>
 					<?php else : ?>
 						<?php $ui->notice( 'warning', __( 'QR konnte nicht erzeugt werden. Bitte das Geheimnis manuell in der App eintragen.', 'wiedenroth-technologies-sentrygate' ) ); ?>
 					<?php endif; ?>

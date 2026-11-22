@@ -19,14 +19,14 @@ class SentryGate_Admin {
 	/**
 	 * Shared UI helper.
 	 *
-	 * @var Wt_Admin_Ui
+	 * @var SentryGate_Admin_Ui
 	 */
-	private Wt_Admin_Ui $ui;
+	private SentryGate_Admin_Ui $ui;
 
 	/**
-	 * @param Wt_Admin_Ui $ui UI helper.
+	 * @param SentryGate_Admin_Ui $ui UI helper.
 	 */
-	public function __construct( Wt_Admin_Ui $ui ) {
+	public function __construct( SentryGate_Admin_Ui $ui ) {
 		$this->ui = $ui;
 	}
 
@@ -34,7 +34,7 @@ class SentryGate_Admin {
 	 * Add top-level menu.
 	 */
 	public function add_menu(): void {
-		Wt_Admin_Ui::ensure_menu_separator();
+		SentryGate_Admin_Ui::ensure_menu_separator();
 
 		add_menu_page(
 			'SentryGate',
@@ -43,7 +43,7 @@ class SentryGate_Admin {
 			SENTRYGATE_SLUG,
 			array( $this, 'render_page' ),
 			$this->menu_icon(),
-			Wt_Admin_Ui::MENU_POSITION
+			SentryGate_Admin_Ui::MENU_POSITION
 		);
 	}
 
@@ -307,12 +307,12 @@ class SentryGate_Admin {
 	/**
 	 * Toggle with hidden 0 so unchecked values persist.
 	 *
-	 * @param Wt_Admin_Ui $ui      UI helper.
+	 * @param SentryGate_Admin_Ui $ui      UI helper.
 	 * @param string      $name    Option key.
 	 * @param mixed       $checked Current value.
 	 * @param string      $label   Visible label.
 	 */
-	public static function toggle( Wt_Admin_Ui $ui, string $name, mixed $checked, string $label ): void {
+	public static function toggle( SentryGate_Admin_Ui $ui, string $name, mixed $checked, string $label ): void {
 		printf(
 			'<input type="hidden" name="%s" value="0" />',
 			esc_attr( self::option_name( $name ) )
@@ -323,7 +323,7 @@ class SentryGate_Admin {
 	/**
 	 * Field row with toggle.
 	 *
-	 * @param Wt_Admin_Ui $ui           UI helper.
+	 * @param SentryGate_Admin_Ui $ui           UI helper.
 	 * @param string      $name         Option key.
 	 * @param mixed       $checked      Current value.
 	 * @param string      $label        Field label.
@@ -331,7 +331,7 @@ class SentryGate_Admin {
 	 * @param string      $help         Optional help.
 	 * @param string      $tech         Optional technical name.
 	 */
-	public static function field_toggle( Wt_Admin_Ui $ui, string $name, mixed $checked, string $label, string $toggle_label, string $help = '', string $tech = '' ): void {
+	public static function field_toggle( SentryGate_Admin_Ui $ui, string $name, mixed $checked, string $label, string $toggle_label, string $help = '', string $tech = '' ): void {
 		echo '<div class="' . esc_attr( $ui->cls( 'field' ) ) . '">';
 		echo '<div class="' . esc_attr( $ui->cls( 'field__label' ) ) . '">';
 		echo esc_html( $label );
@@ -350,14 +350,14 @@ class SentryGate_Admin {
 	/**
 	 * Number input.
 	 *
-	 * @param Wt_Admin_Ui $ui    UI helper.
+	 * @param SentryGate_Admin_Ui $ui    UI helper.
 	 * @param string      $name  Option key.
 	 * @param mixed       $value Value.
 	 * @param int         $min   Min.
 	 * @param int         $max   Max.
 	 * @param string      $mod   Optional input modifier (e.g. narrow).
 	 */
-	public static function number( Wt_Admin_Ui $ui, string $name, mixed $value, int $min = 0, int $max = 999999, string $mod = 'narrow' ): void {
+	public static function number( SentryGate_Admin_Ui $ui, string $name, mixed $value, int $min = 0, int $max = 999999, string $mod = 'narrow' ): void {
 		$id    = self::field_id( $name );
 		$class = '' === $mod ? $ui->cls( 'input' ) : $ui->cls( 'input', $mod );
 
@@ -375,12 +375,12 @@ class SentryGate_Admin {
 	/**
 	 * Text input.
 	 *
-	 * @param Wt_Admin_Ui $ui    UI helper.
+	 * @param SentryGate_Admin_Ui $ui    UI helper.
 	 * @param string      $name  Option key.
 	 * @param mixed       $value Value.
 	 * @param string      $type  Input type.
 	 */
-	public static function text( Wt_Admin_Ui $ui, string $name, mixed $value, string $type = 'text' ): void {
+	public static function text( SentryGate_Admin_Ui $ui, string $name, mixed $value, string $type = 'text' ): void {
 		$id = self::field_id( $name );
 
 		printf(
@@ -396,7 +396,7 @@ class SentryGate_Admin {
 	/**
 	 * Field row with number input.
 	 *
-	 * @param Wt_Admin_Ui $ui    UI helper.
+	 * @param SentryGate_Admin_Ui $ui    UI helper.
 	 * @param string      $name  Option key.
 	 * @param mixed       $value Value.
 	 * @param string      $label Label.
@@ -404,7 +404,7 @@ class SentryGate_Admin {
 	 * @param int         $min   Min.
 	 * @param int         $max   Max.
 	 */
-	public static function field_number( Wt_Admin_Ui $ui, string $name, mixed $value, string $label, string $help, int $min, int $max ): void {
+	public static function field_number( SentryGate_Admin_Ui $ui, string $name, mixed $value, string $label, string $help, int $min, int $max ): void {
 		echo '<div class="' . esc_attr( $ui->cls( 'field' ) ) . '">';
 		echo '<label class="' . esc_attr( $ui->cls( 'field__label' ) ) . '" for="' . esc_attr( self::field_id( $name ) ) . '">' . esc_html( $label ) . '</label>';
 		echo '<div class="' . esc_attr( $ui->cls( 'field__control' ) ) . '">';
@@ -418,10 +418,10 @@ class SentryGate_Admin {
 	/**
 	 * Submit row.
 	 *
-	 * @param Wt_Admin_Ui $ui    UI helper.
+	 * @param SentryGate_Admin_Ui $ui    UI helper.
 	 * @param string      $label Button label.
 	 */
-	public static function save_actions( Wt_Admin_Ui $ui, string $label = '' ): void {
+	public static function save_actions( SentryGate_Admin_Ui $ui, string $label = '' ): void {
 		if ( '' === $label ) {
 			$label = __( 'Einstellungen speichern', 'wiedenroth-technologies-sentrygate' );
 		}
@@ -434,10 +434,10 @@ class SentryGate_Admin {
 	/**
 	 * Map traffic-light status to badge.
 	 *
-	 * @param Wt_Admin_Ui $ui     UI helper.
+	 * @param SentryGate_Admin_Ui $ui     UI helper.
 	 * @param string      $status active|warning|inactive.
 	 */
-	public static function status_badge( Wt_Admin_Ui $ui, string $status ): void {
+	public static function status_badge( SentryGate_Admin_Ui $ui, string $status ): void {
 		$map = array(
 			'active'   => array( 'ok', __( 'Aktiv', 'wiedenroth-technologies-sentrygate' ) ),
 			'warning'  => array( 'warn', __( 'Prüfen', 'wiedenroth-technologies-sentrygate' ) ),
@@ -451,13 +451,13 @@ class SentryGate_Admin {
 	/**
 	 * Dashboard statistic with icon.
 	 *
-	 * @param Wt_Admin_Ui $ui    UI helper.
+	 * @param SentryGate_Admin_Ui $ui    UI helper.
 	 * @param string      $value Display value.
 	 * @param string      $label Label.
 	 * @param string      $icon  shield|check|warn|x.
 	 * @param string      $tone  Optional: ok|warn|off|accent.
 	 */
-	public static function stat( Wt_Admin_Ui $ui, string $value, string $label, string $icon, string $tone = '' ): void {
+	public static function stat( SentryGate_Admin_Ui $ui, string $value, string $label, string $icon, string $tone = '' ): void {
 		echo '<div class="' . esc_attr( $ui->cls( 'stat', $tone ) ) . '">';
 		echo '<span class="' . esc_attr( $ui->cls( 'stat__icon' ) ) . '" aria-hidden="true">' . self::stat_svg( $icon ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- inline SVG from this class.
 		echo '<div class="' . esc_attr( $ui->cls( 'stat__body' ) ) . '">';

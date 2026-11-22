@@ -299,7 +299,7 @@ class SentryGate_Audit_Log {
 
 		$webhook = (string) SentryGate_Options::get( 'audit_notify_webhook', '' );
 		if ( $webhook ) {
-			wp_remote_post(
+			wp_safe_remote_post(
 				$webhook,
 				array(
 					'timeout' => 5,
@@ -326,13 +326,14 @@ class SentryGate_Audit_Log {
 
 		$threshold = (int) SentryGate_Options::get( 'audit_lockout_threshold', 5 );
 		$window    = (int) SentryGate_Options::get( 'audit_lockout_window', 600 );
-		$table     = $wpdb->prefix . 'sentrygate_audit_log';
-		$since     = gmdate( 'Y-m-d H:i:s', time() - $window );
+		$table = $wpdb->prefix . 'sentrygate_audit_log';
+		$since = gmdate( 'Y-m-d H:i:s', time() - $window );
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$count = (int) $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM {$table} WHERE event_type = %s AND created_at >= %s",
+				'SELECT COUNT(*) FROM %i WHERE event_type = %s AND created_at >= %s',
+				$table,
 				'login_lockout',
 				$since
 			)
@@ -368,13 +369,14 @@ class SentryGate_Audit_Log {
 		$cut   = gmdate( 'Y-m-d H:i:s', time() - ( $days * DAY_IN_SECONDS ) );
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE created_at < %s", $cut ) );
+		$wpdb->query( $wpdb->prepare( 'DELETE FROM %i WHERE created_at < %s', $table, $cut ) );
 
 		$lockouts = $wpdb->prefix . 'sentrygate_lockouts';
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->query(
 			$wpdb->prepare(
-				"DELETE FROM {$lockouts} WHERE updated_at < %s AND (locked_until IS NULL OR locked_until < UTC_TIMESTAMP())",
+				'DELETE FROM %i WHERE updated_at < %s AND (locked_until IS NULL OR locked_until < UTC_TIMESTAMP())',
+				$lockouts,
 				$cut
 			)
 		);
@@ -424,7 +426,8 @@ class SentryGate_Audit_Log {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * FROM {$table} ORDER BY id DESC LIMIT %d",
+				'SELECT * FROM %i ORDER BY id DESC LIMIT %d',
+				$table,
 				$limit
 			)
 		);

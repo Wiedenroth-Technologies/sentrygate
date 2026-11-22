@@ -14,14 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( class_exists( 'Wt_Admin_Ui', false ) ) {
+if ( class_exists( 'SentryGate_Admin_Ui', false ) ) {
 	return;
 }
 
 /**
- * Class Wt_Admin_Ui
+ * Class SentryGate_Admin_Ui
  */
-class Wt_Admin_Ui {
+class SentryGate_Admin_Ui {
 
 	/**
 	 * Plugin slug used as CSS prefix.

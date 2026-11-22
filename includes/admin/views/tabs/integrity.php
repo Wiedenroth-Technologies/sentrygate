@@ -4,7 +4,7 @@
  *
  * @package SentryGate
  *
- * @var Wt_Admin_Ui         $ui
+ * @var SentryGate_Admin_Ui         $ui
  * @var array<string,mixed> $options
  */
 
@@ -18,10 +18,10 @@ if ( ! function_exists( 'sentrygate_render_integrity_result' ) ) {
 	/**
 	 * Render checksum result (empty / error / stats).
 	 *
-	 * @param Wt_Admin_Ui               $ui   UI helper.
+	 * @param SentryGate_Admin_Ui               $ui   UI helper.
 	 * @param array<string, mixed>|null $last Last result.
 	 */
-	function sentrygate_render_integrity_result( Wt_Admin_Ui $ui, ?array $last ): void {
+	function sentrygate_render_integrity_result( SentryGate_Admin_Ui $ui, ?array $last ): void {
 		if ( null === $last ) {
 			echo '<div class="' . esc_attr( $ui->cls( 'card' ) ) . '">';
 			echo '<div class="' . esc_attr( $ui->cls( 'empty' ) ) . '">';
@@ -111,11 +111,11 @@ if ( ! function_exists( 'sentrygate_render_integrity_result' ) ) {
 	}
 
 	/**
-	 * @param Wt_Admin_Ui       $ui    UI helper.
+	 * @param SentryGate_Admin_Ui       $ui    UI helper.
 	 * @param string            $title Card title.
 	 * @param array<int, mixed> $files Paths.
 	 */
-	function sentrygate_integrity_file_card( Wt_Admin_Ui $ui, string $title, array $files ): void {
+	function sentrygate_integrity_file_card( SentryGate_Admin_Ui $ui, string $title, array $files ): void {
 		echo '<div class="' . esc_attr( $ui->cls( 'card', 'flush' ) ) . '">';
 		$ui->heading( $title );
 		echo '<div class="' . esc_attr( $ui->cls( 'table-wrap' ) ) . '">';

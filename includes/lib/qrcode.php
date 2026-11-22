@@ -1,27 +1,28 @@
 <?php
+/**
+ * Vendored QR Code library (MIT, Kazuhiko Arase) adapted for SentryGate.
+ *
+ * Original: http://www.d-project.com/
+ * License: MIT — http://www.opensource.org/licenses/mit-license.php
+ * "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
+ *
+ * @package SentryGate
+ */
 
-//---------------------------------------------------------------
-// QRCode for PHP5
-//
-// Copyright (c) 2009 Kazuhiko Arase
-//
-// URL: http://www.d-project.com/
-//
-// Licensed under the MIT license:
-//   http://www.opensource.org/licenses/mit-license.php
-//
-// The word "QR Code" is registered trademark of
-// DENSO WAVE INCORPORATED
-//   http://www.denso-wave.com/qrcode/faqpatent-e.html
-//
-//---------------------------------------------------------------------
+declare(strict_types=1);
+
+namespace SentryGate\Lib;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 //---------------------------------------------------------------
 // QRCode
 //---------------------------------------------------------------
 
-define("QR_PAD0", 0xEC);
-define("QR_PAD1", 0x11);
+const QR_PAD0 = 0xEC;
+const QR_PAD1 = 0x11;
 
 class QRCode {
 
@@ -82,7 +83,7 @@ class QRCode {
             break;
 
         default :
-            trigger_error("mode:$mode", E_USER_ERROR);
+            throw new \RuntimeException( \esc_html( 'mode:' . (string) (int) $mode ) );
         }
     }
 
@@ -351,11 +352,11 @@ class QRCode {
         }
 
         if ($buffer->getLengthInBits() > $totalDataCount * 8) {
-            trigger_error("code length overflow. ("
-                . $buffer->getLengthInBits()
-                . ">"
-                .  $totalDataCount * 8
-                . ")", E_USER_ERROR);
+            throw new \RuntimeException( \esc_html( 'code length overflow. ('
+                . (string) (int) $buffer->getLengthInBits()
+                . '>'
+                . (string) (int) ( $totalDataCount * 8 )
+                . ')' ) );
         }
 
         // end code.
@@ -531,31 +532,7 @@ class QRCode {
         return $image;
     }
 
-    function printHTML($size = "2px") {
 
-        $style = "border-style:none;border-collapse:collapse;margin:0px;padding:0px;";
-
-        print("<table style='$style'>");
-
-        for ($r = 0; $r < $this->getModuleCount(); $r++) {
-
-            print("<tr style='$style'>");
-
-            for ($c = 0; $c < $this->getModuleCount(); $c++) {
-                $color = $this->isDark($r, $c)? "#000000" : "#ffffff";
-                print("<td style='$style;width:$size;height:$size;background-color:$color'></td>");
-            }
-
-            print("</tr>");
-        }
-
-        print("</table>");
-    }
-
-    public function printSVG($size = 2)
-    {
-        print($this->getSVG($size));
-    }
 
     /**
      * Return SVG markup for the QR code.
@@ -565,16 +542,19 @@ class QRCode {
      */
     public function getSVG($size = 2)
     {
-        $count  = $this->getModuleCount();
+        $size   = max(1, (int) $size);
+        $count  = (int) $this->getModuleCount();
         $width  = $count * $size;
         $height = $width;
-        $svg    = '<svg xmlns="http://www.w3.org/2000/svg" width="' . $width . '" height="' . $height . '" viewBox="0 0 ' . $width . ' ' . $height . '" role="img" aria-label="QR Code">';
+        $svg    = '<svg xmlns="http://www.w3.org/2000/svg" width="' . \esc_attr( (string) $width ) . '" height="' . \esc_attr( (string) $height ) . '" viewBox="0 0 ' . \esc_attr( (string) $width ) . ' ' . \esc_attr( (string) $height ) . '" role="img" aria-label="QR Code">';
         $svg   .= '<rect width="100%" height="100%" fill="#ffffff"/>';
 
         for ($r = 0; $r < $count; $r++) {
             for ($c = 0; $c < $count; $c++) {
                 if ($this->isDark($r, $c)) {
-                    $svg .= '<rect x="' . ($c * $size) . '" y="' . ($r * $size) . '" width="' . $size . '" height="' . $size . '" fill="#000000"/>';
+                    $x = $c * $size;
+                    $y = $r * $size;
+                    $svg .= '<rect x="' . \esc_attr( (string) $x ) . '" y="' . \esc_attr( (string) $y ) . '" width="' . \esc_attr( (string) $size ) . '" height="' . \esc_attr( (string) $size ) . '" fill="#000000"/>';
                 }
             }
         }
@@ -588,14 +568,14 @@ class QRCode {
 // QRUtil
 //---------------------------------------------------------------
 
-define("QR_G15", (1 << 10) | (1 << 8) | (1 << 5)
-    | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0) );
+const QR_G15 = (1 << 10) | (1 << 8) | (1 << 5)
+    | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0);
 
-define("QR_G18", (1 << 12) | (1 << 11) | (1 << 10)
-    | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0) );
+const QR_G18 = (1 << 12) | (1 << 11) | (1 << 10)
+    | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0);
 
-define("QR_G15_MASK", (1 << 14) | (1 << 12) | (1 << 10)
-    | (1 << 4) | (1 << 1) );
+const QR_G15_MASK = (1 << 14) | (1 << 12) | (1 << 10)
+    | (1 << 4) | (1 << 1);
 
 class QRUtil {
 
@@ -671,7 +651,7 @@ class QRUtil {
         case QR_ERROR_CORRECT_LEVEL_Q : $e = 2; break;
         case QR_ERROR_CORRECT_LEVEL_H : $e = 3; break;
         default :
-            trigger_error("e:$errorCorrectLevel", E_USER_ERROR);
+            throw new \RuntimeException( \esc_html( 'e:' . (string) (int) $errorCorrectLevel ) );
         }
 
         switch($mode) {
@@ -680,7 +660,7 @@ class QRUtil {
         case QR_MODE_8BIT_BYTE : $m = 2; break;
         case QR_MODE_KANJI     : $m = 3; break;
         default :
-            trigger_error("m:$mode", E_USER_ERROR);
+            throw new \RuntimeException( \esc_html( 'm:' . (string) (int) $mode ) );
         }
 
         return self::$QR_MAX_LENGTH[$t][$e][$m];
@@ -711,7 +691,7 @@ class QRUtil {
         case QR_MASK_PATTERN111 : return ( ($i * $j) % 3 + ($i + $j) % 2) % 2 == 0;
 
         default :
-            trigger_error("mask:$maskPattern", E_USER_ERROR);
+            throw new \RuntimeException( \esc_html( 'mask:' . (string) (int) $maskPattern ) );
         }
     }
 
@@ -1219,7 +1199,7 @@ class QRRSBlock {
         case QR_ERROR_CORRECT_LEVEL_H :
             return self::$QR_RS_BLOCK_TABLE[($typeNumber - 1) * 4 + 3];
         default :
-            trigger_error("tn:$typeNumber/ecl:$errorCorrectLevel", E_USER_ERROR);
+            throw new \RuntimeException( \esc_html( 'tn:' . (string) (int) $typeNumber . '/ecl:' . (string) (int) $errorCorrectLevel ) );
         }
     }
 }
@@ -1273,7 +1253,7 @@ class QRNumber extends QRData {
             return $c - QRUtil::toCharCode('0');
         }
 
-        trigger_error("illegal char : $c", E_USER_ERROR);
+        throw new \RuntimeException( \esc_html( 'illegal char : ' . (string) (int) $c ) );
     }
 }
 
@@ -1302,7 +1282,7 @@ class QRKanji extends QRData {
             } else if (0xE040 <= $c && $c <= 0xEBBF) {
                 $c -= 0xC140;
             } else {
-                trigger_error("illegal char at " . ($i + 1) . "/$c", E_USER_ERROR);
+                throw new \RuntimeException( \esc_html( 'illegal char at ' . (string) (int) ( $i + 1 ) . '/' . (string) (int) $c ) );
             }
 
             $c = ( ($c >> 8) & 0xff) * 0xC0 + ($c & 0xff);
@@ -1313,7 +1293,7 @@ class QRKanji extends QRData {
         }
 
         if ($i < strlen($data) ) {
-            trigger_error("illegal char at " . ($i + 1), E_USER_ERROR);
+            throw new \RuntimeException( \esc_html( 'illegal char at ' . (string) (int) ( $i + 1 ) ) );
         }
     }
 
@@ -1368,7 +1348,7 @@ class QRAlphaNum extends QRData {
             case QRUtil::toCharCode('/') : return 43;
             case QRUtil::toCharCode(':') : return 44;
             default :
-                trigger_error("illegal char : $c", E_USER_ERROR);
+                throw new \RuntimeException( \esc_html( 'illegal char : ' . (string) (int) $c ) );
             }
         }
 
@@ -1442,7 +1422,7 @@ abstract class QRData {
             case QR_MODE_8BIT_BYTE    : return 8;
             case QR_MODE_KANJI      : return 8;
             default :
-                trigger_error("mode:$this->mode", E_USER_ERROR);
+                throw new \RuntimeException( \esc_html( 'mode:' . (string) (int) $this->mode ) );
             }
 
         } else if ($type < 27) {
@@ -1455,7 +1435,7 @@ abstract class QRData {
             case QR_MODE_8BIT_BYTE    : return 16;
             case QR_MODE_KANJI      : return 10;
             default :
-                trigger_error("mode:$this->mode", E_USER_ERROR);
+                throw new \RuntimeException( \esc_html( 'mode:' . (string) (int) $this->mode ) );
             }
 
         } else if ($type < 41) {
@@ -1468,11 +1448,11 @@ abstract class QRData {
             case QR_MODE_8BIT_BYTE    : return 16;
             case QR_MODE_KANJI      : return 12;
             default :
-                trigger_error("mode:$this->mode", E_USER_ERROR);
+                throw new \RuntimeException( \esc_html( 'mode:' . (string) (int) $this->mode ) );
             }
 
         } else {
-            trigger_error("mode:$this->mode", E_USER_ERROR);
+            throw new \RuntimeException( \esc_html( 'mode:' . (string) (int) $this->mode ) );
         }
     }
 
@@ -1520,7 +1500,7 @@ class QRMath {
     static function glog($n) {
 
         if ($n < 1) {
-            trigger_error("log($n)", E_USER_ERROR);
+            throw new \RuntimeException( \esc_html( 'log(' . (string) (int) $n . ')' ) );
         }
 
         return self::$QR_MATH_LOG_TABLE[$n];
@@ -1657,35 +1637,35 @@ class QRPolynomial {
 // Mode
 //---------------------------------------------------------------
 
-define("QR_MODE_NUMBER", 1 << 0);
-define("QR_MODE_ALPHA_NUM", 1 << 1);
-define("QR_MODE_8BIT_BYTE", 1 << 2);
-define("QR_MODE_KANJI", 1 << 3);
+const QR_MODE_NUMBER = 1 << 0;
+const QR_MODE_ALPHA_NUM = 1 << 1;
+const QR_MODE_8BIT_BYTE = 1 << 2;
+const QR_MODE_KANJI = 1 << 3;
 
 //---------------------------------------------------------------
 // MaskPattern
 //---------------------------------------------------------------
 
-define("QR_MASK_PATTERN000", 0);
-define("QR_MASK_PATTERN001", 1);
-define("QR_MASK_PATTERN010", 2);
-define("QR_MASK_PATTERN011", 3);
-define("QR_MASK_PATTERN100", 4);
-define("QR_MASK_PATTERN101", 5);
-define("QR_MASK_PATTERN110", 6);
-define("QR_MASK_PATTERN111", 7);
+const QR_MASK_PATTERN000 = 0;
+const QR_MASK_PATTERN001 = 1;
+const QR_MASK_PATTERN010 = 2;
+const QR_MASK_PATTERN011 = 3;
+const QR_MASK_PATTERN100 = 4;
+const QR_MASK_PATTERN101 = 5;
+const QR_MASK_PATTERN110 = 6;
+const QR_MASK_PATTERN111 = 7;
 
 //---------------------------------------------------------------
 // ErrorCorrectLevel
 
 // 7%.
-define("QR_ERROR_CORRECT_LEVEL_L", 1);
+const QR_ERROR_CORRECT_LEVEL_L = 1;
 // 15%.
-define("QR_ERROR_CORRECT_LEVEL_M", 0);
+const QR_ERROR_CORRECT_LEVEL_M = 0;
 // 25%.
-define("QR_ERROR_CORRECT_LEVEL_Q", 3);
+const QR_ERROR_CORRECT_LEVEL_Q = 3;
 // 30%.
-define("QR_ERROR_CORRECT_LEVEL_H", 2);
+const QR_ERROR_CORRECT_LEVEL_H = 2;
 
 
 //---------------------------------------------------------------

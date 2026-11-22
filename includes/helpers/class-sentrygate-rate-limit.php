@@ -28,7 +28,8 @@ class SentryGate_Rate_Limit {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				"SELECT locked_until FROM {$table} WHERE ip_address = %s AND locked_until IS NOT NULL AND locked_until > UTC_TIMESTAMP() ORDER BY locked_until DESC LIMIT 1",
+				'SELECT locked_until FROM %i WHERE ip_address = %s AND locked_until IS NOT NULL AND locked_until > UTC_TIMESTAMP() ORDER BY locked_until DESC LIMIT 1',
+				$table,
 				$ip
 			)
 		);
@@ -48,7 +49,8 @@ class SentryGate_Rate_Limit {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$until = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT locked_until FROM {$table} WHERE ip_address = %s AND locked_until IS NOT NULL AND locked_until > UTC_TIMESTAMP() ORDER BY locked_until DESC LIMIT 1",
+				'SELECT locked_until FROM %i WHERE ip_address = %s AND locked_until IS NOT NULL AND locked_until > UTC_TIMESTAMP() ORDER BY locked_until DESC LIMIT 1',
+				$table,
 				$ip
 			)
 		);
@@ -79,7 +81,8 @@ class SentryGate_Rate_Limit {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				"SELECT * FROM {$table} WHERE ip_address = %s ORDER BY id DESC LIMIT 1",
+				'SELECT * FROM %i WHERE ip_address = %s ORDER BY id DESC LIMIT 1',
+				$table,
 				$ip
 			),
 			ARRAY_A

@@ -27,28 +27,6 @@ class SentryGate_Debug_Control {
 		}
 
 		$loader->add_action( 'admin_notices', $this, 'admin_notice' );
-		$loader->add_action( 'init', $this, 'harden_runtime_display', 0 );
-	}
-
-	/**
-	 * Attempt to suppress public display of errors at runtime (cannot undefine constants).
-	 */
-	public function harden_runtime_display(): void {
-		if ( ! SentryGate_Options::get( 'enforce_production_debug' ) ) {
-			return;
-		}
-
-		if ( defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY && ! WP_DEBUG ) {
-			// Misconfiguration edge case – still hide display.
-			ini_set( 'display_errors', '0' ); // phpcs:ignore WordPress.PHP.IniSet.display_errors_Disallowed
-		}
-
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY ) {
-			// Soften public error display without touching wp-config.php.
-			if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
-				ini_set( 'display_errors', '0' ); // phpcs:ignore WordPress.PHP.IniSet.display_errors_Disallowed
-			}
-		}
 	}
 
 	/**

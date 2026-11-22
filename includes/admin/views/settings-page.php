@@ -4,7 +4,7 @@
  *
  * @package SentryGate
  *
- * @var Wt_Admin_Ui          $ui
+ * @var SentryGate_Admin_Ui          $ui
  * @var string               $tab
  * @var array<string,string> $tabs
  * @var array<string,mixed>  $options

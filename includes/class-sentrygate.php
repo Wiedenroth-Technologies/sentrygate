@@ -33,9 +33,9 @@ final class SentryGate {
 	/**
 	 * Shared admin UI helper.
 	 *
-	 * @var Wt_Admin_Ui
+	 * @var SentryGate_Admin_Ui
 	 */
-	private Wt_Admin_Ui $ui;
+	private SentryGate_Admin_Ui $ui;
 
 	/**
 	 * Get singleton.
@@ -52,7 +52,7 @@ final class SentryGate {
 	 */
 	private function __construct() {
 		$this->loader = new SentryGate_Loader();
-		$this->ui     = new Wt_Admin_Ui(
+		$this->ui     = new SentryGate_Admin_Ui(
 			SENTRYGATE_SLUG,
 			SENTRYGATE_PLUGIN_DIR . 'assets/css/wt-admin.css',
 			SENTRYGATE_PLUGIN_URL . 'assets/js/wt-admin.js',
@@ -81,8 +81,7 @@ final class SentryGate {
 	 * Register admin hooks.
 	 */
 	private function define_admin_hooks(): void {
-		$i18n = new SentryGate_i18n();
-		$this->loader->add_action( 'plugins_loaded', $i18n, 'load_plugin_textdomain' );
+		// Translations for WordPress.org-hosted plugins load automatically since WP 4.6.
 
 		$this->ui->register_admin_hooks();
 
@@ -174,7 +173,7 @@ final class SentryGate {
 	/**
 	 * Expose the UI helper.
 	 */
-	public function ui(): Wt_Admin_Ui {
+	public function ui(): SentryGate_Admin_Ui {
 		return $this->ui;
 	}
 }
