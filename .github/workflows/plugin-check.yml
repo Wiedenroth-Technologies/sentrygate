@@ -1,0 +1,62 @@
+name: Plugin Check
+
+on:
+  push:
+    branches: [ main, 'cursor/**' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: plugin-check-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  plugin-check:
+    name: WordPress Plugin Check (Release-Build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Release-ZIP (.distignore)
+        run: |
+          set -euo pipefail
+          # rsync+zip anhand .distignore – vermeidet wp package install
+          # (Composer/GitHub-OAuth-Probleme auf Actions-Runnern).
+          FORCE_RSYNC=1 bash ./bin/build-release-zip.sh
+          mkdir -p tmp-build
+          unzip -q ./dist/wiedenroth-technologies-sentrygate.zip -d tmp-build
+          PLUGIN_BUILD=tmp-build/wiedenroth-technologies-sentrygate
+          test -f "$PLUGIN_BUILD/sentrygate.php"
+          # Dev-/CI-Dateien dürfen nicht in der Release-ZIP landen.
+          ! test -e "$PLUGIN_BUILD/.github"
+          ! test -e "$PLUGIN_BUILD/tests"
+          ! test -e "$PLUGIN_BUILD/docs"
+          ! test -e "$PLUGIN_BUILD/composer.json"
+          ! test -e "$PLUGIN_BUILD/package.json"
+          ! test -e "$PLUGIN_BUILD/.wp-env.json"
+          ! test -e "$PLUGIN_BUILD/languages/.gitkeep"
+          echo "Release-Build Inhalt:"
+          find "$PLUGIN_BUILD" -maxdepth 2 -type f | sort | head -80
+
+      - name: Isolate E2E wp-env config
+        run: |
+          # Plugin-Check-Action merged sonst unsere E2E-.wp-env.json (plugins/mappings/lifecycle).
+          if [ -f .wp-env.json ]; then mv .wp-env.json .wp-env.e2e.json.bak; fi
+
+      - name: Upload Release-ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sentrygate-release-zip
+          path: dist/wiedenroth-technologies-sentrygate.zip
+          retention-days: 7
+
+      - name: Run Plugin Check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './tmp-build/wiedenroth-technologies-sentrygate'
+          slug: wiedenroth-technologies-sentrygate
+          # MIT-QR-Bibliothek (Third-Party), nicht Teil unseres eigenen Codes.
+          exclude-directories: includes/lib
