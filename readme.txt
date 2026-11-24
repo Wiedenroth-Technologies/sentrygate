@@ -4,7 +4,7 @@ Tags: security, 2fa, login, hardening, audit-log
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.1
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Author: Wiedenroth Technologies GmbH
@@ -77,12 +77,6 @@ This plugin may connect to external services as follows:
 * Terms / privacy: controlled by the destination service configured by the administrator. SentryGate does not operate that endpoint.
 
 == Changelog ==
-
-= 1.0.1 =
-* Security hardening: sanitize/unslash remaining request input
-* Unique JS admin UI object prefix (wiedenrothSentrygateAdminUi)
-* Uploads permission checks and .htaccess path via wp_upload_dir()
-* Removed bundled translation files (use translate.wordpress.org)
 
 = 1.0.0 =
 * Initial WordPress.org release
