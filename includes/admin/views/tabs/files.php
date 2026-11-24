@@ -14,8 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$report  = SentryGate_File_Hardening::permission_report();
-$snippet = SentryGate_File_Hardening::htaccess_uploads_snippet();
+$sentrygate_report        = SentryGate_File_Hardening::permission_report();
+$sentrygate_snippet       = SentryGate_File_Hardening::htaccess_uploads_snippet();
+$sentrygate_htaccess_path = SentryGate_File_Hardening::uploads_htaccess_path();
+$sentrygate_htaccess_hint = '' !== $sentrygate_htaccess_path
+	? sprintf(
+		/* translators: %s: absolute path to uploads .htaccess */
+		__( 'Optional manuell in die Datei %s kopieren. Nicht automatisch geschrieben.', 'wiedenroth-technologies-sentrygate' ),
+		$sentrygate_htaccess_path
+	)
+	: __( 'Optional manuell in die .htaccess-Datei im Uploads-Verzeichnis kopieren. Nicht automatisch geschrieben.', 'wiedenroth-technologies-sentrygate' );
 ?>
 <form method="post" action="options.php">
 	<?php settings_fields( 'sentrygate_settings_group' ); ?>
@@ -51,16 +59,16 @@ $snippet = SentryGate_File_Hardening::htaccess_uploads_snippet();
 
 <?php if ( ! empty( $options['show_htaccess_snippets'] ) ) : ?>
 	<section class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
-		<?php $ui->heading( __( 'Beispiel: Schutz für hochgeladene Dateien', 'wiedenroth-technologies-sentrygate' ), __( 'Optional manuell in die Datei wp-content/uploads/.htaccess kopieren. Nicht automatisch geschrieben.', 'wiedenroth-technologies-sentrygate' ) ); ?>
+		<?php $ui->heading( __( 'Beispiel: Schutz für hochgeladene Dateien', 'wiedenroth-technologies-sentrygate' ), $sentrygate_htaccess_hint ); ?>
 		<div class="<?php echo esc_attr( $ui->cls( 'snippets' ) ); ?>">
 			<div class="<?php echo esc_attr( $ui->cls( 'snippet' ) ); ?>">
 				<div class="<?php echo esc_attr( $ui->cls( 'snippet__head' ) ); ?>">
 					<p class="<?php echo esc_attr( $ui->cls( 'snippet__title' ) ); ?>">.htaccess</p>
-					<button type="button" class="<?php echo esc_attr( $ui->cls( 'btn', 'primary' ) ); ?>" data-wt-copy="<?php echo esc_attr( $snippet ); ?>">
+					<button type="button" class="<?php echo esc_attr( $ui->cls( 'btn', 'primary' ) ); ?>" data-wt-copy="<?php echo esc_attr( $sentrygate_snippet ); ?>">
 						<?php esc_html_e( 'Kopieren', 'wiedenroth-technologies-sentrygate' ); ?>
 					</button>
 				</div>
-				<textarea class="<?php echo esc_attr( $ui->cls( 'textarea' ) ); ?>" rows="14" readonly><?php echo esc_textarea( $snippet ); ?></textarea>
+				<textarea class="<?php echo esc_attr( $ui->cls( 'textarea' ) ); ?>" rows="14" readonly><?php echo esc_textarea( $sentrygate_snippet ); ?></textarea>
 			</div>
 		</div>
 	</section>
@@ -80,20 +88,20 @@ $snippet = SentryGate_File_Hardening::htaccess_uploads_snippet();
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ( $report as $row ) : ?>
+					<?php foreach ( $sentrygate_report as $sentrygate_row ) : ?>
 						<tr>
-							<td><code><?php echo esc_html( $row['path'] ); ?></code></td>
-							<td><?php echo esc_html( $row['perms'] ); ?></td>
+							<td><code><?php echo esc_html( $sentrygate_row['path'] ); ?></code></td>
+							<td><?php echo esc_html( $sentrygate_row['perms'] ); ?></td>
 							<td>
 								<?php
-								if ( $row['ok'] ) {
+								if ( $sentrygate_row['ok'] ) {
 									$ui->badge( 'ok', __( 'OK', 'wiedenroth-technologies-sentrygate' ) );
 								} else {
 									$ui->badge( 'warn', __( 'Prüfen', 'wiedenroth-technologies-sentrygate' ) );
 								}
 								?>
 							</td>
-							<td><?php echo esc_html( $row['note'] ); ?></td>
+							<td><?php echo esc_html( $sentrygate_row['note'] ); ?></td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>

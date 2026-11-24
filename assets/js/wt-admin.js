@@ -4,7 +4,7 @@
 (function () {
 	'use strict';
 
-	var cfg = window.WtAdminUi || { slug: 'pluginbase', i18n: {} };
+	var cfg = window.wiedenrothSentrygateAdminUi || { slug: 'wiedenroth-technologies-sentrygate', i18n: {} };
 	var ownNotice = cfg.slug + '-wt-notice';
 
 	document.addEventListener('click', function (event) {

@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$product_url = 'https://wiedenroth.tech/software/wordpress/sentrygate';
+$sentrygate_product_url = 'https://wiedenroth.tech/software/wordpress/sentrygate';
 ?>
 <div class="wrap <?php echo esc_attr( $ui->cls( 'app' ) ); ?>">
 	<div class="wp-header-end"></div>
@@ -39,31 +39,33 @@ $product_url = 'https://wiedenroth.tech/software/wordpress/sentrygate';
 		</div>
 		<div class="<?php echo esc_attr( $ui->cls( 'header__actions' ) ); ?>">
 			<?php $ui->inbox(); ?>
-			<?php $ui->button( __( 'Dokumentation', 'wiedenroth-technologies-sentrygate' ), 'secondary', 'button', $product_url ); ?>
+			<?php $ui->button( __( 'Dokumentation', 'wiedenroth-technologies-sentrygate' ), 'secondary', 'button', $sentrygate_product_url ); ?>
 		</div>
 	</header>
 
 	<nav class="<?php echo esc_attr( $ui->cls( 'tabs' ) ); ?>" aria-label="<?php esc_attr_e( 'SentryGate Bereiche', 'wiedenroth-technologies-sentrygate' ); ?>">
-		<?php foreach ( $tabs as $slug => $label ) : ?>
+		<?php foreach ( $tabs as $sentrygate_slug => $sentrygate_label ) : ?>
 			<a
-				class="<?php echo esc_attr( $ui->cls( 'tab', $tab === $slug ? 'active' : '' ) ); ?>"
-				href="<?php echo esc_url( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG . '&tab=' . $slug ) ); ?>"
-				<?php echo $tab === $slug ? 'aria-current="page"' : ''; ?>
+				class="<?php echo esc_attr( $ui->cls( 'tab', $tab === $sentrygate_slug ? 'active' : '' ) ); ?>"
+				href="<?php echo esc_url( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG . '&tab=' . $sentrygate_slug ) ); ?>"
+				<?php echo $tab === $sentrygate_slug ? 'aria-current="page"' : ''; ?>
 			>
-				<?php echo esc_html( $label ); ?>
+				<?php echo esc_html( $sentrygate_label ); ?>
 			</a>
 		<?php endforeach; ?>
 	</nav>
 
 	<div class="<?php echo esc_attr( $ui->cls( 'content' ) ); ?>">
 		<?php
-		if ( isset( $_GET['settings-updated'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Settings API success flag after manage_options screen.
+		$sentrygate_settings_updated = isset( $_GET['settings-updated'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['settings-updated'] ) ) : '';
+		if ( '' !== $sentrygate_settings_updated ) {
 			$ui->notice( 'success', __( 'Einstellungen gespeichert.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
-		$view = SENTRYGATE_PLUGIN_DIR . 'includes/admin/views/tabs/' . $tab . '.php';
-		if ( is_readable( $view ) ) {
-			include $view;
+		$sentrygate_view = SENTRYGATE_PLUGIN_DIR . 'includes/admin/views/tabs/' . $tab . '.php';
+		if ( is_readable( $sentrygate_view ) ) {
+			include $sentrygate_view;
 		} else {
 			$ui->notice( 'error', __( 'Bereich nicht gefunden.', 'wiedenroth-technologies-sentrygate' ) );
 		}

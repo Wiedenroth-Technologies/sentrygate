@@ -51,6 +51,18 @@ HTACCESS;
 	}
 
 	/**
+	 * Absolute path suggestion for the uploads .htaccess file, or empty on failure.
+	 */
+	public static function uploads_htaccess_path(): string {
+		$uploads = wp_upload_dir();
+		if ( ! empty( $uploads['error'] ) || empty( $uploads['basedir'] ) ) {
+			return '';
+		}
+
+		return trailingslashit( (string) $uploads['basedir'] ) . '.htaccess';
+	}
+
+	/**
 	 * Collect permission findings (display only).
 	 *
 	 * @return array<int, array{path: string, perms: string, ok: bool, note: string}>
@@ -72,12 +84,16 @@ HTACCESS;
 				'max'  => 0755,
 				'note' => __( 'wp-content sollte nicht 0777 sein.', 'wiedenroth-technologies-sentrygate' ),
 			),
-			array(
-				'path' => WP_CONTENT_DIR . '/uploads',
+		);
+
+		$uploads = wp_upload_dir();
+		if ( empty( $uploads['error'] ) && ! empty( $uploads['basedir'] ) ) {
+			$checks[] = array(
+				'path' => (string) $uploads['basedir'],
 				'max'  => 0755,
 				'note' => __( 'Uploads-Verzeichnis prüfen.', 'wiedenroth-technologies-sentrygate' ),
-			),
-		);
+			);
+		}
 
 		$report = array();
 		foreach ( $checks as $check ) {

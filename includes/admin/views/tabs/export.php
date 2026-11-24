@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-$import = isset( $_GET['import'] ) ? sanitize_key( (string) wp_unslash( $_GET['import'] ) ) : '';
+$sentrygate_import = isset( $_GET['import'] ) ? sanitize_key( (string) wp_unslash( $_GET['import'] ) ) : '';
 ?>
 
 <section class="<?php echo esc_attr( $ui->cls( 'card', 'intro' ) ); ?>">
@@ -28,9 +28,9 @@ $import = isset( $_GET['import'] ) ? sanitize_key( (string) wp_unslash( $_GET['i
 </section>
 
 <?php
-if ( 'ok' === $import ) {
+if ( 'ok' === $sentrygate_import ) {
 	$ui->notice( 'success', __( 'Einstellungen wurden übernommen.', 'wiedenroth-technologies-sentrygate' ) );
-} elseif ( 'fail' === $import ) {
+} elseif ( 'fail' === $sentrygate_import ) {
 	$ui->notice( 'error', __( 'Import fehlgeschlagen – bitte eine gültige SentryGate-JSON-Datei wählen.', 'wiedenroth-technologies-sentrygate' ) );
 }
 ?>

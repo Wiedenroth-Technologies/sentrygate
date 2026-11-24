@@ -66,7 +66,7 @@ class SentryGate_Admin_Ui {
 	private string $captured_notices = '';
 
 	/**
-	 * @param string $slug     Plugin slug, e.g. pluginbase.
+	 * @param string $slug     Plugin slug, e.g. wiedenroth-technologies-sentrygate.
 	 * @param string $css_path Absolute path to wt-admin.css.
 	 * @param string $js_url   URL to wt-admin.js.
 	 * @param string $version  Asset version.
@@ -200,10 +200,10 @@ class SentryGate_Admin_Ui {
 	/**
 	 * Build a prefixed class name.
 	 *
-	 * cls( 'card' )                → pluginbase-wt-card
-	 * cls( 'card__title' )         → pluginbase-wt-card__title
-	 * cls( 'btn', 'primary' )      → pluginbase-wt-btn pluginbase-wt-btn--primary
-	 * cls( 'notice', 'warning' )   → pluginbase-wt-notice pluginbase-wt-notice--warning
+	 * cls( 'card' )                → {slug}-wt-card
+	 * cls( 'card__title' )         → {slug}-wt-card__title
+	 * cls( 'btn', 'primary' )      → {slug}-wt-btn {slug}-wt-btn--primary
+	 * cls( 'notice', 'warning' )   → {slug}-wt-notice {slug}-wt-notice--warning
 	 *
 	 * @param string $part      Block or element, without prefix.
 	 * @param string $modifiers Space-separated modifiers without leading --.
@@ -253,7 +253,7 @@ class SentryGate_Admin_Ui {
 
 			wp_localize_script(
 				$handle,
-				'WtAdminUi',
+				'wiedenrothSentrygateAdminUi',
 				array(
 					'slug' => $this->slug,
 					'i18n' => array(

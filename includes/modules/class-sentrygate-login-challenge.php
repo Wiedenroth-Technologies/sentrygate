@@ -456,7 +456,7 @@ class SentryGate_Login_Challenge {
 			return new WP_Error( 'sentrygate_bot', __( 'Sicherheitsprüfung fehlgeschlagen.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
-		$loaded_at = isset( $_POST['sentrygate_loaded_at'] ) ? absint( $_POST['sentrygate_loaded_at'] ) : 0;
+		$loaded_at = isset( $_POST['sentrygate_loaded_at'] ) ? absint( wp_unslash( $_POST['sentrygate_loaded_at'] ) ) : 0;
 		$min_time  = (int) SentryGate_Options::get( 'challenge_min_time', 2 );
 		// Fehlendes/ungültiges Timing-Feld nicht überspringen – sonst Bypass der Mindestzeit.
 		if ( $min_time > 0 && ( $loaded_at <= 0 || ( time() - $loaded_at ) < $min_time ) ) {
@@ -533,7 +533,7 @@ class SentryGate_Login_Challenge {
 	private function hidden_context_fields(): void {
 		$keys = array( 'redirect_to', 'reauth', 'interim-login' );
 		foreach ( $keys as $key ) {
-			if ( empty( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( ! isset( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				continue;
 			}
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized immediately below.
@@ -558,7 +558,7 @@ class SentryGate_Login_Challenge {
 		$keys = array( 'redirect_to', 'reauth', 'interim-login' );
 		$args = array();
 		foreach ( $keys as $key ) {
-			if ( empty( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( ! isset( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				continue;
 			}
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized immediately below.
