@@ -9,7 +9,7 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Author: Wiedenroth Technologies GmbH
 Author URI: https://wiedenroth.tech
-Plugin URI: https://wiedenroth.tech/software/wordpress/sentrygate
+Plugin URI: https://wiedenroth.tech/software/sentrygate
 
 Production-ready WordPress security plugin by Wiedenroth Technologies GmbH.
 

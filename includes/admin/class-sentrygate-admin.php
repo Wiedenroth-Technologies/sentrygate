@@ -162,9 +162,9 @@ class SentryGate_Admin {
 			return;
 		}
 
-		$product_url = 'https://wiedenroth.tech/software/wordpress/sentrygate';
+		$product_url = 'https://wiedenroth.tech/software/sentrygate';
 		$impressum   = 'https://wiedenroth.tech/impressum';
-		$datenschutz = 'https://wiedenroth.tech/software/wordpress/sentrygate/datenschutz';
+		$datenschutz = 'https://wiedenroth.tech/software/sentrygate/datenschutz';
 		$brand_url   = 'https://wiedenroth.tech';
 		$brand_img   = '';
 
