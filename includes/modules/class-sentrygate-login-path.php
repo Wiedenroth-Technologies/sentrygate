@@ -115,7 +115,8 @@ class SentryGate_Login_Path {
 	 */
 	private function maybe_redirect_frontend_login(): bool {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! empty( $_REQUEST['interim-login'] ) ) {
+		$interim = isset( $_REQUEST['interim-login'] ) ? sanitize_text_field( wp_unslash( (string) $_REQUEST['interim-login'] ) ) : '';
+		if ( '' !== $interim ) {
 			return false;
 		}
 
@@ -135,14 +136,18 @@ class SentryGate_Login_Path {
 		$args = array();
 		$keep = array( 'action', 'token', 'reauth', 'error', 'email_sent', 'redirect_to' );
 		foreach ( $keep as $key ) {
-			if ( empty( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( ! isset( $_REQUEST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				continue;
 			}
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per key below.
 			$value        = wp_unslash( (string) $_REQUEST[ $key ] );
-			$args[ $key ] = 'redirect_to' === $key
+			$sanitized    = 'redirect_to' === $key
 				? esc_url_raw( $value )
 				: sanitize_text_field( $value );
+			if ( '' === $sanitized ) {
+				continue;
+			}
+			$args[ $key ] = $sanitized;
 		}
 
 		$url = empty( $args ) ? $frontend : add_query_arg( $args, $frontend );

@@ -165,8 +165,10 @@ class SentryGate_Interface_Hardening {
 	 * @return string|false
 	 */
 	public function stop_author_redirect( $redirect, string $requested ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['author'] ) ) {
+		unset( $requested );
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- public author-enumeration probe; presence only.
+		$author = isset( $_GET['author'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['author'] ) ) : '';
+		if ( '' !== $author ) {
 			return false;
 		}
 		return $redirect;

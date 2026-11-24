@@ -9,7 +9,7 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Author: Wiedenroth Technologies GmbH
 Author URI: https://wiedenroth.tech
-Plugin URI: https://wiedenroth.tech/software/wordpress/sentrygate
+Plugin URI: https://wiedenroth.tech/software/sentrygate
 
 Production-ready WordPress security plugin by Wiedenroth Technologies GmbH.
 
@@ -46,7 +46,16 @@ Yes. Separate prefixes and hook namespaces avoid collisions.
 
 = Does the login challenge need ConsentGate? =
 
-No. It is fully self-hosted with no third-party requests or cookies.
+No. It is fully self-hosted with no third-party requests. It does set a first-party functional cookie (`sentrygate_gate`) after a successful check when Login Challenge is enabled—not a third-party or tracking cookie.
+
+= What cookies does SentryGate set? =
+
+Only first-party, functional security cookies (HttpOnly, Secure when the site is HTTPS, SameSite=Lax):
+
+* `sentrygate_gate` – login gate session after a passed challenge (browser session; HMAC valid up to 12 hours). Set only when the Login Challenge module is enabled.
+* `sentrygate_trusted` – optional 2FA “trust this device” (lifetime = configured days, default 30). Set only when Two-Factor is enabled and the user opts in.
+
+The form symbol challenge uses no cookies. Document these in your privacy policy as needed.
 
 = Behind Cloudflare / a reverse proxy? =
 

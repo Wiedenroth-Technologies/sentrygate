@@ -287,7 +287,7 @@ class SentryGate_Two_Factor {
 		$id     = get_current_user_id();
 
 		if ( ! empty( $source['user_id'] ) ) {
-			$requested = (int) $source['user_id'];
+			$requested = absint( wp_unslash( $source['user_id'] ) );
 			if ( $requested > 0 && current_user_can( 'edit_user', $requested ) ) {
 				$id = $requested;
 			} elseif ( $requested !== get_current_user_id() ) {
@@ -419,7 +419,8 @@ class SentryGate_Two_Factor {
 			self::TRANSIENT_PENDING . $token,
 			array(
 				'user_id'  => $user->ID,
-				'remember' => ! empty( $_POST['rememberme'] ), // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- runs during authenticate after core login POST.
+				'remember' => isset( $_POST['rememberme'] ) && '' !== sanitize_text_field( wp_unslash( (string) $_POST['rememberme'] ) ),
 			),
 			10 * MINUTE_IN_SECONDS
 		);
@@ -495,7 +496,7 @@ class SentryGate_Two_Factor {
 
 		delete_transient( self::TRANSIENT_PENDING . $token );
 
-		if ( ! empty( $_POST['trust_device'] ) ) {
+		if ( isset( $_POST['trust_device'] ) && '' !== sanitize_text_field( wp_unslash( (string) $_POST['trust_device'] ) ) ) {
 			$this->set_trusted_device( $user->ID );
 		}
 
@@ -717,7 +718,8 @@ class SentryGate_Two_Factor {
 			wp_login_url()
 		);
 
-		if ( ! empty( $_POST['sentrygate_send_email'] ) && 'email' === $this->method_for_user( $user->ID ) ) {
+		$send_email = isset( $_POST['sentrygate_send_email'] ) ? sanitize_text_field( wp_unslash( (string) $_POST['sentrygate_send_email'] ) ) : '';
+		if ( '' !== $send_email && 'email' === $this->method_for_user( $user->ID ) ) {
 			if ( ! $this->send_email_code( $user ) ) {
 				wp_safe_redirect( add_query_arg( 'error', '1', $back ) );
 				exit;
@@ -737,7 +739,8 @@ class SentryGate_Two_Factor {
 
 		delete_transient( self::TRANSIENT_PENDING . $token );
 
-		if ( ! empty( $_POST['sentrygate_trust_device'] ) ) {
+		$trust_device = isset( $_POST['sentrygate_trust_device'] ) ? sanitize_text_field( wp_unslash( (string) $_POST['sentrygate_trust_device'] ) ) : '';
+		if ( '' !== $trust_device ) {
 			$this->set_trusted_device( $user_id );
 		}
 
@@ -746,11 +749,10 @@ class SentryGate_Two_Factor {
 		do_action( 'wp_login', $user->user_login, $user );
 
 		$redirect_to = admin_url();
-		if ( ! empty( $_REQUEST['redirect_to'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$candidate = esc_url_raw( wp_unslash( (string) $_REQUEST['redirect_to'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( $candidate && wp_validate_redirect( $candidate, false ) ) {
-				$redirect_to = $candidate;
-			}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- redirect after verified TFA nonce above.
+		$candidate = isset( $_REQUEST['redirect_to'] ) ? esc_url_raw( wp_unslash( (string) $_REQUEST['redirect_to'] ) ) : '';
+		if ( $candidate && wp_validate_redirect( $candidate, false ) ) {
+			$redirect_to = $candidate;
 		}
 
 		wp_safe_redirect( $redirect_to );
