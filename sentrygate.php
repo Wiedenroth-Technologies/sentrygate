@@ -3,7 +3,7 @@
  * Plugin Name:       SentryGate – Security Firewall, Login Protection and Two-Factor Authentication (2FA)
  * Plugin URI:        https://wiedenroth.tech/software/sentrygate
  * Description:       Production-ready WordPress security plugin by Wiedenroth Technologies GmbH.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Requires at least: 6.4
  * Requires PHP:      8.1
  * Author:            Wiedenroth Technologies GmbH
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - Multisite network-wide central management
  */
 
-define( 'SENTRYGATE_VERSION', '1.0.2' );
+define( 'SENTRYGATE_VERSION', '1.0.3' );
 define( 'SENTRYGATE_PLUGIN_FILE', __FILE__ );
 define( 'SENTRYGATE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SENTRYGATE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
