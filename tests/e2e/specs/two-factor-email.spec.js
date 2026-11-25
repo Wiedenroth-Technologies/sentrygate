@@ -17,7 +17,7 @@ const {
 	mailCaptureLoaded,
 } = require( '../helpers/wp-cli' );
 
-test.describe( '2FA E-Mail', () => {
+test.describe( '2FA Email', () => {
 	test.beforeEach( () => {
 		expect( mailCaptureLoaded() ).toBe( true );
 		clearLockouts();
@@ -45,13 +45,13 @@ test.describe( '2FA E-Mail', () => {
 		clearLastMail();
 		await page.locator( 'button[name="sentrygate_tfa_action"][value="choose_email"]' ).click();
 		await expect( page.locator( '#sentrygate_tfa_confirm' ) ).toBeVisible();
-		await expect( page.getByRole( 'heading', { name: /E-Mail einrichten/i } ) ).toBeVisible();
+		await expect( page.getByRole( 'heading', { name: /Set up email/i } ) ).toBeVisible();
 
 		// OTP aus abgefangener Mail (MU-Plugin: pre_wp_mail / wp_mail), kein Produktiv-Hook.
 		const setupCode = waitForMailCode( { timeoutMs: 25_000 } );
 		await page.locator( '#sentrygate_tfa_confirm' ).fill( setupCode );
 		await page.locator( 'button[name="sentrygate_tfa_action"][value="confirm_email"]' ).click();
-		await expect( page.getByRole( 'status' ).filter( { hasText: /Einrichtung abgeschlossen|Zwei-Faktor ist aktiv/i } ).first() ).toBeVisible();
+		await expect( page.getByRole( 'status' ).filter( { hasText: /Setup complete|Two-factor is active/i } ).first() ).toBeVisible();
 
 		await page.context().clearCookies();
 		// Cooldown + Capture leeren, sonst sendet Login keinen neuen Code (1-Min-Cooldown nach Setup).

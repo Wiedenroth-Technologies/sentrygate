@@ -84,7 +84,7 @@ class SentryGate_Symbol_Challenge {
 		if ( null === $data || empty( $data['correct_id'] ) ) {
 			return new WP_Error(
 				'sentrygate_expired',
-				__( 'Sicherheitsprüfung abgelaufen. Bitte neu laden.', 'wiedenroth-technologies-sentrygate' )
+				__( 'Security check expired. Please reload.', 'wiedenroth-technologies-sentrygate' )
 			);
 		}
 
@@ -94,7 +94,7 @@ class SentryGate_Symbol_Challenge {
 		if ( ! $passed ) {
 			return new WP_Error(
 				'sentrygate_challenge',
-				__( 'Bitte das richtige Symbol wählen.', 'wiedenroth-technologies-sentrygate' )
+				__( 'Please choose the correct symbol.', 'wiedenroth-technologies-sentrygate' )
 			);
 		}
 
@@ -122,9 +122,9 @@ class SentryGate_Symbol_Challenge {
 		$refresh_class = isset( $args['refresh_class'] ) ? (string) $args['refresh_class'] : 'button sentrygate-refresh';
 
 		echo '<fieldset class="sentrygate-choice">';
-		echo '<legend class="sentrygate-choice__legend">' . esc_html__( 'Sicherheitsprüfung', 'wiedenroth-technologies-sentrygate' ) . '</legend>';
+		echo '<legend class="sentrygate-choice__legend">' . esc_html__( 'Security check', 'wiedenroth-technologies-sentrygate' ) . '</legend>';
 		echo '<div class="sentrygate-choice__prompt" id="' . esc_attr( $prompt_id ) . '">';
-		echo '<span class="sentrygate-choice__prompt-text">' . esc_html__( 'Wählen Sie das Symbol:', 'wiedenroth-technologies-sentrygate' ) . '</span>';
+		echo '<span class="sentrygate-choice__prompt-text">' . esc_html__( 'Choose the symbol:', 'wiedenroth-technologies-sentrygate' ) . '</span>';
 		echo ' <strong class="sentrygate-choice__target" id="' . esc_attr( $target_id ) . '">' . esc_html( $prompt ) . '</strong>';
 		echo '</div>';
 
@@ -155,7 +155,7 @@ class SentryGate_Symbol_Challenge {
 			'<button type="button" class="%1$s" id="%2$s" data-sentrygate-refresh>%3$s</button>',
 			esc_attr( $refresh_class ),
 			esc_attr( $refresh_id ),
-			esc_html__( 'Andere Symbole', 'wiedenroth-technologies-sentrygate' )
+			esc_html__( 'Other symbols', 'wiedenroth-technologies-sentrygate' )
 		);
 		echo '</fieldset>';
 	}
@@ -180,27 +180,27 @@ class SentryGate_Symbol_Challenge {
 	public static function symbols(): array {
 		return array(
 			'lock'   => array(
-				'label' => __( 'Schloss', 'wiedenroth-technologies-sentrygate' ),
+				'label' => __( 'Lock', 'wiedenroth-technologies-sentrygate' ),
 				'svg'   => self::svg_lock(),
 			),
 			'key'    => array(
-				'label' => __( 'Schlüssel', 'wiedenroth-technologies-sentrygate' ),
+				'label' => __( 'Key', 'wiedenroth-technologies-sentrygate' ),
 				'svg'   => self::svg_key(),
 			),
 			'mail'   => array(
-				'label' => __( 'Brief', 'wiedenroth-technologies-sentrygate' ),
+				'label' => __( 'Envelope', 'wiedenroth-technologies-sentrygate' ),
 				'svg'   => self::svg_mail(),
 			),
 			'house'  => array(
-				'label' => __( 'Haus', 'wiedenroth-technologies-sentrygate' ),
+				'label' => __( 'House', 'wiedenroth-technologies-sentrygate' ),
 				'svg'   => self::svg_house(),
 			),
 			'shield' => array(
-				'label' => __( 'Schild', 'wiedenroth-technologies-sentrygate' ),
+				'label' => __( 'Shield', 'wiedenroth-technologies-sentrygate' ),
 				'svg'   => self::svg_shield(),
 			),
 			'globe'  => array(
-				'label' => __( 'Globus', 'wiedenroth-technologies-sentrygate' ),
+				'label' => __( 'Globe', 'wiedenroth-technologies-sentrygate' ),
 				'svg'   => self::svg_globe(),
 			),
 		);

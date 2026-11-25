@@ -34,7 +34,7 @@ class SentryGate_File_Hardening {
 	 */
 	public static function htaccess_uploads_snippet(): string {
 		return <<<'HTACCESS'
-# SentryGate – PHP-Ausführung in Uploads blockieren
+# SentryGate – block PHP execution in uploads
 <FilesMatch "\.(?i:php|phtml|php3|php4|php5|php7|php8|phar)$">
   <IfModule mod_authz_core.c>
     Require all denied
@@ -45,7 +45,7 @@ class SentryGate_File_Hardening {
   </IfModule>
 </FilesMatch>
 
-# Directory-Listing aus
+# Disable directory listing
 Options -Indexes
 HTACCESS;
 	}
@@ -72,17 +72,17 @@ HTACCESS;
 			array(
 				'path' => ABSPATH,
 				'max'  => 0755,
-				'note' => __( 'WordPress-Root sollte nicht welt-schreibbar sein.', 'wiedenroth-technologies-sentrygate' ),
+				'note' => __( 'The WordPress root should not be world-writable.', 'wiedenroth-technologies-sentrygate' ),
 			),
 			array(
 				'path' => ABSPATH . 'wp-config.php',
 				'max'  => 0644,
-				'note' => __( 'wp-config.php idealerweise 0440/0400/0640.', 'wiedenroth-technologies-sentrygate' ),
+				'note' => __( 'wp-config.php should ideally be 0440/0400/0640.', 'wiedenroth-technologies-sentrygate' ),
 			),
 			array(
 				'path' => WP_CONTENT_DIR,
 				'max'  => 0755,
-				'note' => __( 'wp-content sollte nicht 0777 sein.', 'wiedenroth-technologies-sentrygate' ),
+				'note' => __( 'wp-content should not be 0777.', 'wiedenroth-technologies-sentrygate' ),
 			),
 		);
 
@@ -91,7 +91,7 @@ HTACCESS;
 			$checks[] = array(
 				'path' => (string) $uploads['basedir'],
 				'max'  => 0755,
-				'note' => __( 'Uploads-Verzeichnis prüfen.', 'wiedenroth-technologies-sentrygate' ),
+				'note' => __( 'Check the uploads directory.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
@@ -126,8 +126,8 @@ HTACCESS;
 		if ( ! SentryGate_Options::module_enabled( 'file_hardening' ) ) {
 			return array(
 				'status'  => 'inactive',
-				'label'   => __( 'Dateien & Server', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Modul deaktiviert.', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Files & server', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Module disabled.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
@@ -137,15 +137,15 @@ HTACCESS;
 		if ( $bad ) {
 			return array(
 				'status'  => 'warning',
-				'label'   => __( 'Dateien & Server', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Einige Dateirechte weichen von der Empfehlung ab (nur Anzeige).', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Files & server', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Some file permissions differ from the recommendation (display only).', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
 		return array(
 			'status'  => 'active',
-			'label'   => __( 'Dateien & Server', 'wiedenroth-technologies-sentrygate' ),
-			'message' => __( 'Permission-Check OK. .htaccess-Snippets im Backend verfügbar.', 'wiedenroth-technologies-sentrygate' ),
+			'label'   => __( 'Files & server', 'wiedenroth-technologies-sentrygate' ),
+			'message' => __( 'Permission check OK. .htaccess snippets are available in the admin.', 'wiedenroth-technologies-sentrygate' ),
 		);
 	}
 }

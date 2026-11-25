@@ -32,17 +32,17 @@ $show_chooser = '' === $pending;
 	<div class="wp-header-end"></div>
 	<header class="<?php echo esc_attr( $ui->cls( 'header' ) ); ?>">
 		<div class="<?php echo esc_attr( $ui->cls( 'header__titles' ) ); ?>">
-			<h1 class="<?php echo esc_attr( $ui->cls( 'title' ) ); ?>"><?php esc_html_e( 'Zwei-Faktor', 'wiedenroth-technologies-sentrygate' ); ?></h1>
+			<h1 class="<?php echo esc_attr( $ui->cls( 'title' ) ); ?>"><?php esc_html_e( 'Two-factor', 'wiedenroth-technologies-sentrygate' ); ?></h1>
 			<p class="<?php echo esc_attr( $ui->cls( 'tagline' ) ); ?>">
 				<?php
 				if ( $is_other ) {
 					printf(
 						/* translators: %s: user login */
-						esc_html__( 'Einrichtung für %s. Wählen Sie Authenticator-App oder E-Mail.', 'wiedenroth-technologies-sentrygate' ),
+						esc_html__( 'Setup for %s. Choose an authenticator app or email.', 'wiedenroth-technologies-sentrygate' ),
 						esc_html( $user->user_login )
 					);
 				} else {
-					esc_html_e( 'Zweiter Schritt nach dem Passwort: Authenticator-App oder E-Mail – eine Methode reicht.', 'wiedenroth-technologies-sentrygate' );
+					esc_html_e( 'Second step after the password: authenticator app or email – one method is enough.', 'wiedenroth-technologies-sentrygate' );
 				}
 				?>
 			</p>
@@ -52,33 +52,33 @@ $show_chooser = '' === $pending;
 	<div class="<?php echo esc_attr( $ui->cls( 'content' ) ); ?>">
 		<?php
 		if ( 'bad_code' === $error ) {
-			$ui->notice( 'error', __( 'Der Code ist ungültig oder abgelaufen. Bitte erneut versuchen.', 'wiedenroth-technologies-sentrygate' ), __( 'Bestätigung fehlgeschlagen', 'wiedenroth-technologies-sentrygate' ) );
+			$ui->notice( 'error', __( 'The code is invalid or expired. Please try again.', 'wiedenroth-technologies-sentrygate' ), __( 'Confirmation failed', 'wiedenroth-technologies-sentrygate' ) );
 		} elseif ( 'no_email' === $error ) {
-			$ui->notice( 'error', __( 'Für dieses Konto ist keine gültige E-Mail-Adresse hinterlegt, oder E-Mail ist abgeschaltet.', 'wiedenroth-technologies-sentrygate' ), __( 'E-Mail nicht möglich', 'wiedenroth-technologies-sentrygate' ) );
+			$ui->notice( 'error', __( 'This account has no valid email address, or email is turned off.', 'wiedenroth-technologies-sentrygate' ), __( 'Email not available', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		if ( 'ok' === $notice ) {
-			$ui->notice( 'success', __( 'Zwei-Faktor ist aktiv. Bewahren Sie die Notfall-Codes sicher auf – sie werden nur einmal angezeigt.', 'wiedenroth-technologies-sentrygate' ), __( 'Einrichtung abgeschlossen', 'wiedenroth-technologies-sentrygate' ) );
+			$ui->notice( 'success', __( 'Two-factor is active. Keep the emergency codes safe – they are shown only once.', 'wiedenroth-technologies-sentrygate' ), __( 'Setup complete', 'wiedenroth-technologies-sentrygate' ) );
 		} elseif ( 'email' === $notice ) {
 			$ui->notice(
 				'info',
 				sprintf(
 					/* translators: %s: email address */
-					__( 'Ein Code wurde an %s gesendet. Er ist 10 Minuten gültig.', 'wiedenroth-technologies-sentrygate' ),
+					__( 'A code was sent to %s. It is valid for 10 minutes.', 'wiedenroth-technologies-sentrygate' ),
 					$user->user_email
 				)
 			);
 		} elseif ( 'disabled' === $notice ) {
-			$ui->notice( 'success', __( 'Zwei-Faktor ist ausgeschaltet.', 'wiedenroth-technologies-sentrygate' ) );
+			$ui->notice( 'success', __( 'Two-factor is turned off.', 'wiedenroth-technologies-sentrygate' ) );
 		} elseif ( 'codes' === $notice ) {
-			$ui->notice( 'warning', __( 'Alte Notfall-Codes sind ungültig. Die neuen Codes unten jetzt speichern.', 'wiedenroth-technologies-sentrygate' ) );
+			$ui->notice( 'warning', __( 'The old emergency codes are invalid. Save the new codes below now.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		if ( $recovery_once ) :
 			?>
 			<div class="<?php echo esc_attr( $ui->cls( 'notice', 'warning' ) ); ?>" role="status">
-				<p class="<?php echo esc_attr( $ui->cls( 'notice__title' ) ); ?>"><?php esc_html_e( 'Notfall-Codes – nur einmal sichtbar', 'wiedenroth-technologies-sentrygate' ); ?></p>
-				<p class="<?php echo esc_attr( $ui->cls( 'notice__text' ) ); ?>"><?php esc_html_e( 'Jeder Code gilt einmal, falls App oder E-Mail nicht erreichbar sind.', 'wiedenroth-technologies-sentrygate' ); ?></p>
+				<p class="<?php echo esc_attr( $ui->cls( 'notice__title' ) ); ?>"><?php esc_html_e( 'Emergency codes – shown only once', 'wiedenroth-technologies-sentrygate' ); ?></p>
+				<p class="<?php echo esc_attr( $ui->cls( 'notice__text' ) ); ?>"><?php esc_html_e( 'Each code works once if the app or email cannot be reached.', 'wiedenroth-technologies-sentrygate' ); ?></p>
 				<ul class="<?php echo esc_attr( $ui->cls( 'codes' ) ); ?>">
 					<?php foreach ( $recovery_once as $code ) : ?>
 						<li><code><?php echo esc_html( $code ); ?></code></li>
@@ -100,23 +100,23 @@ $show_chooser = '' === $pending;
 				<section class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
 					<?php
 					$ui->heading(
-						__( 'Aktiver Schutz', 'wiedenroth-technologies-sentrygate' ),
+						__( 'Active protection', 'wiedenroth-technologies-sentrygate' ),
 						'email' === $method
 							? sprintf(
 								/* translators: %s: email */
-								__( 'Anmeldungen brauchen einen Code per E-Mail an %s.', 'wiedenroth-technologies-sentrygate' ),
+								__( 'Logins need a code by email to %s.', 'wiedenroth-technologies-sentrygate' ),
 								$user->user_email
 							)
-							: __( 'Anmeldungen brauchen einen Code aus der Authenticator-App.', 'wiedenroth-technologies-sentrygate' )
+							: __( 'Logins need a code from the authenticator app.', 'wiedenroth-technologies-sentrygate' )
 					);
-					$ui->badge( 'ok', 'email' === $method ? __( 'E-Mail aktiv', 'wiedenroth-technologies-sentrygate' ) : __( 'App aktiv', 'wiedenroth-technologies-sentrygate' ) );
+					$ui->badge( 'ok', 'email' === $method ? __( 'Email active', 'wiedenroth-technologies-sentrygate' ) : __( 'App active', 'wiedenroth-technologies-sentrygate' ) );
 					?>
 					<div class="<?php echo esc_attr( $ui->cls( 'row' ) . ' ' . $ui->cls( 'tfa-actions' ) ); ?>">
 						<button type="submit" name="sentrygate_tfa_action" value="regen_recovery" class="<?php echo esc_attr( $ui->cls( 'btn', 'secondary' ) ); ?>">
-							<?php esc_html_e( 'Neue Notfall-Codes', 'wiedenroth-technologies-sentrygate' ); ?>
+							<?php esc_html_e( 'New emergency codes', 'wiedenroth-technologies-sentrygate' ); ?>
 						</button>
 						<button type="submit" name="sentrygate_tfa_action" value="disable" class="<?php echo esc_attr( $ui->cls( 'btn', 'danger' ) ); ?>">
-							<?php esc_html_e( 'Zwei-Faktor ausschalten', 'wiedenroth-technologies-sentrygate' ); ?>
+							<?php esc_html_e( 'Turn off two-factor', 'wiedenroth-technologies-sentrygate' ); ?>
 						</button>
 					</div>
 				</section>
@@ -126,24 +126,24 @@ $show_chooser = '' === $pending;
 				<section class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
 					<?php
 					$ui->heading(
-						$enabled ? __( 'Methode wechseln', 'wiedenroth-technologies-sentrygate' ) : __( 'Methode wählen', 'wiedenroth-technologies-sentrygate' ),
-						__( 'Nur eine Methode ist aktiv. Die andere können Sie später hier umstellen.', 'wiedenroth-technologies-sentrygate' ),
-						__( 'Die App ist unabhängiger vom Postfach. E-Mail braucht eine erreichbare Adresse im Konto.', 'wiedenroth-technologies-sentrygate' )
+						$enabled ? __( 'Change method', 'wiedenroth-technologies-sentrygate' ) : __( 'Choose method', 'wiedenroth-technologies-sentrygate' ),
+						__( 'Only one method is active. You can switch to the other one here later.', 'wiedenroth-technologies-sentrygate' ),
+						__( 'The app does not depend on the inbox. Email needs a reachable address on the account.', 'wiedenroth-technologies-sentrygate' )
 					);
 					?>
 					<div class="<?php echo esc_attr( $ui->cls( 'choice-grid' ) ); ?>">
 						<button type="submit" name="sentrygate_tfa_action" value="choose_app" class="<?php echo esc_attr( $ui->cls( 'tile' ) ); ?>">
-							<span class="<?php echo esc_attr( $ui->cls( 'tile__title' ) ); ?>"><?php esc_html_e( 'Authenticator-App', 'wiedenroth-technologies-sentrygate' ); ?></span>
-							<span class="<?php echo esc_attr( $ui->cls( 'tile__text' ) ); ?>"><?php esc_html_e( 'Google Authenticator, Authy, 1Password und ähnliche Apps. QR-Code scannen, dann einmal bestätigen.', 'wiedenroth-technologies-sentrygate' ); ?></span>
+							<span class="<?php echo esc_attr( $ui->cls( 'tile__title' ) ); ?>"><?php esc_html_e( 'Authenticator app', 'wiedenroth-technologies-sentrygate' ); ?></span>
+							<span class="<?php echo esc_attr( $ui->cls( 'tile__text' ) ); ?>"><?php esc_html_e( 'Google Authenticator, Authy, 1Password, and similar apps. Scan the QR code, then confirm once.', 'wiedenroth-technologies-sentrygate' ); ?></span>
 						</button>
 						<?php if ( $email_allowed ) : ?>
 							<button type="submit" name="sentrygate_tfa_action" value="choose_email" class="<?php echo esc_attr( $ui->cls( 'tile' ) ); ?>">
-								<span class="<?php echo esc_attr( $ui->cls( 'tile__title' ) ); ?>"><?php esc_html_e( 'E-Mail', 'wiedenroth-technologies-sentrygate' ); ?></span>
+								<span class="<?php echo esc_attr( $ui->cls( 'tile__title' ) ); ?>"><?php esc_html_e( 'Email', 'wiedenroth-technologies-sentrygate' ); ?></span>
 								<span class="<?php echo esc_attr( $ui->cls( 'tile__text' ) ); ?>">
 									<?php
 									printf(
 										/* translators: %s: email */
-										esc_html__( 'Bei jeder Anmeldung ein Code an %s. 10 Minuten gültig.', 'wiedenroth-technologies-sentrygate' ),
+										esc_html__( 'A code to %s at every login. Valid for 10 minutes.', 'wiedenroth-technologies-sentrygate' ),
 										esc_html( $user->user_email )
 									);
 									?>
@@ -158,32 +158,32 @@ $show_chooser = '' === $pending;
 				<section class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
 					<?php
 					$ui->heading(
-						__( 'Authenticator-App einrichten', 'wiedenroth-technologies-sentrygate' ),
-						__( 'QR-Code in der App scannen oder das Geheimnis manuell eintragen. Danach den aktuellen 6-stelligen Code hier bestätigen.', 'wiedenroth-technologies-sentrygate' )
+						__( 'Set up authenticator app', 'wiedenroth-technologies-sentrygate' ),
+						__( 'Scan the QR code in the app or enter the secret manually. Then confirm the current 6-digit code here.', 'wiedenroth-technologies-sentrygate' )
 					);
 					?>
 					<?php if ( $qr_svg ) : ?>
 						<div class="<?php echo esc_attr( $ui->cls( 'qr' ) ); ?>"><?php echo $qr_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- offline-generated SVG from integer module geometry only ?></div>
 					<?php else : ?>
-						<?php $ui->notice( 'warning', __( 'QR konnte nicht erzeugt werden. Bitte das Geheimnis manuell in der App eintragen.', 'wiedenroth-technologies-sentrygate' ) ); ?>
+						<?php $ui->notice( 'warning', __( 'The QR code could not be generated. Please enter the secret in the app manually.', 'wiedenroth-technologies-sentrygate' ) ); ?>
 					<?php endif; ?>
-					<p class="<?php echo esc_attr( $ui->cls( 'card__text' ) ); ?>"><?php esc_html_e( 'Geheimnis', 'wiedenroth-technologies-sentrygate' ); ?></p>
+					<p class="<?php echo esc_attr( $ui->cls( 'card__text' ) ); ?>"><?php esc_html_e( 'Secret', 'wiedenroth-technologies-sentrygate' ); ?></p>
 					<code class="<?php echo esc_attr( $ui->cls( 'secret' ) ); ?>"><?php echo esc_html( $secret ); ?></code>
 					<?php if ( $uri ) : ?>
 						<p class="<?php echo esc_attr( $ui->cls( 'card__text' ) ); ?>">
-							<a href="<?php echo esc_url( $uri ); ?>"><?php esc_html_e( 'otpauth-Link öffnen', 'wiedenroth-technologies-sentrygate' ); ?></a>
+							<a href="<?php echo esc_url( $uri ); ?>"><?php esc_html_e( 'Open otpauth link', 'wiedenroth-technologies-sentrygate' ); ?></a>
 						</p>
 					<?php endif; ?>
 					<div class="<?php echo esc_attr( $ui->cls( 'inline-fields' ) . ' ' . $ui->cls( 'tfa-actions' ) ); ?>">
-						<label for="sentrygate_tfa_confirm"><?php esc_html_e( 'Bestätigungscode', 'wiedenroth-technologies-sentrygate' ); ?></label>
+						<label for="sentrygate_tfa_confirm"><?php esc_html_e( 'Confirmation code', 'wiedenroth-technologies-sentrygate' ); ?></label>
 						<input type="text" name="sentrygate_tfa_confirm" id="sentrygate_tfa_confirm" class="<?php echo esc_attr( $ui->cls( 'input' ) ); ?>" inputmode="numeric" autocomplete="one-time-code" />
 					</div>
 					<div class="<?php echo esc_attr( $ui->cls( 'row' ) . ' ' . $ui->cls( 'tfa-actions' ) ); ?>">
 						<button type="submit" name="sentrygate_tfa_action" value="confirm_app" class="<?php echo esc_attr( $ui->cls( 'btn', 'primary' ) ); ?>">
-							<?php esc_html_e( 'App bestätigen', 'wiedenroth-technologies-sentrygate' ); ?>
+							<?php esc_html_e( 'Confirm app', 'wiedenroth-technologies-sentrygate' ); ?>
 						</button>
 						<button type="submit" name="sentrygate_tfa_action" value="cancel_setup" class="<?php echo esc_attr( $ui->cls( 'btn', 'ghost' ) ); ?>">
-							<?php esc_html_e( 'Abbrechen', 'wiedenroth-technologies-sentrygate' ); ?>
+							<?php esc_html_e( 'Cancel', 'wiedenroth-technologies-sentrygate' ); ?>
 						</button>
 					</div>
 				</section>
@@ -193,27 +193,27 @@ $show_chooser = '' === $pending;
 				<section class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
 					<?php
 					$ui->heading(
-						__( 'E-Mail einrichten', 'wiedenroth-technologies-sentrygate' ),
+						__( 'Set up email', 'wiedenroth-technologies-sentrygate' ),
 						sprintf(
 							/* translators: %s: email */
-							__( 'Geben Sie den Code ein, der an %s gesendet wurde.', 'wiedenroth-technologies-sentrygate' ),
+							__( 'Enter the code that was sent to %s.', 'wiedenroth-technologies-sentrygate' ),
 							$user->user_email
 						)
 					);
 					?>
 					<div class="<?php echo esc_attr( $ui->cls( 'inline-fields' ) ); ?>">
-						<label for="sentrygate_tfa_confirm"><?php esc_html_e( 'Bestätigungscode', 'wiedenroth-technologies-sentrygate' ); ?></label>
+						<label for="sentrygate_tfa_confirm"><?php esc_html_e( 'Confirmation code', 'wiedenroth-technologies-sentrygate' ); ?></label>
 						<input type="text" name="sentrygate_tfa_confirm" id="sentrygate_tfa_confirm" class="<?php echo esc_attr( $ui->cls( 'input' ) ); ?>" inputmode="numeric" autocomplete="one-time-code" />
 					</div>
 					<div class="<?php echo esc_attr( $ui->cls( 'row' ) . ' ' . $ui->cls( 'tfa-actions' ) ); ?>">
 						<button type="submit" name="sentrygate_tfa_action" value="confirm_email" class="<?php echo esc_attr( $ui->cls( 'btn', 'primary' ) ); ?>">
-							<?php esc_html_e( 'E-Mail bestätigen', 'wiedenroth-technologies-sentrygate' ); ?>
+							<?php esc_html_e( 'Confirm email', 'wiedenroth-technologies-sentrygate' ); ?>
 						</button>
 						<button type="submit" name="sentrygate_tfa_action" value="send_setup_email" class="<?php echo esc_attr( $ui->cls( 'btn', 'secondary' ) ); ?>">
-							<?php esc_html_e( 'Code erneut senden', 'wiedenroth-technologies-sentrygate' ); ?>
+							<?php esc_html_e( 'Resend code', 'wiedenroth-technologies-sentrygate' ); ?>
 						</button>
 						<button type="submit" name="sentrygate_tfa_action" value="cancel_setup" class="<?php echo esc_attr( $ui->cls( 'btn', 'ghost' ) ); ?>">
-							<?php esc_html_e( 'Abbrechen', 'wiedenroth-technologies-sentrygate' ); ?>
+							<?php esc_html_e( 'Cancel', 'wiedenroth-technologies-sentrygate' ); ?>
 						</button>
 					</div>
 				</section>

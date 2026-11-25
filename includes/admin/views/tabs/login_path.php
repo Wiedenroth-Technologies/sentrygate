@@ -25,21 +25,21 @@ $effective_url = '' !== $frontend_url ? $frontend_url : $login_url;
 	<div class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
 		<?php
 		$ui->heading(
-			__( 'Eigene Adresse für den Login', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Statt der bekannten Adresse /wp-login.php nutzen Sie eine eigene URL. Wer die alte Adresse aufruft, sieht „Seite nicht gefunden“. So finden Bots den Login schwerer.', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Notieren Sie sich die neue Login-Adresse. Das Modul muss unter „Module ein/aus“ eingeschaltet sein.', 'wiedenroth-technologies-sentrygate' )
+			__( 'Custom login URL', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Instead of the well-known address /wp-login.php, use your own URL. Anyone who opens the old address sees "Page not found". That makes the login harder for bots to find.', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Write down the new login URL. The module must be turned on under "Modules on/off".', 'wiedenroth-technologies-sentrygate' )
 		);
 		?>
 
 		<div class="<?php echo esc_attr( $ui->cls( 'field' ) ); ?>">
-			<label class="<?php echo esc_attr( $ui->cls( 'field__label' ) ); ?>" for="<?php echo esc_attr( SentryGate_Admin::field_id( 'login_slug' ) ); ?>"><?php esc_html_e( 'Ihr Login-Name in der URL', 'wiedenroth-technologies-sentrygate' ); ?></label>
+			<label class="<?php echo esc_attr( $ui->cls( 'field__label' ) ); ?>" for="<?php echo esc_attr( SentryGate_Admin::field_id( 'login_slug' ) ); ?>"><?php esc_html_e( 'Your login name in the URL', 'wiedenroth-technologies-sentrygate' ); ?></label>
 			<div class="<?php echo esc_attr( $ui->cls( 'field__control' ) ); ?>">
 				<?php SentryGate_Admin::text( $ui, 'login_slug', $slug ); ?>
 				<?php
 				$ui->help(
 					sprintf(
 						/* translators: %s: login URL */
-						__( 'Login dann unter: %s', 'wiedenroth-technologies-sentrygate' ),
+						__( 'Login is then at: %s', 'wiedenroth-technologies-sentrygate' ),
 						$login_url
 					)
 				);
@@ -47,13 +47,13 @@ $effective_url = '' !== $frontend_url ? $frontend_url : $login_url;
 					$ui->help(
 						sprintf(
 							/* translators: 1: custom login slug, 2: frontend login URL */
-							__( 'Frontend-Anmeldung aktiv: /%1$s/ und Login-Links führen dorthin (%2$s), inkl. Captcha und 2FA – ohne doppeltes Einloggen über die WordPress-Oberfläche.', 'wiedenroth-technologies-sentrygate' ),
+							__( 'Front-end login is active: /%1$s/ and login links go there (%2$s), including captcha and 2FA – without logging in twice through the WordPress admin.', 'wiedenroth-technologies-sentrygate' ),
 							esc_html( $slug ),
 							esc_url( $effective_url )
 						)
 					);
 				}
-				$ui->help( __( 'Nur Buchstaben, Zahlen und Bindestriche. Vermeiden Sie Wörter wie „login“ oder „admin“.', 'wiedenroth-technologies-sentrygate' ) );
+				$ui->help( __( 'Letters, numbers, and hyphens only. Avoid words like "login" or "admin".', 'wiedenroth-technologies-sentrygate' ) );
 				?>
 			</div>
 		</div>
@@ -63,9 +63,9 @@ $effective_url = '' !== $frontend_url ? $frontend_url : $login_url;
 			$ui,
 			'redirect_admin',
 			$options['redirect_admin'] ?? true,
-			__( 'Backend-Adresse sperren', 'wiedenroth-technologies-sentrygate' ),
-			__( '/wp-admin für Nicht-Eingeloggte mit „nicht gefunden“ beantworten', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Eingeloggte Nutzer können weiterhin normal ins Backend.', 'wiedenroth-technologies-sentrygate' )
+			__( 'Block the admin URL', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Answer /wp-admin with "not found" for visitors who are not logged in', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Logged-in users can still reach the admin as usual.', 'wiedenroth-technologies-sentrygate' )
 		);
 		?>
 	</div>
@@ -76,15 +76,15 @@ $effective_url = '' !== $frontend_url ? $frontend_url : $login_url;
 <?php
 $ui->notice(
 	'info',
-	__( 'Falls die neue Adresse nicht greift: unter Einstellungen → Permalinks einmal „Änderungen speichern“ klicken.', 'wiedenroth-technologies-sentrygate' )
+	__( 'If the new address does not take effect: under Settings → Permalinks, click "Save Changes" once.', 'wiedenroth-technologies-sentrygate' )
 );
 $ui->notice(
 	'warning',
 	sprintf(
 		/* translators: %s: custom login URL */
-		__( 'Wiederherstellung, falls Sie die Login-Adresse vergessen: (1) Notierte URL nutzen (%s). (2) Plugin per FTP/Dateimanager umbenennen oder deaktivieren – danach funktioniert /wp-login.php wieder. (3) Per WP-CLI: wp plugin deactivate sentrygate – oder in der Datenbank die Einstellung module_login_path auf aus setzen und Permalinks speichern.', 'wiedenroth-technologies-sentrygate' ),
+		__( 'Recovery if you forget the login URL: (1) Use the URL you wrote down (%s). (2) Rename or deactivate the plugin via FTP or a file manager – after that, /wp-login.php works again. (3) With WP-CLI: wp plugin deactivate sentrygate – or set the module_login_path setting to off in the database and save permalinks.', 'wiedenroth-technologies-sentrygate' ),
 		$login_url
 	),
-	__( 'Wiederherstellungsweg', 'wiedenroth-technologies-sentrygate' )
+	__( 'Recovery path', 'wiedenroth-technologies-sentrygate' )
 );
 ?>

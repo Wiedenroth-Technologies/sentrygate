@@ -75,8 +75,8 @@
 			toggle.hidden = false;
 			if (label) {
 				label.textContent = count === 1
-					? (cfg.i18n.noticeOne || '1 Nachricht')
-					: (cfg.i18n.noticeMany || '%d Nachrichten').replace('%d', String(count));
+					? (cfg.i18n.noticeOne || '1 notice')
+					: (cfg.i18n.noticeMany || '%d notices').replace('%d', String(count));
 			}
 		}
 

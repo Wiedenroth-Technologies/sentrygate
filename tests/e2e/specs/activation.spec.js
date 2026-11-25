@@ -2,7 +2,7 @@ const { test, expect } = require( '@playwright/test' );
 const { loginAsAdmin } = require( '../helpers/auth' );
 const { wpCli } = require( '../helpers/wp-cli' );
 
-test.describe( 'Aktivierung / Deaktivierung', () => {
+test.describe( 'Activation / deactivation', () => {
 	test.afterAll( () => {
 		wpCli( [ 'plugin', 'activate', 'sentrygate' ] );
 	} );

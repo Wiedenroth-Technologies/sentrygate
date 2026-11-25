@@ -40,7 +40,7 @@ function sentrygate_e2e_persist_mail_atts( array $atts ): void {
 		update_option( 'sentrygate_e2e_last_code', $code, false );
 	}
 
-	// Zusätzlich Datei schreiben (Fallback, falls Options-Lesen in CLI verzögert wirkt).
+	// Also write a file (fallback if option reads are delayed in CLI).
 	$upload = wp_upload_dir( null, false );
 	if ( empty( $upload['error'] ) && ! empty( $upload['basedir'] ) ) {
 		$dir = trailingslashit( (string) $upload['basedir'] );

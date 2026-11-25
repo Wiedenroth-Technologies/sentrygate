@@ -20,10 +20,10 @@ $sentrygate_htaccess_path = SentryGate_File_Hardening::uploads_htaccess_path();
 $sentrygate_htaccess_hint = '' !== $sentrygate_htaccess_path
 	? sprintf(
 		/* translators: %s: absolute path to uploads .htaccess */
-		__( 'Optional manuell in die Datei %s kopieren. Nicht automatisch geschrieben.', 'wiedenroth-technologies-sentrygate' ),
+		__( 'Optionally copy this manually into the file %s. Not written automatically.', 'wiedenroth-technologies-sentrygate' ),
 		$sentrygate_htaccess_path
 	)
-	: __( 'Optional manuell in die .htaccess-Datei im Uploads-Verzeichnis kopieren. Nicht automatisch geschrieben.', 'wiedenroth-technologies-sentrygate' );
+	: __( 'Optionally copy this manually into the .htaccess file in the uploads directory. Not written automatically.', 'wiedenroth-technologies-sentrygate' );
 ?>
 <form method="post" action="options.php">
 	<?php settings_fields( 'sentrygate_settings_group' ); ?>
@@ -31,25 +31,25 @@ $sentrygate_htaccess_hint = '' !== $sentrygate_htaccess_path
 	<div class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
 		<?php
 		$ui->heading(
-			__( 'Hinweise zu Dateien auf dem Server', 'wiedenroth-technologies-sentrygate' ),
-			__( 'SentryGate zeigt Empfehlungen und Prüfungen – es ändert Dateirechte und .htaccess nicht von allein. So bleibt nichts „heimlich“ umgeschrieben.', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Den .htaccess-Text nur einfügen, wenn Ihr Hosting Apache nutzt und Sie wissen, wo die Upload-Ordner-Datei liegt – oder Ihren Dienstleister fragen.', 'wiedenroth-technologies-sentrygate' )
+			__( 'Notes about files on the server', 'wiedenroth-technologies-sentrygate' ),
+			__( 'SentryGate shows recommendations and checks – it does not change file permissions or .htaccess on its own. That way nothing is rewritten in secret.', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Paste the .htaccess text only if your host uses Apache and you know where the file in the uploads folder is – or ask your provider.', 'wiedenroth-technologies-sentrygate' )
 		);
 
 		SentryGate_Admin::field_toggle(
 			$ui,
 			'show_htaccess_snippets',
 			$options['show_htaccess_snippets'] ?? true,
-			__( 'Upload-Schutz', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Beispiel-Text für Upload-Schutz zeigen', 'wiedenroth-technologies-sentrygate' )
+			__( 'Upload protection', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Show sample text for upload protection', 'wiedenroth-technologies-sentrygate' )
 		);
 
 		SentryGate_Admin::field_toggle(
 			$ui,
 			'show_permission_checks',
 			$options['show_permission_checks'] ?? true,
-			__( 'Dateirechte', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Prüfung der Dateirechte zeigen', 'wiedenroth-technologies-sentrygate' )
+			__( 'File permissions', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Show the file permissions check', 'wiedenroth-technologies-sentrygate' )
 		);
 		?>
 	</div>
@@ -59,13 +59,13 @@ $sentrygate_htaccess_hint = '' !== $sentrygate_htaccess_path
 
 <?php if ( ! empty( $options['show_htaccess_snippets'] ) ) : ?>
 	<section class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
-		<?php $ui->heading( __( 'Beispiel: Schutz für hochgeladene Dateien', 'wiedenroth-technologies-sentrygate' ), $sentrygate_htaccess_hint ); ?>
+		<?php $ui->heading( __( 'Example: protection for uploaded files', 'wiedenroth-technologies-sentrygate' ), $sentrygate_htaccess_hint ); ?>
 		<div class="<?php echo esc_attr( $ui->cls( 'snippets' ) ); ?>">
 			<div class="<?php echo esc_attr( $ui->cls( 'snippet' ) ); ?>">
 				<div class="<?php echo esc_attr( $ui->cls( 'snippet__head' ) ); ?>">
 					<p class="<?php echo esc_attr( $ui->cls( 'snippet__title' ) ); ?>">.htaccess</p>
 					<button type="button" class="<?php echo esc_attr( $ui->cls( 'btn', 'primary' ) ); ?>" data-wt-copy="<?php echo esc_attr( $sentrygate_snippet ); ?>">
-						<?php esc_html_e( 'Kopieren', 'wiedenroth-technologies-sentrygate' ); ?>
+						<?php esc_html_e( 'Copy', 'wiedenroth-technologies-sentrygate' ); ?>
 					</button>
 				</div>
 				<textarea class="<?php echo esc_attr( $ui->cls( 'textarea' ) ); ?>" rows="14" readonly><?php echo esc_textarea( $sentrygate_snippet ); ?></textarea>
@@ -76,15 +76,15 @@ $sentrygate_htaccess_hint = '' !== $sentrygate_htaccess_path
 
 <?php if ( ! empty( $options['show_permission_checks'] ) ) : ?>
 	<div class="<?php echo esc_attr( $ui->cls( 'card', 'flush' ) ); ?>">
-		<?php $ui->heading( __( 'Dateirechte – nur zur Kontrolle', 'wiedenroth-technologies-sentrygate' ), __( '„Prüfen“ heißt: Rechte wirken ungewöhnlich. Ändern Sie nichts selbst, wenn Sie unsicher sind – Hosting oder Agentur fragen.', 'wiedenroth-technologies-sentrygate' ) ); ?>
+		<?php $ui->heading( __( 'File permissions – for review only', 'wiedenroth-technologies-sentrygate' ), __( '"Check" means the permissions look unusual. Do not change anything yourself if you are unsure – ask your host or agency.', 'wiedenroth-technologies-sentrygate' ) ); ?>
 		<div class="<?php echo esc_attr( $ui->cls( 'table-wrap' ) ); ?>">
 			<table class="<?php echo esc_attr( $ui->cls( 'table' ) ); ?>">
 				<thead>
 					<tr>
-						<th><?php esc_html_e( 'Pfad', 'wiedenroth-technologies-sentrygate' ); ?></th>
-						<th><?php esc_html_e( 'Rechte', 'wiedenroth-technologies-sentrygate' ); ?></th>
+						<th><?php esc_html_e( 'Path', 'wiedenroth-technologies-sentrygate' ); ?></th>
+						<th><?php esc_html_e( 'Permissions', 'wiedenroth-technologies-sentrygate' ); ?></th>
 						<th><?php esc_html_e( 'Status', 'wiedenroth-technologies-sentrygate' ); ?></th>
-						<th><?php esc_html_e( 'Hinweis', 'wiedenroth-technologies-sentrygate' ); ?></th>
+						<th><?php esc_html_e( 'Note', 'wiedenroth-technologies-sentrygate' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -97,7 +97,7 @@ $sentrygate_htaccess_hint = '' !== $sentrygate_htaccess_path
 								if ( $sentrygate_row['ok'] ) {
 									$ui->badge( 'ok', __( 'OK', 'wiedenroth-technologies-sentrygate' ) );
 								} else {
-									$ui->badge( 'warn', __( 'Prüfen', 'wiedenroth-technologies-sentrygate' ) );
+									$ui->badge( 'warn', __( 'Check', 'wiedenroth-technologies-sentrygate' ) );
 								}
 								?>
 							</td>

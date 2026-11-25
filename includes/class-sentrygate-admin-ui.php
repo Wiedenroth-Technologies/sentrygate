@@ -189,7 +189,7 @@ class SentryGate_Admin_Ui {
 		echo '<button type="button" class="' . esc_attr( $this->cls( 'inbox__toggle' ) ) . '" data-wt-inbox-toggle hidden aria-expanded="false" aria-haspopup="true">';
 		echo '<span data-wt-inbox-label></span>';
 		echo '</button>';
-		echo '<div class="' . esc_attr( $this->cls( 'inbox__panel' ) ) . '" data-wt-inbox-panel hidden role="region" aria-label="' . esc_attr__( 'WordPress-Nachrichten', 'wiedenroth-technologies-sentrygate' ) . '">';
+		echo '<div class="' . esc_attr( $this->cls( 'inbox__panel' ) ) . '" data-wt-inbox-panel hidden role="region" aria-label="' . esc_attr__( 'WordPress notices', 'wiedenroth-technologies-sentrygate' ) . '">';
 		if ( '' !== $this->captured_notices ) {
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- admin notice HTML from WP / other plugins.
 			echo $this->captured_notices;
@@ -257,10 +257,10 @@ class SentryGate_Admin_Ui {
 				array(
 					'slug' => $this->slug,
 					'i18n' => array(
-						'copied'    => __( 'Klassenname kopiert.', 'wiedenroth-technologies-sentrygate' ),
-						'noticeOne' => __( '1 Nachricht', 'wiedenroth-technologies-sentrygate' ),
+						'copied'    => __( 'Class name copied.', 'wiedenroth-technologies-sentrygate' ),
+						'noticeOne' => __( '1 notice', 'wiedenroth-technologies-sentrygate' ),
 						/* translators: %d: number of admin notices */
-						'noticeMany' => __( '%d Nachrichten', 'wiedenroth-technologies-sentrygate' ),
+						'noticeMany' => __( '%d notices', 'wiedenroth-technologies-sentrygate' ),
 					),
 				)
 			);
@@ -309,7 +309,7 @@ class SentryGate_Admin_Ui {
 			echo '<p class="' . esc_attr( $this->cls( 'card__text' ) ) . '">' . esc_html( $text ) . '</p>';
 		}
 		if ( '' !== $tip ) {
-			echo '<p class="' . esc_attr( $this->cls( 'card__tip' ) ) . '"><span class="' . esc_attr( $this->cls( 'card__tip-label' ) ) . '">' . esc_html__( 'Tipp:', 'wiedenroth-technologies-sentrygate' ) . '</span> ' . esc_html( $tip ) . '</p>';
+			echo '<p class="' . esc_attr( $this->cls( 'card__tip' ) ) . '"><span class="' . esc_attr( $this->cls( 'card__tip-label' ) ) . '">' . esc_html__( 'Tip:', 'wiedenroth-technologies-sentrygate' ) . '</span> ' . esc_html( $tip ) . '</p>';
 		}
 		echo '</div>';
 	}
@@ -457,20 +457,20 @@ class SentryGate_Admin_Ui {
 
 		$summary = sprintf(
 			/* translators: 1: first item on page, 2: last item on page, 3: total items */
-			__( '%1$s–%2$s von %3$s Einträgen', 'wiedenroth-technologies-sentrygate' ),
+			__( '%1$s–%2$s of %3$s entries', 'wiedenroth-technologies-sentrygate' ),
 			number_format_i18n( $from ),
 			number_format_i18n( $to ),
 			number_format_i18n( $total_items )
 		);
 
-		echo '<nav class="' . esc_attr( $this->cls( 'pagination' ) ) . '" aria-label="' . esc_attr__( 'Seiten', 'wiedenroth-technologies-sentrygate' ) . '">';
+		echo '<nav class="' . esc_attr( $this->cls( 'pagination' ) ) . '" aria-label="' . esc_attr__( 'Pages', 'wiedenroth-technologies-sentrygate' ) . '">';
 		echo '<p class="' . esc_attr( $this->cls( 'pagination__summary' ) ) . '">';
 		echo '<span class="' . esc_attr( $this->cls( 'pagination__range' ) ) . '">' . esc_html( $summary ) . '</span>';
 		echo '<span class="' . esc_attr( $this->cls( 'pagination__hint' ) ) . '">';
 		echo esc_html(
 			sprintf(
 				/* translators: %d: total number of pages */
-				_n( '%d Seite', '%d Seiten', $total_pages, 'wiedenroth-technologies-sentrygate' ),
+				_n( '%d page', '%d pages', $total_pages, 'wiedenroth-technologies-sentrygate' ),
 				$total_pages
 			)
 		);
@@ -483,8 +483,8 @@ class SentryGate_Admin_Ui {
 				'current'   => $current,
 				'total'     => $total_pages,
 				'type'      => 'array',
-				'prev_text' => __( 'Zurück', 'wiedenroth-technologies-sentrygate' ),
-				'next_text' => __( 'Weiter', 'wiedenroth-technologies-sentrygate' ),
+				'prev_text' => __( 'Previous', 'wiedenroth-technologies-sentrygate' ),
+				'next_text' => __( 'Next', 'wiedenroth-technologies-sentrygate' ),
 				'mid_size'  => 1,
 				'end_size'  => 1,
 			);
@@ -523,7 +523,7 @@ class SentryGate_Admin_Ui {
 	 */
 	public function footer( array $links, string $brand_url, string $brand_img = '', string $brand_name = 'Wiedenroth Technologies' ): void {
 		echo '<footer class="' . esc_attr( $this->cls( 'footer' ) ) . '">';
-		echo '<nav class="' . esc_attr( $this->cls( 'footer__links' ) ) . '" aria-label="' . esc_attr__( 'Rechtliches', 'wiedenroth-technologies-sentrygate' ) . '">';
+		echo '<nav class="' . esc_attr( $this->cls( 'footer__links' ) ) . '" aria-label="' . esc_attr__( 'Legal', 'wiedenroth-technologies-sentrygate' ) . '">';
 
 		$first = true;
 		foreach ( $links as $label => $url ) {
@@ -542,7 +542,7 @@ class SentryGate_Admin_Ui {
 
 		if ( '' !== $brand_url ) {
 			echo '<div class="' . esc_attr( $this->cls( 'brand' ) ) . '">';
-			echo '<p class="' . esc_attr( $this->cls( 'brand__label' ) ) . '">' . esc_html__( 'Ein Produkt von', 'wiedenroth-technologies-sentrygate' ) . '</p>';
+			echo '<p class="' . esc_attr( $this->cls( 'brand__label' ) ) . '">' . esc_html__( 'A product of', 'wiedenroth-technologies-sentrygate' ) . '</p>';
 			echo '<a class="' . esc_attr( $this->cls( 'brand__link' ) ) . '" href="' . esc_url( $brand_url ) . '" target="_blank" rel="noopener noreferrer">';
 
 			if ( '' !== $brand_img ) {

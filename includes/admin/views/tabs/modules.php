@@ -16,44 +16,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $modules = array(
 	'module_interface_hardening' => array(
-		'label' => __( 'Basis-Schutz', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Sperrt bekannte Angriffswege (XML-RPC, Benutzer-Erraten, Datei-Editor, Versionslecks).', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'Basic protection', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'Blocks known attack paths (XML-RPC, username guessing, file editor, version leaks).', 'wiedenroth-technologies-sentrygate' ),
 	),
 	'module_debug_control'       => array(
-		'label' => __( 'Fehleranzeige prüfen', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Warnt, wenn WordPress im Live-Betrieb Debug-Meldungen zeigt – ändert Ihre wp-config.php nicht.', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'Check error display', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'Warns you when WordPress shows debug messages on a live site – it does not change your wp-config.php.', 'wiedenroth-technologies-sentrygate' ),
 	),
 	'module_login_path'          => array(
-		'label' => __( 'Login-Adresse verstecken', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Ersetzt /wp-login.php durch eine eigene Adresse. Unbekannte Besucher sehen „Seite nicht gefunden“.', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'Hide the login URL', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'Replaces /wp-login.php with a custom address. Unknown visitors see "Page not found".', 'wiedenroth-technologies-sentrygate' ),
 	),
 	'module_login_challenge'     => array(
-		'label' => __( 'Login-Schutz', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Prüfung vor dem Login (Symbolwahl), danach Sitzungscookie. Direct-POSTs ohne Cookie werden abgewiesen.', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'Login protection', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'A check before login (symbol choice), then a session cookie. Direct POSTs without a cookie are rejected.', 'wiedenroth-technologies-sentrygate' ),
 	),
 	'module_form_challenge'      => array(
-		'label' => __( 'Formular-Schutz', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Dieselbe Symbolwahl vor dem Absenden von BlockForge-Formularen und anderen angebundenen Formularen.', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'Form protection', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'The same symbol choice before submitting BlockForge forms and other connected forms.', 'wiedenroth-technologies-sentrygate' ),
 	),
 	'module_two_factor'          => array(
-		'label' => __( 'Zwei-Faktor-Login', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Zusätzlicher Code per Authenticator-App oder E-Mail. Einrichtung unter Benutzer → Zwei-Faktor.', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'Two-factor login', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'An extra code via authenticator app or email. Set up under Users → Two-factor.', 'wiedenroth-technologies-sentrygate' ),
 	),
 	'module_security_headers'    => array(
-		'label' => __( 'Browser-Schutz', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Sagt dem Browser, wie die Seite geladen werden darf (z. B. kein Einbetten in fremde Seiten).', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'Browser protection', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'Tells the browser how the page may be loaded (for example, no embedding on other sites).', 'wiedenroth-technologies-sentrygate' ),
 	),
 	'module_file_hardening'      => array(
-		'label' => __( 'Dateien & Server', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Zeigt Empfehlungen zu Dateirechten und Upload-Schutz. Schreibt nichts automatisch auf den Server.', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'Files & server', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'Shows recommendations for file permissions and upload protection. Does not write anything to the server automatically.', 'wiedenroth-technologies-sentrygate' ),
 	),
 	'module_audit_log'           => array(
-		'label' => __( 'Ereignis-Protokoll', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Protokolliert Logins, Sperren und wichtige Sicherheitsereignisse.', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'Audit log', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'Logs logins, lockouts, and important security events.', 'wiedenroth-technologies-sentrygate' ),
 	),
 	'module_core_integrity'      => array(
-		'label' => __( 'WordPress-Check', 'wiedenroth-technologies-sentrygate' ),
-		'desc'  => __( 'Vergleicht WordPress-Dateien mit dem Original von wordpress.org. Keine automatische Reparatur.', 'wiedenroth-technologies-sentrygate' ),
+		'label' => __( 'WordPress check', 'wiedenroth-technologies-sentrygate' ),
+		'desc'  => __( 'Compares WordPress files with the original from wordpress.org. No automatic repair.', 'wiedenroth-technologies-sentrygate' ),
 	),
 );
 ?>
@@ -63,9 +63,9 @@ $modules = array(
 	<div class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
 		<?php
 		$ui->heading(
-			__( 'Module sind die Schutz-Bausteine', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Schalten Sie hier ein, was auf dieser Website aktiv sein soll. Ausgeschaltete Module tun nichts – ihre Einstellungen bleiben gespeichert.', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Für die meisten Kunden-Websites: Basis-Schutz, Login-Schutz, Browser-Schutz und Ereignis-Protokoll anlassen.', 'wiedenroth-technologies-sentrygate' )
+			__( 'Modules are the protection building blocks', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Here, turn on what should be active on this site. Turned-off modules do nothing – their settings stay saved.', 'wiedenroth-technologies-sentrygate' ),
+			__( 'For most client sites: leave Basic protection, Login protection, Browser protection, and Audit log on.', 'wiedenroth-technologies-sentrygate' )
 		);
 		?>
 
@@ -76,12 +76,12 @@ $modules = array(
 				$key,
 				$options[ $key ] ?? false,
 				$meta['label'],
-				__( 'Einschalten', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Enable', 'wiedenroth-technologies-sentrygate' ),
 				$meta['desc']
 			);
 			?>
 		<?php endforeach; ?>
 	</div>
 
-	<?php SentryGate_Admin::save_actions( $ui, __( 'Module speichern', 'wiedenroth-technologies-sentrygate' ) ); ?>
+	<?php SentryGate_Admin::save_actions( $ui, __( 'Save modules', 'wiedenroth-technologies-sentrygate' ) ); ?>
 </form>

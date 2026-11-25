@@ -17,7 +17,7 @@
 		btn.disabled = true;
 		btn.classList.add('is-busy');
 		btn.setAttribute('aria-busy', 'true');
-		setStatus(i18n.running || 'Prüfung läuft…', 'busy');
+		setStatus(i18n.running || 'Checking…', 'busy');
 
 		var body = new FormData();
 		body.append('action', 'sentrygate_run_checksum');
@@ -36,7 +36,7 @@
 				btn.classList.remove('is-busy');
 				btn.removeAttribute('aria-busy');
 				if (!json || !json.success) {
-					var err = i18n.error || 'Fehler bei der Prüfung.';
+					var err = i18n.error || 'The check failed.';
 					if (json && json.data && json.data.message) {
 						err = json.data.message;
 					}
@@ -46,7 +46,7 @@
 					}
 					return;
 				}
-				setStatus(i18n.done || 'Prüfung abgeschlossen', 'done');
+				setStatus(i18n.done || 'Check complete', 'done');
 				if (resultEl) {
 					resultEl.innerHTML = renderResult(json.data || {});
 				}
@@ -55,7 +55,7 @@
 				btn.disabled = false;
 				btn.classList.remove('is-busy');
 				btn.removeAttribute('aria-busy');
-				setStatus(i18n.error || 'Fehler bei der Prüfung.', 'error');
+				setStatus(i18n.error || 'The check failed.', 'error');
 			});
 	});
 
@@ -86,23 +86,23 @@
 		html += '<div class="sentrygate-wt-result__banner sentrygate-wt-result__banner--' + tone + '">';
 		html += '<span class="sentrygate-wt-result__icon" aria-hidden="true">' + statSvg(ok ? 'check' : 'warn') + '</span>';
 		html += '<div class="sentrygate-wt-result__copy">';
-		html += '<p class="sentrygate-wt-result__eyebrow">' + escapeHtml(i18n.lastTitle || 'Letztes Ergebnis') + '</p>';
+		html += '<p class="sentrygate-wt-result__eyebrow">' + escapeHtml(i18n.lastTitle || 'Last result') + '</p>';
 		html += '<h2 class="sentrygate-wt-result__title">' + escapeHtml(ok ? (i18n.okTitle || '') : (i18n.warnTitle || '')) + '</h2>';
 		html += '<p class="sentrygate-wt-result__text">' + escapeHtml(ok ? (i18n.okText || '') : (i18n.warnText || '')) + '</p>';
 		html += '</div></div>';
 
 		html += '<div class="sentrygate-wt-result__body">';
 		html += '<div class="sentrygate-wt-stats">';
-		html += statHtml(String(checked), i18n.statChecked || 'Dateien geprüft', 'accent', 'shield');
+		html += statHtml(String(checked), i18n.statChecked || 'Files checked', 'accent', 'shield');
 		html += statHtml(
 			String(mismatch.length),
-			i18n.statMismatch || 'Abweichend',
+			i18n.statMismatch || 'Mismatch',
 			mismatch.length ? 'warn' : 'ok',
 			mismatch.length ? 'warn' : 'check'
 		);
 		html += statHtml(
 			String(missing.length),
-			i18n.statMissing || 'Fehlend',
+			i18n.statMissing || 'Missing',
 			missing.length ? 'off' : 'ok',
 			missing.length ? 'x' : 'check'
 		);
@@ -111,7 +111,7 @@
 		if (d.time_label || d.version) {
 			html += '<ul class="sentrygate-wt-result__meta">';
 			if (d.time_label) {
-				html += metaChipHtml(i18n.metaChecked || 'Zuletzt geprüft', d.time_label);
+				html += metaChipHtml(i18n.metaChecked || 'Last checked', d.time_label);
 			}
 			if (d.version) {
 				html += metaChipHtml(i18n.metaWp || 'WordPress', d.version);
@@ -126,10 +126,10 @@
 		}
 
 		if (mismatch.length) {
-			html += fileCardHtml(i18n.mismatchFiles || 'Abweichende Dateien', mismatch);
+			html += fileCardHtml(i18n.mismatchFiles || 'Mismatched files', mismatch);
 		}
 		if (missing.length) {
-			html += fileCardHtml(i18n.missingFiles || 'Fehlende Dateien', missing);
+			html += fileCardHtml(i18n.missingFiles || 'Missing files', missing);
 		}
 		return html;
 	}
@@ -169,7 +169,7 @@
 		return '<div class="sentrygate-wt-card sentrygate-wt-card--flush">' +
 			'<div class="sentrygate-wt-card__head"><h2 class="sentrygate-wt-card__title">' + escapeHtml(title) + '</h2></div>' +
 			'<div class="sentrygate-wt-table-wrap"><table class="sentrygate-wt-table">' +
-			'<thead><tr><th scope="col">' + escapeHtml(i18n.fileCol || 'Datei') + '</th></tr></thead>' +
+			'<thead><tr><th scope="col">' + escapeHtml(i18n.fileCol || 'File') + '</th></tr></thead>' +
 			'<tbody>' + rows + '</tbody></table></div></div>';
 	}
 

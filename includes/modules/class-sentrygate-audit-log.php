@@ -108,7 +108,7 @@ class SentryGate_Audit_Log {
 			'info',
 			sprintf(
 				/* translators: %s: username */
-				__( 'Erfolgreicher Login: %s', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Successful login: %s', 'wiedenroth-technologies-sentrygate' ),
 				$user_login
 			),
 			array(),
@@ -133,7 +133,7 @@ class SentryGate_Audit_Log {
 			'warning',
 			sprintf(
 				/* translators: %s: username */
-				__( 'Fehlgeschlagener Login: %s', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Failed login: %s', 'wiedenroth-technologies-sentrygate' ),
 				$username
 			),
 			array(),
@@ -159,7 +159,7 @@ class SentryGate_Audit_Log {
 			$is_admin ? 'critical' : 'info',
 			sprintf(
 				/* translators: %s: username */
-				__( 'Neuer Benutzer: %s', 'wiedenroth-technologies-sentrygate' ),
+				__( 'New user: %s', 'wiedenroth-technologies-sentrygate' ),
 				$user->user_login
 			),
 			array( 'roles' => $user->roles ),
@@ -183,7 +183,7 @@ class SentryGate_Audit_Log {
 			$critical ? 'critical' : 'warning',
 			sprintf(
 				/* translators: 1: user, 2: role */
-				__( 'Rollenwechsel: %1$s → %2$s', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Role change: %1$s → %2$s', 'wiedenroth-technologies-sentrygate' ),
 				$user ? $user->user_login : (string) $user_id,
 				$role
 			),
@@ -204,7 +204,7 @@ class SentryGate_Audit_Log {
 			'warning',
 			sprintf(
 				/* translators: %s: plugin */
-				__( 'Plugin aktiviert: %s', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Plugin activated: %s', 'wiedenroth-technologies-sentrygate' ),
 				$plugin
 			),
 			array( 'plugin' => $plugin ),
@@ -223,7 +223,7 @@ class SentryGate_Audit_Log {
 			'info',
 			sprintf(
 				/* translators: %s: plugin */
-				__( 'Plugin deaktiviert: %s', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Plugin deactivated: %s', 'wiedenroth-technologies-sentrygate' ),
 				$plugin
 			),
 			array( 'plugin' => $plugin ),
@@ -245,7 +245,7 @@ class SentryGate_Audit_Log {
 			'warning',
 			sprintf(
 				/* translators: %s: theme */
-				__( 'Theme gewechselt: %s', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Theme switched: %s', 'wiedenroth-technologies-sentrygate' ),
 				$new_name
 			),
 			array(),
@@ -267,7 +267,7 @@ class SentryGate_Audit_Log {
 			'warning',
 			sprintf(
 				/* translators: %s: update type */
-				__( 'Update abgeschlossen: %s', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Update complete: %s', 'wiedenroth-technologies-sentrygate' ),
 				(string) $type
 			),
 			$options,
@@ -289,7 +289,7 @@ class SentryGate_Audit_Log {
 				$email,
 				sprintf(
 					/* translators: 1: site, 2: event */
-					__( '[%1$s] SentryGate Alarm: %2$s', 'wiedenroth-technologies-sentrygate' ),
+					__( '[%1$s] SentryGate alert: %2$s', 'wiedenroth-technologies-sentrygate' ),
 					wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
 					$event_type
 				),
@@ -349,7 +349,7 @@ class SentryGate_Audit_Log {
 				'lockout_burst',
 				sprintf(
 					/* translators: 1: count, 2: seconds */
-					__( '%1$d Lockouts innerhalb von %2$d Sekunden.', 'wiedenroth-technologies-sentrygate' ),
+					__( '%1$d lockouts within %2$d seconds.', 'wiedenroth-technologies-sentrygate' ),
 					$count,
 					$window
 				),
@@ -444,17 +444,17 @@ class SentryGate_Audit_Log {
 		if ( ! SentryGate_Options::module_enabled( 'audit_log' ) ) {
 			return array(
 				'status'  => 'inactive',
-				'label'   => __( 'Ereignis-Protokoll', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Modul deaktiviert – keine Nachvollziehbarkeit kritischer Events.', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Audit log', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Module disabled – critical events cannot be traced.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
 		return array(
 			'status'  => 'active',
-			'label'   => __( 'Ereignis-Protokoll', 'wiedenroth-technologies-sentrygate' ),
+			'label'   => __( 'Audit log', 'wiedenroth-technologies-sentrygate' ),
 			'message' => sprintf(
 				/* translators: %d: retention days */
-				__( 'Logging aktiv, Aufbewahrung %d Tage.', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Logging active, retention %d days.', 'wiedenroth-technologies-sentrygate' ),
 				(int) SentryGate_Options::get( 'audit_retention_days', 90 )
 			),
 		);

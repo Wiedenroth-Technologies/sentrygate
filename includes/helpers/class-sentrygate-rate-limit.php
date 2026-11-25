@@ -139,7 +139,7 @@ class SentryGate_Rate_Limit {
 				'critical',
 				sprintf(
 					/* translators: 1: IP, 2: username */
-					__( 'Login-Lockout für IP %1$s (Benutzer: %2$s).', 'wiedenroth-technologies-sentrygate' ),
+					__( 'Login lockout for IP %1$s (user: %2$s).', 'wiedenroth-technologies-sentrygate' ),
 					$ip,
 					$username ?: '-'
 				),

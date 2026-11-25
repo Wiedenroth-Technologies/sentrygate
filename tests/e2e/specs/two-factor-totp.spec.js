@@ -15,7 +15,7 @@ const {
 	clearLockouts,
 } = require( '../helpers/wp-cli' );
 
-test.describe( '2FA TOTP (Authenticator-App)', () => {
+test.describe( '2FA TOTP (Authenticator app)', () => {
 	test.beforeEach( () => {
 		clearLockouts();
 		resetUserTfa( adminUserId() );
@@ -46,7 +46,7 @@ test.describe( '2FA TOTP (Authenticator-App)', () => {
 		const code = totpCode( secret );
 		await page.locator( '#sentrygate_tfa_confirm' ).fill( code );
 		await page.locator( 'button[name="sentrygate_tfa_action"][value="confirm_app"]' ).click();
-		await expect( page.getByRole( 'status' ).filter( { hasText: /Einrichtung abgeschlossen|Zwei-Faktor ist aktiv/i } ).first() ).toBeVisible();
+		await expect( page.getByRole( 'status' ).filter( { hasText: /Setup complete|Two-factor is active/i } ).first() ).toBeVisible();
 
 		await page.context().clearCookies();
 		await page.goto( '/wp-login.php' );

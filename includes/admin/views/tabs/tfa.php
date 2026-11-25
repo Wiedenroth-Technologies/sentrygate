@@ -23,14 +23,14 @@ $selected = (array) ( $options['tfa_required_roles'] ?? array() );
 	<div class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
 		<?php
 		$ui->heading(
-			__( 'Zweiter Schritt nach dem Passwort', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Selbst wenn das Passwort gestohlen wird, braucht der Angreifer zusätzlich einen Code. Jeder Nutzer wählt auf der eigenen Seite „Zwei-Faktor“ zwischen Authenticator-App und E-Mail.', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Für Administratoren unbedingt als Pflicht-Rolle markieren.', 'wiedenroth-technologies-sentrygate' )
+			__( 'Second step after the password', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Even if the password is stolen, the attacker also needs a code. Each user chooses an authenticator app or email on their own "Two-factor" page.', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Be sure to mark administrators as a required role.', 'wiedenroth-technologies-sentrygate' )
 		);
 		?>
 
 		<div class="<?php echo esc_attr( $ui->cls( 'field' ) ); ?>">
-			<span class="<?php echo esc_attr( $ui->cls( 'field__label' ) ); ?>"><?php esc_html_e( 'Wer muss Zwei-Faktor nutzen?', 'wiedenroth-technologies-sentrygate' ); ?></span>
+			<span class="<?php echo esc_attr( $ui->cls( 'field__label' ) ); ?>"><?php esc_html_e( 'Who must use two-factor?', 'wiedenroth-technologies-sentrygate' ); ?></span>
 			<div class="<?php echo esc_attr( $ui->cls( 'field__control' ) ); ?>">
 				<input type="hidden" name="<?php echo esc_attr( SentryGate_Admin::option_name( 'tfa_roles_section' ) ); ?>" value="1" />
 				<div class="<?php echo esc_attr( $ui->cls( 'check-list' ) ); ?>">
@@ -41,7 +41,7 @@ $selected = (array) ( $options['tfa_required_roles'] ?? array() );
 						</label>
 					<?php endforeach; ?>
 				</div>
-				<?php $ui->help( __( 'Markierte Rollen werden nach dem Login zur Einrichtungsseite geleitet, bis eine Methode aktiv ist.', 'wiedenroth-technologies-sentrygate' ) ); ?>
+				<?php $ui->help( __( 'Marked roles are sent to the setup page after login until a method is active.', 'wiedenroth-technologies-sentrygate' ) ); ?>
 			</div>
 		</div>
 
@@ -50,17 +50,17 @@ $selected = (array) ( $options['tfa_required_roles'] ?? array() );
 			$ui,
 			'tfa_email_fallback',
 			$options['tfa_email_fallback'] ?? true,
-			__( 'E-Mail als Methode erlauben?', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Ja, Nutzer dürfen E-Mail statt einer App wählen', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Ohne diese Option bleibt nur die Authenticator-App. Es ist keine zweite Login-Methode parallel, sondern eine Wahl.', 'wiedenroth-technologies-sentrygate' )
+			__( 'Allow email as a method?', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Yes, users may choose email instead of an app', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Without this option, only the authenticator app remains. Email is not a second method alongside the app; it is a choice between the two.', 'wiedenroth-technologies-sentrygate' )
 		);
 
 		SentryGate_Admin::field_number(
 			$ui,
 			'tfa_trusted_days',
 			$options['tfa_trusted_days'] ?? 30,
-			__( 'Gerät merken', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Tage ohne erneuten Code. Nutzer können beim Login „Dieses Gerät vertrauen“ wählen. Auf fremden Rechnern nicht anhaken.', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Remember device', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Days without another code. Users can choose "Trust this device" at login. Do not check it on a shared computer.', 'wiedenroth-technologies-sentrygate' ),
 			1,
 			365
 		);
@@ -69,8 +69,8 @@ $selected = (array) ( $options['tfa_required_roles'] ?? array() );
 			$ui,
 			'tfa_recovery_count',
 			$options['tfa_recovery_count'] ?? 10,
-			__( 'Notfall-Codes', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Anzahl neuer Codes (8–10). Einmalig anzeigbare Backup-Codes, falls Handy oder App weg ist. Sicher aufbewahren.', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Emergency codes', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Number of new codes (8–10). One-time backup codes in case the phone or app is gone. Keep them safe.', 'wiedenroth-technologies-sentrygate' ),
 			8,
 			10
 		);
@@ -82,10 +82,10 @@ $selected = (array) ( $options['tfa_required_roles'] ?? array() );
 
 <div class="<?php echo esc_attr( $ui->cls( 'notice', 'info shop' ) ); ?>">
 	<div class="<?php echo esc_attr( $ui->cls( 'notice__body' ) ); ?>">
-		<p class="<?php echo esc_attr( $ui->cls( 'notice__title' ) ); ?>"><?php esc_html_e( 'Eigene Einrichtungsseite', 'wiedenroth-technologies-sentrygate' ); ?></p>
-		<p class="<?php echo esc_attr( $ui->cls( 'notice__text' ) ); ?>"><?php esc_html_e( 'Nicht im Profil: Benutzer → Zwei-Faktor. Dort App oder E-Mail wählen, bestätigen, fertig.', 'wiedenroth-technologies-sentrygate' ); ?></p>
+		<p class="<?php echo esc_attr( $ui->cls( 'notice__title' ) ); ?>"><?php esc_html_e( 'Separate setup page', 'wiedenroth-technologies-sentrygate' ); ?></p>
+		<p class="<?php echo esc_attr( $ui->cls( 'notice__text' ) ); ?>"><?php esc_html_e( 'Not in the profile: Users → Two-factor. Choose an app or email there, confirm, done.', 'wiedenroth-technologies-sentrygate' ); ?></p>
 	</div>
 	<div class="<?php echo esc_attr( $ui->cls( 'notice__actions' ) ); ?>">
-		<?php $ui->button( __( 'Meine Zwei-Faktor-Seite', 'wiedenroth-technologies-sentrygate' ), 'primary', 'button', SentryGate_Two_Factor::setup_url() ); ?>
+		<?php $ui->button( __( 'My two-factor page', 'wiedenroth-technologies-sentrygate' ), 'primary', 'button', SentryGate_Two_Factor::setup_url() ); ?>
 	</div>
 </div>

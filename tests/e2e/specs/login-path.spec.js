@@ -9,7 +9,7 @@ const { updateSentryGateOptions, wpCli, clearLockouts } = require( '../helpers/w
 
 const SLUG = 'sg-e2e-portal';
 
-test.describe( 'Eigener Login-Pfad', () => {
+test.describe( 'Custom login path', () => {
 	test.beforeEach( () => {
 		clearLockouts();
 		updateSentryGateOptions( {
@@ -44,7 +44,7 @@ test.describe( 'Eigener Login-Pfad', () => {
 		await fillLoginCredentials( page, { user: ADMIN_USER, password: ADMIN_PASSWORD } );
 		await expect( page ).toHaveURL( /wp-admin/ );
 
-		// Dokumentierter Wiederherstellungsweg: Modul aus / Plugin deaktivieren stellt wp-login wieder her.
+		// Documented recovery path: turning the module off / deactivating the plugin restores wp-login.
 		updateSentryGateOptions( { module_login_path: false } );
 		wpCli( [ 'rewrite', 'flush', '--hard' ] );
 

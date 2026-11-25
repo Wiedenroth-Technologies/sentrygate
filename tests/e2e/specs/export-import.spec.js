@@ -22,7 +22,7 @@ test.describe( 'Konfig-Export und -Import', () => {
 
 		await page.goto( '/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=export' );
 		const downloadPromise = page.waitForEvent( 'download' );
-		await page.getByRole( 'button', { name: /Datei herunterladen/i } ).click();
+		await page.getByRole( 'button', { name: /Download file/i } ).click();
 		const download = await downloadPromise;
 		const tmp = path.join( test.info().outputDir, 'sentrygate-config.json' );
 		fs.mkdirSync( path.dirname( tmp ), { recursive: true } );
@@ -43,9 +43,9 @@ test.describe( 'Konfig-Export und -Import', () => {
 		await page.locator( 'input[name="sentrygate_import"]' ).setInputFiles( tmp );
 		await Promise.all( [
 			page.waitForURL( /tab=export&import=ok/, { timeout: 30_000 } ),
-			page.getByRole( 'button', { name: /Datei einspielen/i } ).click(),
+			page.getByRole( 'button', { name: /Import file/i } ).click(),
 		] );
-		await expect( page.getByRole( 'status' ).filter( { hasText: /Einstellungen wurden übernommen/i } ).first() ).toBeVisible();
+		await expect( page.getByRole( 'status' ).filter( { hasText: /Settings have been applied/i } ).first() ).toBeVisible();
 
 		const after = wpCli( [
 			'eval',
