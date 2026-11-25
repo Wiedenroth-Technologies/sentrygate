@@ -1,10 +1,10 @@
-=== Wiedenroth Technologies SentryGate ===
+=== SentryGate – Security Firewall, Login Protection and Two-Factor Authentication (2FA) ===
 Contributors: wiedenrothtechnologies
 Tags: security, 2fa, login, hardening, audit-log
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Author: Wiedenroth Technologies GmbH
@@ -87,6 +87,9 @@ This plugin may connect to external services as follows:
 
 == Changelog ==
 
+= 1.0.2 =
+* Updated plugin name in the directory listing.
+
 = 1.0.1 =
 * Switched all source strings to English so the plugin can be translated on translate.wordpress.org.
 
@@ -98,6 +101,9 @@ This plugin may connect to external services as follows:
 * Config export/import and offline QR for authenticator setup
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Updated plugin name in the directory listing.
 
 = 1.0.1 =
 Switched all source strings to English so the plugin can be translated on translate.wordpress.org.
