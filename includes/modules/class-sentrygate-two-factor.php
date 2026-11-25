@@ -102,8 +102,8 @@ class SentryGate_Two_Factor {
 			'email_sent' => $email_sent,
 			'trust_days' => (int) SentryGate_Options::get( 'tfa_trusted_days', 30 ),
 			'message'    => 'email' === $method
-				? __( 'Bitte den Code aus der E-Mail eingeben.', 'wiedenroth-technologies-sentrygate' )
-				: __( 'Bitte den Code aus der Authenticator-App eingeben.', 'wiedenroth-technologies-sentrygate' ),
+				? __( 'Please enter the code from the email.', 'wiedenroth-technologies-sentrygate' )
+				: __( 'Please enter the code from the authenticator app.', 'wiedenroth-technologies-sentrygate' ),
 		);
 	}
 
@@ -112,8 +112,8 @@ class SentryGate_Two_Factor {
 	 */
 	public function add_setup_page(): void {
 		add_users_page(
-			__( 'Zwei-Faktor', 'wiedenroth-technologies-sentrygate' ),
-			__( 'Zwei-Faktor', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Two-factor', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Two-factor', 'wiedenroth-technologies-sentrygate' ),
 			'read',
 			self::PAGE_SLUG,
 			array( $this, 'render_setup_page' )
@@ -150,12 +150,12 @@ class SentryGate_Two_Factor {
 		}
 
 		if ( ! isset( $_POST['sentrygate_tfa_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( (string) $_POST['sentrygate_tfa_nonce'] ) ), 'sentrygate_tfa_setup' ) ) {
-			wp_die( esc_html__( 'Sicherheitsprüfung fehlgeschlagen.', 'wiedenroth-technologies-sentrygate' ) );
+			wp_die( esc_html__( 'Security check failed.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		$user = $this->setup_user_from_request( true );
 		if ( ! $user ) {
-			wp_die( esc_html__( 'Keine Berechtigung.', 'wiedenroth-technologies-sentrygate' ) );
+			wp_die( esc_html__( 'You do not have permission.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		$action = isset( $_POST['sentrygate_tfa_action'] ) ? sanitize_key( (string) wp_unslash( $_POST['sentrygate_tfa_action'] ) ) : '';
@@ -246,7 +246,7 @@ class SentryGate_Two_Factor {
 	public function render_setup_page(): void {
 		$user = $this->setup_user_from_request( false );
 		if ( ! $user ) {
-			wp_die( esc_html__( 'Keine Berechtigung.', 'wiedenroth-technologies-sentrygate' ) );
+			wp_die( esc_html__( 'You do not have permission.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		$ui            = SentryGate::instance()->ui();
@@ -436,8 +436,8 @@ class SentryGate_Two_Factor {
 			return new WP_Error(
 				'sentrygate_tfa',
 				'email' === $method
-					? __( 'Bitte den Code aus der E-Mail eingeben.', 'wiedenroth-technologies-sentrygate' )
-					: __( 'Bitte den Code aus der Authenticator-App eingeben.', 'wiedenroth-technologies-sentrygate' ),
+					? __( 'Please enter the code from the email.', 'wiedenroth-technologies-sentrygate' )
+					: __( 'Please enter the code from the authenticator app.', 'wiedenroth-technologies-sentrygate' ),
 				array(
 					'token'      => $token,
 					'method'     => $method,
@@ -472,7 +472,7 @@ class SentryGate_Two_Factor {
 				array(
 					'locked'    => true,
 					'remaining' => SentryGate_Rate_Limit::remaining_seconds( $ip ),
-					'message'   => __( 'Zu viele Fehlversuche. Bitte später erneut versuchen.', 'wiedenroth-technologies-sentrygate' ),
+					'message'   => __( 'Too many failed attempts. Please try again later.', 'wiedenroth-technologies-sentrygate' ),
 				)
 			);
 		}
@@ -480,18 +480,18 @@ class SentryGate_Two_Factor {
 		$token = $this->request_token();
 		$data  = $token ? get_transient( self::TRANSIENT_PENDING . $token ) : false;
 		if ( ! is_array( $data ) ) {
-			wp_send_json_error( array( 'message' => __( 'Sitzung abgelaufen. Bitte erneut anmelden.', 'wiedenroth-technologies-sentrygate' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Session expired. Please log in again.', 'wiedenroth-technologies-sentrygate' ) ) );
 		}
 
 		$user = get_user_by( 'id', (int) $data['user_id'] );
 		if ( ! $user ) {
-			wp_send_json_error( array( 'message' => __( 'Sitzung abgelaufen. Bitte erneut anmelden.', 'wiedenroth-technologies-sentrygate' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Session expired. Please log in again.', 'wiedenroth-technologies-sentrygate' ) ) );
 		}
 
 		$code = isset( $_POST['code'] ) ? sanitize_text_field( wp_unslash( (string) $_POST['code'] ) ) : '';
 		if ( ! $this->verify_any_code( $user, $code ) ) {
 			SentryGate_Rate_Limit::record_failure( $ip, $user->user_login );
-			wp_send_json_error( array( 'message' => __( 'Code ungültig oder abgelaufen.', 'wiedenroth-technologies-sentrygate' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Code invalid or expired.', 'wiedenroth-technologies-sentrygate' ) ) );
 		}
 
 		delete_transient( self::TRANSIENT_PENDING . $token );
@@ -530,7 +530,7 @@ class SentryGate_Two_Factor {
 				array(
 					'locked'    => true,
 					'remaining' => SentryGate_Rate_Limit::remaining_seconds( $ip ),
-					'message'   => __( 'Zu viele Fehlversuche. Bitte später erneut versuchen.', 'wiedenroth-technologies-sentrygate' ),
+					'message'   => __( 'Too many failed attempts. Please try again later.', 'wiedenroth-technologies-sentrygate' ),
 				)
 			);
 		}
@@ -538,21 +538,21 @@ class SentryGate_Two_Factor {
 		$token = $this->request_token();
 		$data  = $token ? get_transient( self::TRANSIENT_PENDING . $token ) : false;
 		if ( ! is_array( $data ) ) {
-			wp_send_json_error( array( 'message' => __( 'Sitzung abgelaufen. Bitte erneut anmelden.', 'wiedenroth-technologies-sentrygate' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Session expired. Please log in again.', 'wiedenroth-technologies-sentrygate' ) ) );
 		}
 
 		$user = get_user_by( 'id', (int) $data['user_id'] );
 		if ( ! $user || 'email' !== $this->method_for_user( $user->ID ) ) {
-			wp_send_json_error( array( 'message' => __( 'Code konnte nicht gesendet werden.', 'wiedenroth-technologies-sentrygate' ) ) );
+			wp_send_json_error( array( 'message' => __( 'The code could not be sent.', 'wiedenroth-technologies-sentrygate' ) ) );
 		}
 
 		if ( ! $this->send_email_code( $user ) ) {
-			wp_send_json_error( array( 'message' => __( 'Bitte kurz warten, bevor Sie erneut einen Code anfordern.', 'wiedenroth-technologies-sentrygate' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Please wait a moment before requesting another code.', 'wiedenroth-technologies-sentrygate' ) ) );
 		}
 
 		wp_send_json_success(
 			array(
-				'message' => __( 'Ein Code wurde per E-Mail gesendet (10 Minuten gültig).', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'A code was sent by email (valid for 10 minutes).', 'wiedenroth-technologies-sentrygate' ),
 			)
 		);
 	}
@@ -626,13 +626,13 @@ class SentryGate_Two_Factor {
 			wp_login_url()
 		);
 
-		login_header( __( 'Zwei-Faktor-Authentifizierung', 'wiedenroth-technologies-sentrygate' ) );
+		login_header( __( 'Two-factor authentication', 'wiedenroth-technologies-sentrygate' ) );
 
 		if ( $error ) {
-			echo '<div id="login_error">' . esc_html__( 'Code ungültig oder abgelaufen.', 'wiedenroth-technologies-sentrygate' ) . '</div>';
+			echo '<div id="login_error">' . esc_html__( 'Code invalid or expired.', 'wiedenroth-technologies-sentrygate' ) . '</div>';
 		}
 		if ( $email_sent && 'email' === $method ) {
-			echo '<p class="message">' . esc_html__( 'Ein Code wurde per E-Mail gesendet (10 Minuten gültig).', 'wiedenroth-technologies-sentrygate' ) . '</p>';
+			echo '<p class="message">' . esc_html__( 'A code was sent by email (valid for 10 minutes).', 'wiedenroth-technologies-sentrygate' ) . '</p>';
 		}
 		?>
 		<form name="sentrygate_tfa_form" id="sentrygate_tfa_form" action="<?php echo esc_url( $form_action ); ?>" method="post">
@@ -642,9 +642,9 @@ class SentryGate_Two_Factor {
 				<label for="sentrygate_tfa_code">
 					<?php
 					if ( 'email' === $method ) {
-						esc_html_e( 'Code aus der E-Mail', 'wiedenroth-technologies-sentrygate' );
+						esc_html_e( 'Code from the email', 'wiedenroth-technologies-sentrygate' );
 					} else {
-						esc_html_e( 'Code aus der Authenticator-App', 'wiedenroth-technologies-sentrygate' );
+						esc_html_e( 'Code from the authenticator app', 'wiedenroth-technologies-sentrygate' );
 					}
 					?>
 				</label>
@@ -653,14 +653,14 @@ class SentryGate_Two_Factor {
 			<p class="description">
 				<?php
 				if ( 'email' === $method ) {
-					esc_html_e( 'E-Mail-Code oder Notfall-Code eingeben.', 'wiedenroth-technologies-sentrygate' );
+					esc_html_e( 'Enter an email code or an emergency code.', 'wiedenroth-technologies-sentrygate' );
 				} else {
-					esc_html_e( 'App-Code oder Notfall-Code eingeben.', 'wiedenroth-technologies-sentrygate' );
+					esc_html_e( 'Enter an app code or an emergency code.', 'wiedenroth-technologies-sentrygate' );
 				}
 				?>
 			</p>
 			<?php if ( 'email' === $method ) : ?>
-				<p><button type="submit" name="sentrygate_send_email" value="1" class="button"><?php esc_html_e( 'Code erneut senden', 'wiedenroth-technologies-sentrygate' ); ?></button></p>
+				<p><button type="submit" name="sentrygate_send_email" value="1" class="button"><?php esc_html_e( 'Resend code', 'wiedenroth-technologies-sentrygate' ); ?></button></p>
 			<?php endif; ?>
 			<p>
 				<label>
@@ -668,14 +668,14 @@ class SentryGate_Two_Factor {
 					<?php
 					printf(
 						/* translators: %d: days */
-						esc_html__( 'Dieses Gerät für %d Tage vertrauen', 'wiedenroth-technologies-sentrygate' ),
+						esc_html__( 'Trust this device for %d days', 'wiedenroth-technologies-sentrygate' ),
 						(int) SentryGate_Options::get( 'tfa_trusted_days', 30 )
 					);
 					?>
 				</label>
 			</p>
 			<p class="submit">
-				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Bestätigen', 'wiedenroth-technologies-sentrygate' ); ?>" />
+				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Confirm', 'wiedenroth-technologies-sentrygate' ); ?>" />
 			</p>
 		</form>
 		<?php
@@ -693,7 +693,7 @@ class SentryGate_Two_Factor {
 		}
 
 		if ( ! isset( $_POST['sentrygate_tfa_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( (string) $_POST['sentrygate_tfa_nonce'] ) ), 'sentrygate_tfa_verify' ) ) {
-			wp_die( esc_html__( 'Sicherheitsprüfung fehlgeschlagen.', 'wiedenroth-technologies-sentrygate' ) );
+			wp_die( esc_html__( 'Security check failed.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		$token = $this->request_token();
@@ -845,12 +845,12 @@ class SentryGate_Two_Factor {
 			$user->user_email,
 			sprintf(
 				/* translators: %s: site name */
-				__( '[%s] Ihr Anmeldecode', 'wiedenroth-technologies-sentrygate' ),
+				__( '[%s] Your login code', 'wiedenroth-technologies-sentrygate' ),
 				wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES )
 			),
 			sprintf(
 				/* translators: %s: code */
-				__( "Ihr Einmalcode lautet: %s\n\nDer Code ist 10 Minuten gültig.", 'wiedenroth-technologies-sentrygate' ),
+				__( "Your one-time code is: %s\n\nThe code is valid for 10 minutes.", 'wiedenroth-technologies-sentrygate' ),
 				$code
 			)
 		);
@@ -977,8 +977,8 @@ class SentryGate_Two_Factor {
 		}
 
 		echo '<div class="notice notice-error"><p>';
-		echo esc_html__( 'SentryGate: Für Ihre Rolle ist Zwei-Faktor-Authentifizierung Pflicht. Bitte wählen Sie Authenticator-App oder E-Mail.', 'wiedenroth-technologies-sentrygate' );
-		echo ' <a href="' . esc_url( self::setup_url() ) . '">' . esc_html__( 'Jetzt einrichten', 'wiedenroth-technologies-sentrygate' ) . '</a>';
+		echo esc_html__( 'SentryGate: Two-factor authentication is required for your role. Please choose an authenticator app or email.', 'wiedenroth-technologies-sentrygate' );
+		echo ' <a href="' . esc_url( self::setup_url() ) . '">' . esc_html__( 'Set up now', 'wiedenroth-technologies-sentrygate' ) . '</a>';
 		echo '</p></div>';
 	}
 
@@ -991,15 +991,15 @@ class SentryGate_Two_Factor {
 		if ( ! SentryGate_Options::module_enabled( 'two_factor' ) ) {
 			return array(
 				'status'  => 'inactive',
-				'label'   => __( 'Zwei-Faktor', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Ausgeschaltet – nur Passwort, kein zweiter Code.', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Two-factor', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Disabled – password only, no second code.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
 		return array(
 			'status'  => 'active',
-			'label'   => __( 'Zwei-Faktor', 'wiedenroth-technologies-sentrygate' ),
-			'message' => __( 'App oder E-Mail, Einrichtung unter Benutzer → Zwei-Faktor.', 'wiedenroth-technologies-sentrygate' ),
+			'label'   => __( 'Two-factor', 'wiedenroth-technologies-sentrygate' ),
+			'message' => __( 'App or email, set up under Users → Two-factor.', 'wiedenroth-technologies-sentrygate' ),
 		);
 	}
 }

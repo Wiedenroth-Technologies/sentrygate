@@ -33,17 +33,17 @@ $sentrygate_product_url = 'https://wiedenroth.tech/software/sentrygate';
 			<div class="<?php echo esc_attr( $ui->cls( 'header__copy' ) ); ?>">
 				<h1 class="<?php echo esc_attr( $ui->cls( 'title' ) ); ?>"><?php echo esc_html( get_admin_page_title() ); ?></h1>
 				<p class="<?php echo esc_attr( $ui->cls( 'tagline' ) ); ?>">
-					<?php esc_html_e( 'Schützt Anmeldung, Formulare und die Website.', 'wiedenroth-technologies-sentrygate' ); ?>
+					<?php esc_html_e( 'Protects login, forms, and the site.', 'wiedenroth-technologies-sentrygate' ); ?>
 				</p>
 			</div>
 		</div>
 		<div class="<?php echo esc_attr( $ui->cls( 'header__actions' ) ); ?>">
 			<?php $ui->inbox(); ?>
-			<?php $ui->button( __( 'Dokumentation', 'wiedenroth-technologies-sentrygate' ), 'secondary', 'button', $sentrygate_product_url ); ?>
+			<?php $ui->button( __( 'Documentation', 'wiedenroth-technologies-sentrygate' ), 'secondary', 'button', $sentrygate_product_url ); ?>
 		</div>
 	</header>
 
-	<nav class="<?php echo esc_attr( $ui->cls( 'tabs' ) ); ?>" aria-label="<?php esc_attr_e( 'SentryGate Bereiche', 'wiedenroth-technologies-sentrygate' ); ?>">
+	<nav class="<?php echo esc_attr( $ui->cls( 'tabs' ) ); ?>" aria-label="<?php esc_attr_e( 'SentryGate sections', 'wiedenroth-technologies-sentrygate' ); ?>">
 		<?php foreach ( $tabs as $sentrygate_slug => $sentrygate_label ) : ?>
 			<a
 				class="<?php echo esc_attr( $ui->cls( 'tab', $tab === $sentrygate_slug ? 'active' : '' ) ); ?>"
@@ -60,14 +60,14 @@ $sentrygate_product_url = 'https://wiedenroth.tech/software/sentrygate';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Settings API success flag after manage_options screen.
 		$sentrygate_settings_updated = isset( $_GET['settings-updated'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['settings-updated'] ) ) : '';
 		if ( '' !== $sentrygate_settings_updated ) {
-			$ui->notice( 'success', __( 'Einstellungen gespeichert.', 'wiedenroth-technologies-sentrygate' ) );
+			$ui->notice( 'success', __( 'Settings saved.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		$sentrygate_view = SENTRYGATE_PLUGIN_DIR . 'includes/admin/views/tabs/' . $tab . '.php';
 		if ( is_readable( $sentrygate_view ) ) {
 			include $sentrygate_view;
 		} else {
-			$ui->notice( 'error', __( 'Bereich nicht gefunden.', 'wiedenroth-technologies-sentrygate' ) );
+			$ui->notice( 'error', __( 'Section not found.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 		?>
 	</div>

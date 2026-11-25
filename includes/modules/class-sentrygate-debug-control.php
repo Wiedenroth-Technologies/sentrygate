@@ -46,9 +46,9 @@ class SentryGate_Debug_Control {
 			return;
 		}
 
-		echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'SentryGate Debug-Kontrolle:', 'wiedenroth-technologies-sentrygate' ) . '</strong> ';
+		echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'SentryGate debug check:', 'wiedenroth-technologies-sentrygate' ) . '</strong> ';
 		echo esc_html( implode( ' ', $issues ) );
-		echo ' ' . esc_html__( 'wp-config.php wird nicht automatisch überschrieben – bitte manuell prüfen.', 'wiedenroth-technologies-sentrygate' );
+		echo ' ' . esc_html__( 'wp-config.php is not overwritten automatically – please check it manually.', 'wiedenroth-technologies-sentrygate' );
 		echo '</p></div>';
 	}
 
@@ -61,16 +61,16 @@ class SentryGate_Debug_Control {
 		$issues = array();
 
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			$issues[] = __( 'WP_DEBUG ist aktiv.', 'wiedenroth-technologies-sentrygate' );
+			$issues[] = __( 'WP_DEBUG is active.', 'wiedenroth-technologies-sentrygate' );
 		}
 		if ( defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY ) {
-			$issues[] = __( 'WP_DEBUG_DISPLAY ist aktiv (Fehler können öffentlich sichtbar sein).', 'wiedenroth-technologies-sentrygate' );
+			$issues[] = __( 'WP_DEBUG_DISPLAY is active (errors may be publicly visible).', 'wiedenroth-technologies-sentrygate' );
 		}
 		if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
 			$log_path = is_string( WP_DEBUG_LOG ) ? WP_DEBUG_LOG : ( WP_CONTENT_DIR . '/debug.log' );
 			if ( is_readable( $log_path ) ) {
 				// Check if likely web-accessible under wp-content.
-				$issues[] = __( 'WP_DEBUG_LOG ist aktiv – sicherstellen, dass die Log-Datei nicht öffentlich erreichbar ist.', 'wiedenroth-technologies-sentrygate' );
+				$issues[] = __( 'WP_DEBUG_LOG is active – make sure the log file is not publicly reachable.', 'wiedenroth-technologies-sentrygate' );
 			}
 		}
 
@@ -86,8 +86,8 @@ class SentryGate_Debug_Control {
 		if ( ! SentryGate_Options::module_enabled( 'debug_control' ) ) {
 			return array(
 				'status'  => 'inactive',
-				'label'   => __( 'Fehleranzeige', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Modul deaktiviert.', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Error display', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Module disabled.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
@@ -95,15 +95,15 @@ class SentryGate_Debug_Control {
 		if ( $issues ) {
 			return array(
 				'status'  => 'warning',
-				'label'   => __( 'Fehleranzeige', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Error display', 'wiedenroth-technologies-sentrygate' ),
 				'message' => implode( ' ', $issues ),
 			);
 		}
 
 		return array(
 			'status'  => 'active',
-			'label'   => __( 'Fehleranzeige', 'wiedenroth-technologies-sentrygate' ),
-			'message' => __( 'Debug-Konstanten entsprechen der Produktiv-Empfehlung.', 'wiedenroth-technologies-sentrygate' ),
+			'label'   => __( 'Error display', 'wiedenroth-technologies-sentrygate' ),
+			'message' => __( 'Debug constants match the production recommendation.', 'wiedenroth-technologies-sentrygate' ),
 		);
 	}
 }

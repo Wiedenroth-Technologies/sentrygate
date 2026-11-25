@@ -130,9 +130,9 @@ class SentryGate_Login_Challenge {
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'sentrygate_challenge' ),
 				'i18n'    => array(
-					'prompt'  => __( 'Wählen Sie das Symbol:', 'wiedenroth-technologies-sentrygate' ),
-					'refresh' => __( 'Andere Symbole', 'wiedenroth-technologies-sentrygate' ),
-					'locked'  => __( 'Zu viele Fehlversuche. Bitte später erneut versuchen.', 'wiedenroth-technologies-sentrygate' ),
+					'prompt'  => __( 'Choose the symbol:', 'wiedenroth-technologies-sentrygate' ),
+					'refresh' => __( 'Other symbols', 'wiedenroth-technologies-sentrygate' ),
+					'locked'  => __( 'Too many failed attempts. Please try again later.', 'wiedenroth-technologies-sentrygate' ),
 				),
 			)
 		);
@@ -167,7 +167,7 @@ class SentryGate_Login_Challenge {
 
 		return new WP_Error(
 			'sentrygate_gate',
-			__( '<strong>Fehler:</strong> Bitte zuerst die Sicherheitsprüfung abschließen.', 'wiedenroth-technologies-sentrygate' )
+			__( '<strong>Error:</strong> Please complete the security check first.', 'wiedenroth-technologies-sentrygate' )
 		);
 	}
 
@@ -302,7 +302,7 @@ class SentryGate_Login_Challenge {
 				array(
 					'locked'    => true,
 					'remaining' => SentryGate_Rate_Limit::remaining_seconds( $ip ),
-					'message'   => __( 'Zu viele Fehlversuche. Bitte später erneut versuchen.', 'wiedenroth-technologies-sentrygate' ),
+					'message'   => __( 'Too many failed attempts. Please try again later.', 'wiedenroth-technologies-sentrygate' ),
 				)
 			);
 		}
@@ -333,19 +333,19 @@ class SentryGate_Login_Challenge {
 		if ( ! SentryGate_Options::module_enabled( 'login_challenge' ) ) {
 			return array(
 				'status'  => 'inactive',
-				'label'   => __( 'Login-Schutz', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Ausgeschaltet – Anmeldung ohne Zusatzschutz gegen Bots.', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Login protection', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Disabled – login without extra protection against bots.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
 		$mode = (string) SentryGate_Options::get( 'challenge_mode', 'full' );
 		$msg  = 'lightweight' === $mode
-			? __( 'Prüfung vor dem Login (Honeypot + Timing), danach Sitzungscookie.', 'wiedenroth-technologies-sentrygate' )
-			: __( 'Symbolwahl vor dem Login, danach Sitzungscookie. Direct-POSTs ohne Cookie werden abgewiesen.', 'wiedenroth-technologies-sentrygate' );
+			? __( 'Check before login (honeypot + timing), then a session cookie.', 'wiedenroth-technologies-sentrygate' )
+			: __( 'Symbol choice before login, then a session cookie. Direct POSTs without a cookie are rejected.', 'wiedenroth-technologies-sentrygate' );
 
 		return array(
 			'status'  => 'active',
-			'label'   => __( 'Login-Schutz', 'wiedenroth-technologies-sentrygate' ),
+			'label'   => __( 'Login protection', 'wiedenroth-technologies-sentrygate' ),
 			'message' => $msg,
 		);
 	}
@@ -446,22 +446,22 @@ class SentryGate_Login_Challenge {
 		if ( ! $nonce_already_checked ) {
 			if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( (string) $_POST['_wpnonce'] ) ), 'sentrygate_gate' ) ) {
 				$this->record_challenge_failure( $ip, '' );
-				return new WP_Error( 'sentrygate_nonce', __( 'Sicherheitsprüfung ungültig. Bitte erneut versuchen.', 'wiedenroth-technologies-sentrygate' ) );
+				return new WP_Error( 'sentrygate_nonce', __( 'Security check invalid. Please try again.', 'wiedenroth-technologies-sentrygate' ) );
 			}
 		}
 
 		$honeypot = isset( $_POST['sentrygate_website'] ) ? sanitize_text_field( wp_unslash( (string) $_POST['sentrygate_website'] ) ) : '';
 		if ( '' !== trim( $honeypot ) ) {
 			$this->record_challenge_failure( $ip, '' );
-			return new WP_Error( 'sentrygate_bot', __( 'Sicherheitsprüfung fehlgeschlagen.', 'wiedenroth-technologies-sentrygate' ) );
+			return new WP_Error( 'sentrygate_bot', __( 'Security check failed.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		$loaded_at = isset( $_POST['sentrygate_loaded_at'] ) ? absint( wp_unslash( $_POST['sentrygate_loaded_at'] ) ) : 0;
 		$min_time  = (int) SentryGate_Options::get( 'challenge_min_time', 2 );
-		// Fehlendes/ungültiges Timing-Feld nicht überspringen – sonst Bypass der Mindestzeit.
+		// Do not skip a missing/invalid timing field – otherwise the minimum wait can be bypassed.
 		if ( $min_time > 0 && ( $loaded_at <= 0 || ( time() - $loaded_at ) < $min_time ) ) {
 			$this->record_challenge_failure( $ip, '' );
-			return new WP_Error( 'sentrygate_timing', __( 'Bitte etwas langsamer – Formular zu schnell abgesendet.', 'wiedenroth-technologies-sentrygate' ) );
+			return new WP_Error( 'sentrygate_timing', __( 'Please slow down a little – the form was submitted too quickly.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		$mode = (string) SentryGate_Options::get( 'challenge_mode', 'full' );
@@ -487,9 +487,9 @@ class SentryGate_Login_Challenge {
 	 */
 	private function render_challenge_page( ?WP_Error $error ): void {
 		$wp_error = $error instanceof WP_Error ? $error : new WP_Error();
-		$message  = '<p class="message">' . esc_html__( 'Bitte bestätigen Sie kurz, dass Sie kein Bot sind. Danach erscheint die Anmeldung.', 'wiedenroth-technologies-sentrygate' ) . '</p>';
+		$message  = '<p class="message">' . esc_html__( 'Please briefly confirm that you are not a bot. The login will appear after that.', 'wiedenroth-technologies-sentrygate' ) . '</p>';
 
-		login_header( __( 'Sicherheitsprüfung', 'wiedenroth-technologies-sentrygate' ), $message, $wp_error );
+		login_header( __( 'Security check', 'wiedenroth-technologies-sentrygate' ), $message, $wp_error );
 
 		$mode  = (string) SentryGate_Options::get( 'challenge_mode', 'full' );
 		$token = isset( $GLOBALS['sentrygate_challenge_token'] ) ? (string) $GLOBALS['sentrygate_challenge_token'] : '';
@@ -513,13 +513,13 @@ class SentryGate_Login_Challenge {
 						<?php $this->render_choice_markup( is_array( $data ) ? $data : array() ); ?>
 					</div>
 				<?php else : ?>
-					<p class="sentrygate-choice__prompt"><?php esc_html_e( 'Klicken Sie auf Weiter, um zur Anmeldung zu gelangen.', 'wiedenroth-technologies-sentrygate' ); ?></p>
+					<p class="sentrygate-choice__prompt"><?php esc_html_e( 'Click Continue to go to the login.', 'wiedenroth-technologies-sentrygate' ); ?></p>
 				<?php endif; ?>
 			</div>
 
 			<p class="submit">
 				<button type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large">
-					<?php esc_html_e( 'Weiter zur Anmeldung', 'wiedenroth-technologies-sentrygate' ); ?>
+					<?php esc_html_e( 'Continue to login', 'wiedenroth-technologies-sentrygate' ); ?>
 				</button>
 			</p>
 		</form>
@@ -580,11 +580,11 @@ class SentryGate_Login_Challenge {
 	private function render_locked( string $ip ): void {
 		$secs = SentryGate_Rate_Limit::remaining_seconds( $ip );
 		login_header(
-			__( 'Gesperrt', 'wiedenroth-technologies-sentrygate' ),
+			__( 'Locked out', 'wiedenroth-technologies-sentrygate' ),
 			'<p class="message">' . esc_html(
 				sprintf(
 					/* translators: %d: seconds */
-					__( 'Zu viele Fehlversuche. Bitte in %d Sekunden erneut versuchen.', 'wiedenroth-technologies-sentrygate' ),
+					__( 'Too many failed attempts. Please try again in %d seconds.', 'wiedenroth-technologies-sentrygate' ),
 					$secs
 				)
 			) . '</p>'

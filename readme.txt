@@ -4,7 +4,7 @@ Tags: security, 2fa, login, hardening, audit-log
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Author: Wiedenroth Technologies GmbH
@@ -87,9 +87,17 @@ This plugin may connect to external services as follows:
 
 == Changelog ==
 
+= 1.0.1 =
+* Switched all source strings to English so the plugin can be translated on translate.wordpress.org.
+
 = 1.0.0 =
 * Initial WordPress.org release
 * Interface hardening, custom login path, login and form challenges
 * Two-factor authentication (TOTP and email) with recovery codes and trusted devices
 * Security headers, audit log (email / optional webhook), core integrity check
 * Config export/import and offline QR for authenticator setup
+
+== Upgrade Notice ==
+
+= 1.0.1 =
+Switched all source strings to English so the plugin can be translated on translate.wordpress.org.

@@ -16,7 +16,7 @@ function wp( args ) {
 
 try {
 	// MU-Plugin kommt über .wp-env.json-Mapping (wp-content/mu-plugins → tests/e2e/mu-plugins).
-	// Kein cp: Quell- und Zieldatei sind im Container dieselbe gemappte Datei.
+	// No cp needed: source and target are the same mapped file in the container.
 	run(
 		`npx wp-env run cli bash -lc 'ls -la /var/www/html/wp-content/mu-plugins'`
 	);
@@ -34,7 +34,7 @@ try {
 
 	// Smoke: Core wp_mail → pre_wp_mail Capture muss 654321 speichern.
 	wp(
-		`eval 'delete_option("sentrygate_e2e_last_code"); wp_mail("admin@example.com","SentryGate E2E ping","Ihr Einmalcode lautet: 654321"); echo get_option("sentrygate_e2e_last_code");'`
+		`eval 'delete_option("sentrygate_e2e_last_code"); wp_mail("admin@example.com","SentryGate E2E ping","Your one-time code is: 654321"); echo get_option("sentrygate_e2e_last_code");'`
 	);
 
 	const patch = Buffer.from(

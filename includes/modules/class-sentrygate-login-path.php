@@ -344,7 +344,7 @@ class SentryGate_Login_Path {
 		if ( $template ) {
 			include $template;
 		} else {
-			echo esc_html__( 'Seite nicht gefunden.', 'wiedenroth-technologies-sentrygate' );
+			echo esc_html__( 'Page not found.', 'wiedenroth-technologies-sentrygate' );
 		}
 		exit;
 	}
@@ -397,8 +397,8 @@ class SentryGate_Login_Path {
 		if ( ! SentryGate_Options::module_enabled( 'login_path' ) ) {
 			return array(
 				'status'  => 'inactive',
-				'label'   => __( 'Login-Adresse', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Ausgeschaltet – Login liegt unter der Standard-Adresse.', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Login URL', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Disabled – the login is at the default address.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
@@ -407,10 +407,10 @@ class SentryGate_Login_Path {
 		if ( '' !== $frontend ) {
 			return array(
 				'status'  => 'active',
-				'label'   => __( 'Login-Adresse', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Login URL', 'wiedenroth-technologies-sentrygate' ),
 				'message' => sprintf(
 					/* translators: %s: custom login slug */
-					__( '/%s/ leitet auf die Frontend-Anmeldung weiter – Originalpfade liefern 404.', 'wiedenroth-technologies-sentrygate' ),
+					__( '/%s/ redirects to the front-end login – original paths return 404.', 'wiedenroth-technologies-sentrygate' ),
 					esc_html( $slug )
 				),
 			);
@@ -418,9 +418,9 @@ class SentryGate_Login_Path {
 
 		return array(
 			'status'  => 'active',
-			'label'   => __( 'Login-Adresse', 'wiedenroth-technologies-sentrygate' ),
+			'label'   => __( 'Login URL', 'wiedenroth-technologies-sentrygate' ),
 			/* translators: %s: custom login slug */
-			'message' => sprintf( __( 'Login unter /%s/ – Originalpfade liefern 404.', 'wiedenroth-technologies-sentrygate' ), esc_html( $slug ) ),
+			'message' => sprintf( __( 'Login at /%s/ – original paths return 404.', 'wiedenroth-technologies-sentrygate' ), esc_html( $slug ) ),
 		);
 	}
 }

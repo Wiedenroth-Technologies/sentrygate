@@ -82,18 +82,18 @@ class SentryGate_Security_Headers {
 		if ( ! SentryGate_Options::module_enabled( 'security_headers' ) ) {
 			return array(
 				'status'  => 'inactive',
-				'label'   => __( 'Browser-Schutz', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Modul deaktiviert.', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Browser protection', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Module disabled.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
 		$csp_ro = (bool) SentryGate_Options::get( 'header_csp_report_only' );
 		return array(
 			'status'  => 'active',
-			'label'   => __( 'Browser-Schutz', 'wiedenroth-technologies-sentrygate' ),
+			'label'   => __( 'Browser protection', 'wiedenroth-technologies-sentrygate' ),
 			'message' => $csp_ro
-				? __( 'Header aktiv (CSP im Report-Only-Modus).', 'wiedenroth-technologies-sentrygate' )
-				: __( 'Header aktiv (CSP enforcing).', 'wiedenroth-technologies-sentrygate' ),
+				? __( 'Headers active (CSP in report-only mode).', 'wiedenroth-technologies-sentrygate' )
+				: __( 'Headers active (CSP enforcing).', 'wiedenroth-technologies-sentrygate' ),
 		);
 	}
 }

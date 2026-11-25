@@ -116,23 +116,23 @@ class SentryGate_Admin {
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'sentrygate_admin' ),
 				'i18n'    => array(
-					'running'        => __( 'Prüfung läuft…', 'wiedenroth-technologies-sentrygate' ),
-					'done'           => __( 'Prüfung abgeschlossen', 'wiedenroth-technologies-sentrygate' ),
-					'error'          => __( 'Fehler bei der Prüfung.', 'wiedenroth-technologies-sentrygate' ),
-					'statChecked'    => __( 'Dateien geprüft', 'wiedenroth-technologies-sentrygate' ),
-					'statMismatch'   => __( 'Abweichend', 'wiedenroth-technologies-sentrygate' ),
-					'statMissing'    => __( 'Fehlend', 'wiedenroth-technologies-sentrygate' ),
-					'okTitle'        => __( 'Core stimmt überein', 'wiedenroth-technologies-sentrygate' ),
-					'okText'         => __( 'Keine abweichenden oder fehlenden Core-Dateien.', 'wiedenroth-technologies-sentrygate' ),
-					'warnTitle'      => __( 'Abweichungen gefunden', 'wiedenroth-technologies-sentrygate' ),
-					'warnText'       => __( 'SentryGate repariert nichts automatisch. Backup anlegen und Core ggf. neu installieren oder Entwickler informieren.', 'wiedenroth-technologies-sentrygate' ),
-					'mismatchFiles'  => __( 'Abweichende Dateien', 'wiedenroth-technologies-sentrygate' ),
-					'missingFiles'   => __( 'Fehlende Dateien', 'wiedenroth-technologies-sentrygate' ),
-					'fileCol'        => __( 'Datei', 'wiedenroth-technologies-sentrygate' ),
-					'lastTitle'      => __( 'Letztes Ergebnis', 'wiedenroth-technologies-sentrygate' ),
-					'emptyTitle'     => __( 'Noch keine Prüfung', 'wiedenroth-technologies-sentrygate' ),
-					'emptyText'      => __( 'Starten Sie den Check, um die WordPress-Core-Dateien mit der offiziellen Liste von wordpress.org zu vergleichen.', 'wiedenroth-technologies-sentrygate' ),
-					'metaChecked'    => __( 'Zuletzt geprüft', 'wiedenroth-technologies-sentrygate' ),
+					'running'        => __( 'Checking…', 'wiedenroth-technologies-sentrygate' ),
+					'done'           => __( 'Check complete', 'wiedenroth-technologies-sentrygate' ),
+					'error'          => __( 'The check failed.', 'wiedenroth-technologies-sentrygate' ),
+					'statChecked'    => __( 'Files checked', 'wiedenroth-technologies-sentrygate' ),
+					'statMismatch'   => __( 'Mismatch', 'wiedenroth-technologies-sentrygate' ),
+					'statMissing'    => __( 'Missing', 'wiedenroth-technologies-sentrygate' ),
+					'okTitle'        => __( 'Core matches', 'wiedenroth-technologies-sentrygate' ),
+					'okText'         => __( 'No mismatched or missing core files.', 'wiedenroth-technologies-sentrygate' ),
+					'warnTitle'      => __( 'Mismatches found', 'wiedenroth-technologies-sentrygate' ),
+					'warnText'       => __( 'SentryGate does not repair anything automatically. Create a backup and reinstall core if needed, or tell a developer.', 'wiedenroth-technologies-sentrygate' ),
+					'mismatchFiles'  => __( 'Mismatched files', 'wiedenroth-technologies-sentrygate' ),
+					'missingFiles'   => __( 'Missing files', 'wiedenroth-technologies-sentrygate' ),
+					'fileCol'        => __( 'File', 'wiedenroth-technologies-sentrygate' ),
+					'lastTitle'      => __( 'Last result', 'wiedenroth-technologies-sentrygate' ),
+					'emptyTitle'     => __( 'No check yet', 'wiedenroth-technologies-sentrygate' ),
+					'emptyText'      => __( 'Run the check to compare the WordPress core files with the official list from wordpress.org.', 'wiedenroth-technologies-sentrygate' ),
+					'metaChecked'    => __( 'Last checked', 'wiedenroth-technologies-sentrygate' ),
 					'metaWp'         => __( 'WordPress', 'wiedenroth-technologies-sentrygate' ),
 				),
 			)
@@ -149,7 +149,7 @@ class SentryGate_Admin {
 		$url = admin_url( 'admin.php?page=' . SENTRYGATE_SLUG );
 		array_unshift(
 			$links,
-			'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Einstellungen', 'wiedenroth-technologies-sentrygate' ) . '</a>'
+			'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'wiedenroth-technologies-sentrygate' ) . '</a>'
 		);
 		return $links;
 	}
@@ -179,8 +179,8 @@ class SentryGate_Admin {
 
 		$this->ui->footer(
 			array(
-				__( 'Impressum', 'wiedenroth-technologies-sentrygate' )   => $impressum,
-				__( 'Datenschutz', 'wiedenroth-technologies-sentrygate' ) => $datenschutz,
+				__( 'Imprint', 'wiedenroth-technologies-sentrygate' )   => $impressum,
+				__( 'Privacy', 'wiedenroth-technologies-sentrygate' ) => $datenschutz,
 				'SentryGate'                      => $product_url,
 			),
 			$brand_url,
@@ -202,18 +202,18 @@ class SentryGate_Admin {
 		$tab = isset( $_GET['tab'] ) ? sanitize_key( (string) wp_unslash( $_GET['tab'] ) ) : 'dashboard';
 
 		$tabs = array(
-			'dashboard'  => __( 'Übersicht', 'wiedenroth-technologies-sentrygate' ),
-			'modules'    => __( 'Module ein/aus', 'wiedenroth-technologies-sentrygate' ),
-			'interface'  => __( 'Basis-Schutz', 'wiedenroth-technologies-sentrygate' ),
-			'debug'      => __( 'Fehleranzeige', 'wiedenroth-technologies-sentrygate' ),
-			'login_path' => __( 'Login-Adresse', 'wiedenroth-technologies-sentrygate' ),
-			'challenge'  => __( 'Bot-Schutz', 'wiedenroth-technologies-sentrygate' ),
-			'tfa'        => __( 'Zwei-Faktor', 'wiedenroth-technologies-sentrygate' ),
-			'headers'    => __( 'Browser-Schutz', 'wiedenroth-technologies-sentrygate' ),
-			'files'      => __( 'Dateien & Server', 'wiedenroth-technologies-sentrygate' ),
-			'audit'      => __( 'Ereignis-Protokoll', 'wiedenroth-technologies-sentrygate' ),
-			'integrity'  => __( 'WordPress-Check', 'wiedenroth-technologies-sentrygate' ),
-			'export'     => __( 'Sichern / Übertragen', 'wiedenroth-technologies-sentrygate' ),
+			'dashboard'  => __( 'Overview', 'wiedenroth-technologies-sentrygate' ),
+			'modules'    => __( 'Modules on/off', 'wiedenroth-technologies-sentrygate' ),
+			'interface'  => __( 'Basic protection', 'wiedenroth-technologies-sentrygate' ),
+			'debug'      => __( 'Error display', 'wiedenroth-technologies-sentrygate' ),
+			'login_path' => __( 'Login URL', 'wiedenroth-technologies-sentrygate' ),
+			'challenge'  => __( 'Bot protection', 'wiedenroth-technologies-sentrygate' ),
+			'tfa'        => __( 'Two-factor', 'wiedenroth-technologies-sentrygate' ),
+			'headers'    => __( 'Browser protection', 'wiedenroth-technologies-sentrygate' ),
+			'files'      => __( 'Files & server', 'wiedenroth-technologies-sentrygate' ),
+			'audit'      => __( 'Audit log', 'wiedenroth-technologies-sentrygate' ),
+			'integrity'  => __( 'WordPress check', 'wiedenroth-technologies-sentrygate' ),
+			'export'     => __( 'Backup / transfer', 'wiedenroth-technologies-sentrygate' ),
 		);
 
 		if ( ! isset( $tabs[ $tab ] ) ) {
@@ -231,7 +231,7 @@ class SentryGate_Admin {
 	 */
 	public function handle_export(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Keine Berechtigung.', 'wiedenroth-technologies-sentrygate' ) );
+			wp_die( esc_html__( 'You do not have permission.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		check_admin_referer( 'sentrygate_export_config' );
@@ -252,7 +252,7 @@ class SentryGate_Admin {
 	 */
 	public function handle_import(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Keine Berechtigung.', 'wiedenroth-technologies-sentrygate' ) );
+			wp_die( esc_html__( 'You do not have permission.', 'wiedenroth-technologies-sentrygate' ) );
 		}
 
 		check_admin_referer( 'sentrygate_import_config' );
@@ -423,7 +423,7 @@ class SentryGate_Admin {
 	 */
 	public static function save_actions( SentryGate_Admin_Ui $ui, string $label = '' ): void {
 		if ( '' === $label ) {
-			$label = __( 'Einstellungen speichern', 'wiedenroth-technologies-sentrygate' );
+			$label = __( 'Save settings', 'wiedenroth-technologies-sentrygate' );
 		}
 
 		echo '<p class="' . esc_attr( $ui->cls( 'actions' ) ) . '">';
@@ -439,9 +439,9 @@ class SentryGate_Admin {
 	 */
 	public static function status_badge( SentryGate_Admin_Ui $ui, string $status ): void {
 		$map = array(
-			'active'   => array( 'ok', __( 'Aktiv', 'wiedenroth-technologies-sentrygate' ) ),
-			'warning'  => array( 'warn', __( 'Prüfen', 'wiedenroth-technologies-sentrygate' ) ),
-			'inactive' => array( 'off', __( 'Aus', 'wiedenroth-technologies-sentrygate' ) ),
+			'active'   => array( 'ok', __( 'Active', 'wiedenroth-technologies-sentrygate' ) ),
+			'warning'  => array( 'warn', __( 'Check', 'wiedenroth-technologies-sentrygate' ) ),
+			'inactive' => array( 'off', __( 'Off', 'wiedenroth-technologies-sentrygate' ) ),
 		);
 
 		$pair = $map[ $status ] ?? array( 'off', $status );

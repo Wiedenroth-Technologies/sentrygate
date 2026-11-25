@@ -26,7 +26,7 @@ class SentryGate_Dashboard {
 
 		wp_add_dashboard_widget(
 			'sentrygate_status_widget',
-			'SentryGate – Sicherheitsstatus',
+			'SentryGate – Security status',
 			array( $this, 'render_widget' )
 		);
 	}
@@ -60,7 +60,7 @@ class SentryGate_Dashboard {
 	 * Render widget content.
 	 */
 	public function render_widget(): void {
-		echo '<p class="description">' . esc_html__( 'Grün = aktiv, Gelb = prüfen, Rot = aus. Details unter SentryGate.', 'wiedenroth-technologies-sentrygate' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Green = active, yellow = check, red = off. See details under SentryGate.', 'wiedenroth-technologies-sentrygate' ) . '</p>';
 		$statuses = self::all_statuses();
 		echo '<table class="widefat striped"><tbody>';
 		foreach ( $statuses as $row ) {
@@ -72,6 +72,6 @@ class SentryGate_Dashboard {
 			);
 		}
 		echo '</tbody></table>';
-		echo '<p><a class="button" href="' . esc_url( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG ) ) . '">' . esc_html__( 'Alle Einstellungen öffnen', 'wiedenroth-technologies-sentrygate' ) . '</a></p>';
+		echo '<p><a class="button" href="' . esc_url( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG ) ) . '">' . esc_html__( 'Open all settings', 'wiedenroth-technologies-sentrygate' ) . '</a></p>';
 	}
 }

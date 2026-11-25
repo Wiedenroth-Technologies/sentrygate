@@ -80,8 +80,8 @@ class SentryGate_Interface_Hardening {
 		if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {
 			status_header( 403 );
 			wp_die(
-				esc_html__( 'XML-RPC ist auf dieser Website deaktiviert.', 'wiedenroth-technologies-sentrygate' ),
-				esc_html__( 'Zugriff verweigert', 'wiedenroth-technologies-sentrygate' ),
+				esc_html__( 'XML-RPC is disabled on this site.', 'wiedenroth-technologies-sentrygate' ),
+				esc_html__( 'Access denied', 'wiedenroth-technologies-sentrygate' ),
 				array( 'response' => 403 )
 			);
 		}
@@ -128,7 +128,7 @@ class SentryGate_Interface_Hardening {
 		if ( preg_match( '#/wp/v2/users(/|$)#', $rest_route ) || preg_match( '#/wp/v2/users(/|$)#', $request_uri ) ) {
 			return new WP_Error(
 				'sentrygate_rest_users_blocked',
-				__( 'Benutzer-Enumeration über die REST-API ist deaktiviert.', 'wiedenroth-technologies-sentrygate' ),
+				__( 'User enumeration via the REST API is disabled.', 'wiedenroth-technologies-sentrygate' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -150,8 +150,8 @@ class SentryGate_Interface_Hardening {
 			status_header( 403 );
 			nocache_headers();
 			wp_die(
-				esc_html__( 'Benutzer-Enumeration ist deaktiviert.', 'wiedenroth-technologies-sentrygate' ),
-				esc_html__( 'Zugriff verweigert', 'wiedenroth-technologies-sentrygate' ),
+				esc_html__( 'User enumeration is disabled.', 'wiedenroth-technologies-sentrygate' ),
+				esc_html__( 'Access denied', 'wiedenroth-technologies-sentrygate' ),
 				array( 'response' => 403 )
 			);
 		}
@@ -250,7 +250,7 @@ class SentryGate_Interface_Hardening {
 		// Always allow namespace index lightly for discovery of allowed routes? Prefer deny.
 		return new WP_Error(
 			'sentrygate_rest_restricted',
-			__( 'Diese REST-Route ist für anonyme Nutzer gesperrt.', 'wiedenroth-technologies-sentrygate' ),
+			__( 'This REST route is blocked for anonymous users.', 'wiedenroth-technologies-sentrygate' ),
 			array( 'status' => 401 )
 		);
 	}
@@ -264,31 +264,31 @@ class SentryGate_Interface_Hardening {
 		if ( ! SentryGate_Options::module_enabled( 'interface_hardening' ) ) {
 			return array(
 				'status'  => 'inactive',
-				'label'   => __( 'Basis-Schutz', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Ausgeschaltet – bekannte Angriffswege sind nicht blockiert.', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Basic protection', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Disabled – known attack paths are not blocked.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
 		$warnings = array();
 		if ( ! SentryGate_Options::get( 'disable_xmlrpc' ) ) {
-			$warnings[] = __( 'XML-RPC ist nicht deaktiviert.', 'wiedenroth-technologies-sentrygate' );
+			$warnings[] = __( 'XML-RPC is not disabled.', 'wiedenroth-technologies-sentrygate' );
 		}
 		if ( ! SentryGate_Options::get( 'block_user_enumeration' ) ) {
-			$warnings[] = __( 'User-Enumeration ist nicht blockiert.', 'wiedenroth-technologies-sentrygate' );
+			$warnings[] = __( 'User enumeration is not blocked.', 'wiedenroth-technologies-sentrygate' );
 		}
 
 		if ( $warnings ) {
 			return array(
 				'status'  => 'warning',
-				'label'   => __( 'Basis-Schutz', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Basic protection', 'wiedenroth-technologies-sentrygate' ),
 				'message' => implode( ' ', $warnings ),
 			);
 		}
 
 		return array(
 			'status'  => 'active',
-			'label'   => __( 'Basis-Schutz', 'wiedenroth-technologies-sentrygate' ),
-			'message' => __( 'XML-RPC, Enumeration und Versionsleaks sind gehärtet.', 'wiedenroth-technologies-sentrygate' ),
+			'label'   => __( 'Basic protection', 'wiedenroth-technologies-sentrygate' ),
+			'message' => __( 'XML-RPC, enumeration, and version leaks are hardened.', 'wiedenroth-technologies-sentrygate' ),
 		);
 	}
 }

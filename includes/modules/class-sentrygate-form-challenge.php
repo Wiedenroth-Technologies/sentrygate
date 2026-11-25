@@ -101,7 +101,7 @@ class SentryGate_Form_Challenge {
 			return '<p class="sentrygate-form-challenge__locked">' . esc_html(
 				sprintf(
 					/* translators: %d: seconds */
-					__( 'Zu viele Fehlversuche. Bitte in %d Sekunden erneut versuchen.', 'wiedenroth-technologies-sentrygate' ),
+					__( 'Too many failed attempts. Please try again in %d seconds.', 'wiedenroth-technologies-sentrygate' ),
 					$secs
 				)
 			) . '</p>';
@@ -138,7 +138,7 @@ class SentryGate_Form_Challenge {
 		if ( SentryGate_Rate_Limit::is_locked( $ip ) ) {
 			return new WP_Error(
 				'sentrygate_form_locked',
-				__( 'Zu viele Fehlversuche. Bitte später erneut versuchen.', 'wiedenroth-technologies-sentrygate' ),
+				__( 'Too many failed attempts. Please try again later.', 'wiedenroth-technologies-sentrygate' ),
 				array( 'status' => 429 )
 			);
 		}
@@ -163,7 +163,7 @@ class SentryGate_Form_Challenge {
 		check_ajax_referer( 'sentrygate_form_challenge', 'nonce' );
 
 		if ( ! self::is_enabled() ) {
-			wp_send_json_error( array( 'message' => __( 'Sicherheitsprüfung ist ausgeschaltet.', 'wiedenroth-technologies-sentrygate' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Security check is turned off.', 'wiedenroth-technologies-sentrygate' ) ) );
 		}
 
 		$ip = SentryGate_IP::get();
@@ -172,7 +172,7 @@ class SentryGate_Form_Challenge {
 				array(
 					'locked'    => true,
 					'remaining' => SentryGate_Rate_Limit::remaining_seconds( $ip ),
-					'message'   => __( 'Zu viele Fehlversuche. Bitte später erneut versuchen.', 'wiedenroth-technologies-sentrygate' ),
+					'message'   => __( 'Too many failed attempts. Please try again later.', 'wiedenroth-technologies-sentrygate' ),
 				)
 			);
 		}
@@ -204,15 +204,15 @@ class SentryGate_Form_Challenge {
 		if ( ! SentryGate_Options::module_enabled( 'form_challenge' ) ) {
 			return array(
 				'status'  => 'inactive',
-				'label'   => __( 'Formular-Schutz', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Ausgeschaltet – Formulare ohne Symbolwahl.', 'wiedenroth-technologies-sentrygate' ),
+				'label'   => __( 'Form protection', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Disabled – forms without a symbol choice.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
 		return array(
 			'status'  => 'active',
-			'label'   => __( 'Formular-Schutz', 'wiedenroth-technologies-sentrygate' ),
-			'message' => __( 'Symbolwahl vor dem Absenden (BlockForge und angebundene Formulare).', 'wiedenroth-technologies-sentrygate' ),
+			'label'   => __( 'Form protection', 'wiedenroth-technologies-sentrygate' ),
+			'message' => __( 'Symbol choice before submitting (BlockForge and connected forms).', 'wiedenroth-technologies-sentrygate' ),
 		);
 	}
 }

@@ -1,0 +1,1794 @@
+# Copyright (C) 2026 Wiedenroth Technologies GmbH
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Wiedenroth Technologies SentryGate 1.0.1\n"
+"Report-Msgid-Bugs-To: https://wiedenroth.tech\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-25T13:03:35+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: wiedenroth-technologies-sentrygate\n"
+
+#. Plugin Name of the plugin
+#: sentrygate.php
+msgid "Wiedenroth Technologies SentryGate"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: sentrygate.php
+msgid "https://wiedenroth.tech/software/sentrygate"
+msgstr ""
+
+#. Description of the plugin
+#: sentrygate.php
+msgid "Production-ready WordPress security plugin by Wiedenroth Technologies GmbH."
+msgstr ""
+
+#. Author of the plugin
+#: sentrygate.php
+msgid "Wiedenroth Technologies GmbH"
+msgstr ""
+
+#. Author URI of the plugin
+#: sentrygate.php
+msgid "https://wiedenroth.tech"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:119
+msgid "Checking…"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:120
+msgid "Check complete"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:121
+msgid "The check failed."
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:122
+#: includes/admin/views/tabs/integrity.php:66
+msgid "Files checked"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:123
+#: includes/admin/views/tabs/integrity.php:70
+msgid "Mismatch"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:124
+#: includes/admin/views/tabs/integrity.php:77
+msgid "Missing"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:125
+#: includes/admin/views/tabs/integrity.php:56
+msgid "Core matches"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:126
+#: includes/admin/views/tabs/integrity.php:57
+msgid "No mismatched or missing core files."
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:127
+#: includes/admin/views/tabs/integrity.php:59
+msgid "Mismatches found"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:128
+#: includes/admin/views/tabs/integrity.php:60
+msgid "SentryGate does not repair anything automatically. Create a backup and reinstall core if needed, or tell a developer."
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:129
+#: includes/admin/views/tabs/integrity.php:106
+msgid "Mismatched files"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:130
+#: includes/admin/views/tabs/integrity.php:109
+msgid "Missing files"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:131
+#: includes/admin/views/tabs/integrity.php:123
+msgid "File"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:132
+#: includes/admin/views/tabs/integrity.php:54
+msgid "Last result"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:133
+#: includes/admin/views/tabs/integrity.php:29
+msgid "No check yet"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:134
+#: includes/admin/views/tabs/integrity.php:31
+msgid "Run the check to compare the WordPress core files with the official list from wordpress.org."
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:135
+#: includes/admin/views/tabs/integrity.php:87
+msgid "Last checked"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:136
+#: includes/admin/views/tabs/integrity.php:93
+msgid "WordPress"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:152
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:182
+msgid "Imprint"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:183
+msgid "Privacy"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:205
+msgid "Overview"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:206
+#: includes/admin/views/tabs/dashboard.php:43
+msgid "Modules on/off"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:207
+#: includes/admin/views/tabs/dashboard.php:48
+#: includes/admin/views/tabs/modules.php:19
+#: includes/modules/class-sentrygate-interface-hardening.php:267
+#: includes/modules/class-sentrygate-interface-hardening.php:283
+#: includes/modules/class-sentrygate-interface-hardening.php:290
+msgid "Basic protection"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:208
+#: includes/modules/class-sentrygate-debug-control.php:89
+#: includes/modules/class-sentrygate-debug-control.php:98
+#: includes/modules/class-sentrygate-debug-control.php:105
+msgid "Error display"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:209
+#: includes/modules/class-sentrygate-login-path.php:400
+#: includes/modules/class-sentrygate-login-path.php:410
+#: includes/modules/class-sentrygate-login-path.php:421
+msgid "Login URL"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:210
+#: includes/admin/views/tabs/dashboard.php:53
+msgid "Bot protection"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:211
+#: includes/admin/views/tfa-setup.php:35
+#: includes/modules/class-sentrygate-two-factor.php:115
+#: includes/modules/class-sentrygate-two-factor.php:116
+#: includes/modules/class-sentrygate-two-factor.php:994
+#: includes/modules/class-sentrygate-two-factor.php:1001
+msgid "Two-factor"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:212
+#: includes/admin/views/tabs/modules.php:43
+#: includes/modules/class-sentrygate-security-headers.php:85
+#: includes/modules/class-sentrygate-security-headers.php:93
+msgid "Browser protection"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:213
+#: includes/admin/views/tabs/modules.php:47
+#: includes/modules/class-sentrygate-file-hardening.php:129
+#: includes/modules/class-sentrygate-file-hardening.php:140
+#: includes/modules/class-sentrygate-file-hardening.php:147
+msgid "Files & server"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:214
+#: includes/admin/views/tabs/modules.php:51
+#: includes/modules/class-sentrygate-audit-log.php:447
+#: includes/modules/class-sentrygate-audit-log.php:454
+msgid "Audit log"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:215
+#: includes/admin/views/tabs/modules.php:55
+#: includes/modules/class-sentrygate-core-integrity.php:170
+#: includes/modules/class-sentrygate-core-integrity.php:179
+#: includes/modules/class-sentrygate-core-integrity.php:187
+#: includes/modules/class-sentrygate-core-integrity.php:195
+#: includes/modules/class-sentrygate-core-integrity.php:207
+msgid "WordPress check"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:216
+msgid "Backup / transfer"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:234
+#: includes/admin/class-sentrygate-admin.php:255
+#: includes/modules/class-sentrygate-core-integrity.php:151
+#: includes/modules/class-sentrygate-two-factor.php:158
+#: includes/modules/class-sentrygate-two-factor.php:249
+msgid "You do not have permission."
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:426
+msgid "Save settings"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:442
+msgid "Active"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:443
+#: includes/admin/views/tabs/files.php:100
+msgid "Check"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:444
+msgid "Off"
+msgstr ""
+
+#: includes/admin/class-sentrygate-dashboard.php:63
+msgid "Green = active, yellow = check, red = off. See details under SentryGate."
+msgstr ""
+
+#: includes/admin/class-sentrygate-dashboard.php:75
+msgid "Open all settings"
+msgstr ""
+
+#: includes/admin/views/settings-page.php:36
+msgid "Protects login, forms, and the site."
+msgstr ""
+
+#: includes/admin/views/settings-page.php:42
+msgid "Documentation"
+msgstr ""
+
+#: includes/admin/views/settings-page.php:46
+msgid "SentryGate sections"
+msgstr ""
+
+#: includes/admin/views/settings-page.php:63
+msgid "Settings saved."
+msgstr ""
+
+#: includes/admin/views/settings-page.php:70
+msgid "Section not found."
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:25
+msgid "What happened on the site"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:26
+msgid "Here you can see logins, failed attempts, and lockouts. Useful when you want to check whether someone is rattling the door – without complicated server logs."
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:27
+msgid "Fill in an email or webhook only if you want to be notified when there are many lockouts."
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:34
+msgid "How long to keep?"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:35
+msgid "Days. Older entries are deleted automatically. 90 days is a good compromise."
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:44
+msgid "Shorten IP addresses?"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:45
+msgid "Yes, mask the last segment (privacy-friendly)"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:46
+msgid "Helps with privacy. But it makes it harder to pinpoint an attacker."
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:51
+msgid "Alert on many lockouts"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:55
+msgid "Email address"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:59
+msgid "Webhook URL (optional)"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:63
+msgid "Alert after this many lockouts"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:67
+msgid "… within this many seconds"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:71
+msgid "Leave empty = no extra notification. 600 seconds = 10 minutes."
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:83
+msgid "Module is off"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:85
+msgid "Turn it on under \"Modules on/off\" so events are recorded."
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:87
+msgid "Open modules"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:94
+msgid "No entries yet"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:96
+msgid "Either it was quiet, or the module was only just turned on."
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:102
+msgid "Recent events"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:107
+msgid "Date"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:108
+msgid "Type"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:109
+msgid "Level"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:110
+msgid "What happened"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:111
+msgid "IP"
+msgstr ""
+
+#: includes/admin/views/tabs/audit.php:112
+msgid "User"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:23
+msgid "Extra protection at login"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:24
+msgid "The check appears before the username and password. After you pass it, SentryGate stores an HttpOnly session cookie – you will not be asked again in this browser window. Direct POSTs without a cookie are rejected without checking the password."
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:25
+msgid "The symbol choice is a hurdle against simple bots, not a captcha like those from Google. Protection is stronger together with the hidden login URL."
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:30
+msgid "Type of protection"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:33
+msgid "Full – symbol choice before login + session cookie"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:34
+msgid "Light – confirm only + invisible traps + cookie"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:36
+msgid "The cookie is signed (HMAC), HttpOnly, and lasts until the browser is closed, for at most 12 hours. It cannot be read by JavaScript."
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:45
+msgid "Minimum wait time"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:46
+msgid "Seconds before submitting is allowed. Bots often submit forms immediately. 2 seconds is usually enough."
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:53
+msgid "Too many failed attempts"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:57
+msgid "Allowed attempts"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:61
+msgid "Time window in seconds"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:65
+msgid "Lockout duration in seconds"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:74
+msgid "Make the lockout longer on repeat"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:76
+msgid "Example: 5 failed attempts in 15 minutes → 15-minute pause. 900 seconds = 15 minutes."
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:86
+msgid "Site behind Cloudflare / proxy?"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:87
+msgid "Yes, read the real visitor IP from proxy headers"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:88
+msgid "Turn this on only if a trusted proxy or CDN is in front. Otherwise leave it off."
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:96
+msgid "Forms"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:97
+msgid "The same symbol choice as at login, right in the form before submitting. No cookie; each submission needs a fresh check."
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:98
+msgid "BlockForge forms use this automatically. Other plugins can use SentryGate_Form_Challenge::widget() and ::verify()."
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:105
+msgid "Symbol choice in forms"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:106
+#: includes/admin/views/tabs/modules.php:79
+msgid "Enable"
+msgstr ""
+
+#: includes/admin/views/tabs/challenge.php:107
+msgid "Without this module, or without SentryGate, forms are submitted as before (the honeypot and wait time stay in the form plugin)."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:44
+msgid "Enable or pause the protection building blocks."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:49
+msgid "XML-RPC, username guessing, file editor."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:54
+msgid "Symbol choice at login and in forms, session cookie, rate limit."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:62
+#: includes/admin/views/tabs/dashboard.php:95
+#: includes/admin/views/tabs/files.php:86
+msgid "Status"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:63
+msgid "Green = protection active. Yellow = please check. Red = off or critical."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:64
+msgid "First, turn on the recommended modules under \"Modules on/off\" – then fine-tune each section as needed."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:71
+msgid "Protection sections"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:72
+msgid "Active / OK"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:73
+msgid "Notice / check"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:74
+msgid "Off or risky"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:84
+msgid "Recommended first steps"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:90
+msgid "Security status"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:90
+msgid "All protection sections at a glance."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:96
+msgid "Section"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:97
+msgid "Summary"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:114
+msgid "Next steps"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:114
+msgid "The most important settings in three steps."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:126
+msgid "Not included in this version: automatic updates, malware scanning, and Multisite management."
+msgstr ""
+
+#: includes/admin/views/tabs/debug.php:25
+msgid "Error display on the live site"
+msgstr ""
+
+#: includes/admin/views/tabs/debug.php:26
+msgid "On a live site, visitors should not see technical error messages. SentryGate warns you if debug switches are still on – it does not change your server file wp-config.php automatically."
+msgstr ""
+
+#: includes/admin/views/tabs/debug.php:27
+msgid "If warnings appear here, ask a developer to turn off WP_DEBUG on the live site."
+msgstr ""
+
+#: includes/admin/views/tabs/debug.php:34
+msgid "Monitor the live site"
+msgstr ""
+
+#: includes/admin/views/tabs/debug.php:35
+msgid "Show warnings and suppress visible errors on the front end"
+msgstr ""
+
+#: includes/admin/views/tabs/debug.php:36
+msgid "Safe: nothing in the WordPress configuration is permanently overwritten."
+msgstr ""
+
+#: includes/admin/views/tabs/debug.php:45
+msgid "Current status"
+msgstr ""
+
+#: includes/admin/views/tabs/debug.php:48
+msgid "Everything looks set for production – no warning needed."
+msgstr ""
+
+#: includes/admin/views/tabs/debug.php:51
+msgid "Please check:"
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:23
+msgid "Back up settings or apply them to another site"
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:24
+msgid "Export creates a file with your SentryGate settings. Import loads that file back in – handy when you want the same security standard for every client."
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:25
+msgid "Personal secrets (for example, user 2FA) are not in the file. They must be set up again on each site."
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:32
+msgid "Settings have been applied."
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:34
+msgid "Import failed – please choose a valid SentryGate JSON file."
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:40
+msgid "1. Back up / download"
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:40
+msgid "Downloads a JSON file to your computer."
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:45
+msgid "Download file"
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:51
+msgid "2. Import on this site"
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:51
+msgid "Overwrites the current SentryGate settings with the selected file."
+msgstr ""
+
+#: includes/admin/views/tabs/export.php:58
+msgid "Import file"
+msgstr ""
+
+#. translators: %s: absolute path to uploads .htaccess
+#: includes/admin/views/tabs/files.php:23
+#, php-format
+msgid "Optionally copy this manually into the file %s. Not written automatically."
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:26
+msgid "Optionally copy this manually into the .htaccess file in the uploads directory. Not written automatically."
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:34
+msgid "Notes about files on the server"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:35
+msgid "SentryGate shows recommendations and checks – it does not change file permissions or .htaccess on its own. That way nothing is rewritten in secret."
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:36
+msgid "Paste the .htaccess text only if your host uses Apache and you know where the file in the uploads folder is – or ask your provider."
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:43
+msgid "Upload protection"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:44
+msgid "Show sample text for upload protection"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:51
+msgid "File permissions"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:52
+msgid "Show the file permissions check"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:62
+msgid "Example: protection for uploaded files"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:68
+msgid "Copy"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:79
+msgid "File permissions – for review only"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:79
+msgid "\"Check\" means the permissions look unusual. Do not change anything yourself if you are unsure – ask your host or agency."
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:84
+msgid "Path"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:85
+msgid "Permissions"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:87
+msgid "Note"
+msgstr ""
+
+#: includes/admin/views/tabs/files.php:98
+msgid "OK"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:23
+msgid "Instructions for the browser"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:24
+msgid "These settings tell the browser what is allowed – for example, whether your page may be embedded on other sites. The defaults are enough for most sites."
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:25
+msgid "Turn on HSTS only if the whole site reliably runs over HTTPS. Leave CSP in report-only mode at first."
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:31
+msgid "Embedding on other sites"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:40
+msgid "Enable protection"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:44
+msgid "Allow on this domain only"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:45
+msgid "Deny everywhere"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:47
+msgid "Protects against \"clickjacking\" – your page is not secretly misused inside a frame."
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:56
+msgid "Take file types seriously"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:57
+msgid "Browser should not guess file types (nosniff)"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:58
+msgid "Stops harmful files from being executed as something else."
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:65
+msgid "Sharing the referrer address"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:74
+msgid "Set a rule"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:77
+msgid "The default is privacy-friendly and suitable for most sites. Change it only if you know the value."
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:84
+msgid "Always encrypted (HTTPS)"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:94
+msgid "Force the browser to use only HTTPS from now on"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:98
+msgid "Lifetime in seconds"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:102
+msgid "Only with HTTPS throughout. 31536000 ≈ 1 year. Set incorrectly, it can make the site hard to reach."
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:108
+msgid "What scripts and content may do"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:118
+msgid "Send policy"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:124
+msgid "Report only, do not block anything yet (recommended)"
+msgstr ""
+
+#: includes/admin/views/tabs/headers.php:133
+msgid "Test in report-only mode first. Clear the \"report only\" checkbox only when nothing breaks."
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:38
+msgid "Check failed"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:139
+msgid "Does WordPress still match the original?"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:140
+msgid "The check compares the WordPress files with the official list from wordpress.org. Differences can be a warning sign – SentryGate does not repair anything automatically."
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:141
+msgid "Check once after updates. If there are differences: back up, then reinstall core if needed or tell a developer."
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:148
+msgid "Show on the overview?"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:149
+msgid "Yes, also show the status on the overview page"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:154
+msgid "Save setting"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:161
+msgid "Start check"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:162
+msgid "Takes a few seconds, depending on the server. No files are changed."
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:167
+msgid "Check now"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:192
+msgid "Wiedenroth Technologies security check"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:194
+msgid "Scan the site from the outside"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:195
+msgid "The check above inspects files on this server. The security checker inspects the site from the outside: TLS, headers, login, and visible gaps."
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:199
+msgid "Check site"
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:204
+msgid "The scan reads only publicly visible information. Not a penetration test, and no exploits. The result is a first technical assessment."
+msgstr ""
+
+#: includes/admin/views/tabs/integrity.php:205
+msgid "Publicly reachable pages only. Non-invasive, about 20–40 seconds."
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:25
+msgid "Baseline protection for the site"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:26
+msgid "Here you turn off common attack paths. You can safely leave most settings enabled."
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:27
+msgid "Turn on \"Restrict the REST API\" only if you know which endpoints the site needs (for example, forms or blocks)."
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:36
+msgid "Block the old remote interface"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:37
+msgid "Disable XML-RPC"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:38
+msgid "An old interface often abused for password attacks. Not needed for ordinary sites."
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:45
+msgid "Protect usernames"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:46
+msgid "Make username guessing harder"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:47
+msgid "Stops attackers from reading lists of valid logins."
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:54
+msgid "Code editor in the admin"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:55
+msgid "Disable the theme/plugin editor"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:56
+msgid "If someone takes over your admin account, they cannot rewrite files directly in the browser this way."
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:63
+msgid "Hide the WordPress version"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:64
+msgid "Remove the version number from the public site"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:65
+msgid "Makes it harder for attackers to see which WordPress version is running."
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:70
+msgid "Interface for apps (REST)"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:77
+msgid "Allow only approved areas for guests"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:79
+msgid "Off by default. Enable it only if you deliberately maintain the list below."
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:81
+msgid "Allowed areas (one line per entry)"
+msgstr ""
+
+#: includes/admin/views/tabs/interface.php:88
+msgid "Example: /wp/v2/posts – anything that starts with this line stays reachable for guests."
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:28
+msgid "Custom login URL"
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:29
+msgid "Instead of the well-known address /wp-login.php, use your own URL. Anyone who opens the old address sees \"Page not found\". That makes the login harder for bots to find."
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:30
+msgid "Write down the new login URL. The module must be turned on under \"Modules on/off\"."
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:35
+msgid "Your login name in the URL"
+msgstr ""
+
+#. translators: %s: login URL
+#: includes/admin/views/tabs/login_path.php:42
+#, php-format
+msgid "Login is then at: %s"
+msgstr ""
+
+#. translators: 1: custom login slug, 2: frontend login URL
+#: includes/admin/views/tabs/login_path.php:50
+#, php-format
+msgid "Front-end login is active: /%1$s/ and login links go there (%2$s), including captcha and 2FA – without logging in twice through the WordPress admin."
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:56
+msgid "Letters, numbers, and hyphens only. Avoid words like \"login\" or \"admin\"."
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:66
+msgid "Block the admin URL"
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:67
+msgid "Answer /wp-admin with \"not found\" for visitors who are not logged in"
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:68
+msgid "Logged-in users can still reach the admin as usual."
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:79
+msgid "If the new address does not take effect: under Settings → Permalinks, click \"Save Changes\" once."
+msgstr ""
+
+#. translators: %s: custom login URL
+#: includes/admin/views/tabs/login_path.php:85
+#, php-format
+msgid "Recovery if you forget the login URL: (1) Use the URL you wrote down (%s). (2) Rename or deactivate the plugin via FTP or a file manager – after that, /wp-login.php works again. (3) With WP-CLI: wp plugin deactivate sentrygate – or set the module_login_path setting to off in the database and save permalinks."
+msgstr ""
+
+#: includes/admin/views/tabs/login_path.php:88
+msgid "Recovery path"
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:20
+msgid "Blocks known attack paths (XML-RPC, username guessing, file editor, version leaks)."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:23
+msgid "Check error display"
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:24
+msgid "Warns you when WordPress shows debug messages on a live site – it does not change your wp-config.php."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:27
+msgid "Hide the login URL"
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:28
+msgid "Replaces /wp-login.php with a custom address. Unknown visitors see \"Page not found\"."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:31
+#: includes/modules/class-sentrygate-login-challenge.php:336
+#: includes/modules/class-sentrygate-login-challenge.php:348
+msgid "Login protection"
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:32
+msgid "A check before login (symbol choice), then a session cookie. Direct POSTs without a cookie are rejected."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:35
+#: includes/modules/class-sentrygate-form-challenge.php:207
+#: includes/modules/class-sentrygate-form-challenge.php:214
+msgid "Form protection"
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:36
+msgid "The same symbol choice before submitting BlockForge forms and other connected forms."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:39
+msgid "Two-factor login"
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:40
+msgid "An extra code via authenticator app or email. Set up under Users → Two-factor."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:44
+msgid "Tells the browser how the page may be loaded (for example, no embedding on other sites)."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:48
+msgid "Shows recommendations for file permissions and upload protection. Does not write anything to the server automatically."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:52
+msgid "Logs logins, lockouts, and important security events."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:56
+msgid "Compares WordPress files with the original from wordpress.org. No automatic repair."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:66
+msgid "Modules are the protection building blocks"
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:67
+msgid "Here, turn on what should be active on this site. Turned-off modules do nothing – their settings stay saved."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:68
+msgid "For most client sites: leave Basic protection, Login protection, Browser protection, and Audit log on."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:86
+msgid "Save modules"
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:26
+msgid "Second step after the password"
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:27
+msgid "Even if the password is stolen, the attacker also needs a code. Each user chooses an authenticator app or email on their own \"Two-factor\" page."
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:28
+msgid "Be sure to mark administrators as a required role."
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:33
+msgid "Who must use two-factor?"
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:44
+msgid "Marked roles are sent to the setup page after login until a method is active."
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:53
+msgid "Allow email as a method?"
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:54
+msgid "Yes, users may choose email instead of an app"
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:55
+msgid "Without this option, only the authenticator app remains. Email is not a second method alongside the app; it is a choice between the two."
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:62
+msgid "Remember device"
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:63
+msgid "Days without another code. Users can choose \"Trust this device\" at login. Do not check it on a shared computer."
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:72
+msgid "Emergency codes"
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:73
+msgid "Number of new codes (8–10). One-time backup codes in case the phone or app is gone. Keep them safe."
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:85
+msgid "Separate setup page"
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:86
+msgid "Not in the profile: Users → Two-factor. Choose an app or email there, confirm, done."
+msgstr ""
+
+#: includes/admin/views/tabs/tfa.php:89
+msgid "My two-factor page"
+msgstr ""
+
+#. translators: %s: user login
+#: includes/admin/views/tfa-setup.php:41
+#, php-format
+msgid "Setup for %s. Choose an authenticator app or email."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:45
+msgid "Second step after the password: authenticator app or email – one method is enough."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:55
+msgid "The code is invalid or expired. Please try again."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:55
+msgid "Confirmation failed"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:57
+msgid "This account has no valid email address, or email is turned off."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:57
+msgid "Email not available"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:61
+msgid "Two-factor is active. Keep the emergency codes safe – they are shown only once."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:61
+msgid "Setup complete"
+msgstr ""
+
+#. translators: %s: email address
+#: includes/admin/views/tfa-setup.php:67
+#, php-format
+msgid "A code was sent to %s. It is valid for 10 minutes."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:72
+msgid "Two-factor is turned off."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:74
+msgid "The old emergency codes are invalid. Save the new codes below now."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:80
+msgid "Emergency codes – shown only once"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:81
+msgid "Each code works once if the app or email cannot be reached."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:103
+msgid "Active protection"
+msgstr ""
+
+#. translators: %s: email
+#: includes/admin/views/tfa-setup.php:107
+#, php-format
+msgid "Logins need a code by email to %s."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:110
+msgid "Logins need a code from the authenticator app."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:112
+msgid "Email active"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:112
+msgid "App active"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:116
+msgid "New emergency codes"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:119
+msgid "Turn off two-factor"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:129
+msgid "Change method"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:129
+msgid "Choose method"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:130
+msgid "Only one method is active. You can switch to the other one here later."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:131
+msgid "The app does not depend on the inbox. Email needs a reachable address on the account."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:136
+msgid "Authenticator app"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:137
+msgid "Google Authenticator, Authy, 1Password, and similar apps. Scan the QR code, then confirm once."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:141
+msgid "Email"
+msgstr ""
+
+#. translators: %s: email
+#: includes/admin/views/tfa-setup.php:146
+#, php-format
+msgid "A code to %s at every login. Valid for 10 minutes."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:161
+msgid "Set up authenticator app"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:162
+msgid "Scan the QR code in the app or enter the secret manually. Then confirm the current 6-digit code here."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:168
+msgid "The QR code could not be generated. Please enter the secret in the app manually."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:170
+msgid "Secret"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:174
+msgid "Open otpauth link"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:178
+#: includes/admin/views/tfa-setup.php:205
+msgid "Confirmation code"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:183
+msgid "Confirm app"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:186
+#: includes/admin/views/tfa-setup.php:216
+msgid "Cancel"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:196
+msgid "Set up email"
+msgstr ""
+
+#. translators: %s: email
+#: includes/admin/views/tfa-setup.php:199
+#, php-format
+msgid "Enter the code that was sent to %s."
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:210
+msgid "Confirm email"
+msgstr ""
+
+#: includes/admin/views/tfa-setup.php:213
+#: includes/modules/class-sentrygate-two-factor.php:663
+msgid "Resend code"
+msgstr ""
+
+#: includes/class-sentrygate-admin-ui.php:192
+msgid "WordPress notices"
+msgstr ""
+
+#: includes/class-sentrygate-admin-ui.php:260
+msgid "Class name copied."
+msgstr ""
+
+#: includes/class-sentrygate-admin-ui.php:261
+msgid "1 notice"
+msgstr ""
+
+#. translators: %d: number of admin notices
+#: includes/class-sentrygate-admin-ui.php:263
+#, php-format
+msgid "%d notices"
+msgstr ""
+
+#: includes/class-sentrygate-admin-ui.php:312
+msgid "Tip:"
+msgstr ""
+
+#. translators: 1: first item on page, 2: last item on page, 3: total items
+#: includes/class-sentrygate-admin-ui.php:460
+#, php-format
+msgid "%1$s–%2$s of %3$s entries"
+msgstr ""
+
+#: includes/class-sentrygate-admin-ui.php:466
+msgid "Pages"
+msgstr ""
+
+#. translators: %d: total number of pages
+#: includes/class-sentrygate-admin-ui.php:473
+#, php-format
+msgid "%d page"
+msgid_plural "%d pages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-sentrygate-admin-ui.php:486
+msgid "Previous"
+msgstr ""
+
+#: includes/class-sentrygate-admin-ui.php:487
+msgid "Next"
+msgstr ""
+
+#: includes/class-sentrygate-admin-ui.php:526
+msgid "Legal"
+msgstr ""
+
+#: includes/class-sentrygate-admin-ui.php:545
+msgid "A product of"
+msgstr ""
+
+#. translators: 1: IP, 2: username
+#: includes/helpers/class-sentrygate-rate-limit.php:142
+#, php-format
+msgid "Login lockout for IP %1$s (user: %2$s)."
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:87
+msgid "Security check expired. Please reload."
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:97
+msgid "Please choose the correct symbol."
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:125
+#: includes/modules/class-sentrygate-login-challenge.php:492
+msgid "Security check"
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:127
+#: includes/modules/class-sentrygate-login-challenge.php:133
+msgid "Choose the symbol:"
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:158
+#: includes/modules/class-sentrygate-login-challenge.php:134
+msgid "Other symbols"
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:183
+msgid "Lock"
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:187
+msgid "Key"
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:191
+msgid "Envelope"
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:195
+msgid "House"
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:199
+msgid "Shield"
+msgstr ""
+
+#: includes/helpers/class-sentrygate-symbol-challenge.php:203
+msgid "Globe"
+msgstr ""
+
+#. translators: %s: username
+#: includes/modules/class-sentrygate-audit-log.php:111
+#, php-format
+msgid "Successful login: %s"
+msgstr ""
+
+#. translators: %s: username
+#: includes/modules/class-sentrygate-audit-log.php:136
+#, php-format
+msgid "Failed login: %s"
+msgstr ""
+
+#. translators: %s: username
+#: includes/modules/class-sentrygate-audit-log.php:162
+#, php-format
+msgid "New user: %s"
+msgstr ""
+
+#. translators: 1: user, 2: role
+#: includes/modules/class-sentrygate-audit-log.php:186
+#, php-format
+msgid "Role change: %1$s → %2$s"
+msgstr ""
+
+#. translators: %s: plugin
+#: includes/modules/class-sentrygate-audit-log.php:207
+#, php-format
+msgid "Plugin activated: %s"
+msgstr ""
+
+#. translators: %s: plugin
+#: includes/modules/class-sentrygate-audit-log.php:226
+#, php-format
+msgid "Plugin deactivated: %s"
+msgstr ""
+
+#. translators: %s: theme
+#: includes/modules/class-sentrygate-audit-log.php:248
+#, php-format
+msgid "Theme switched: %s"
+msgstr ""
+
+#. translators: %s: update type
+#: includes/modules/class-sentrygate-audit-log.php:270
+#, php-format
+msgid "Update complete: %s"
+msgstr ""
+
+#. translators: 1: site, 2: event
+#: includes/modules/class-sentrygate-audit-log.php:292
+#, php-format
+msgid "[%1$s] SentryGate alert: %2$s"
+msgstr ""
+
+#. translators: 1: count, 2: seconds
+#: includes/modules/class-sentrygate-audit-log.php:352
+#, php-format
+msgid "%1$d lockouts within %2$d seconds."
+msgstr ""
+
+#: includes/modules/class-sentrygate-audit-log.php:448
+msgid "Module disabled – critical events cannot be traced."
+msgstr ""
+
+#. translators: %d: retention days
+#: includes/modules/class-sentrygate-audit-log.php:457
+#, php-format
+msgid "Logging active, retention %d days."
+msgstr ""
+
+#: includes/modules/class-sentrygate-core-integrity.php:77
+msgid "The checksum API did not return valid data."
+msgstr ""
+
+#: includes/modules/class-sentrygate-core-integrity.php:171
+#: includes/modules/class-sentrygate-debug-control.php:90
+#: includes/modules/class-sentrygate-file-hardening.php:130
+#: includes/modules/class-sentrygate-security-headers.php:86
+msgid "Module disabled."
+msgstr ""
+
+#: includes/modules/class-sentrygate-core-integrity.php:180
+msgid "No check has been run yet."
+msgstr ""
+
+#. translators: 1: mismatches, 2: missing
+#: includes/modules/class-sentrygate-core-integrity.php:198
+#, php-format
+msgid "%1$d mismatched, %2$d missing files (no auto-repair in v1)."
+msgstr ""
+
+#. translators: %d: files checked
+#: includes/modules/class-sentrygate-core-integrity.php:210
+#, php-format
+msgid "Core OK (%d files checked)."
+msgstr ""
+
+#: includes/modules/class-sentrygate-debug-control.php:49
+msgid "SentryGate debug check:"
+msgstr ""
+
+#: includes/modules/class-sentrygate-debug-control.php:51
+msgid "wp-config.php is not overwritten automatically – please check it manually."
+msgstr ""
+
+#: includes/modules/class-sentrygate-debug-control.php:64
+msgid "WP_DEBUG is active."
+msgstr ""
+
+#: includes/modules/class-sentrygate-debug-control.php:67
+msgid "WP_DEBUG_DISPLAY is active (errors may be publicly visible)."
+msgstr ""
+
+#: includes/modules/class-sentrygate-debug-control.php:73
+msgid "WP_DEBUG_LOG is active – make sure the log file is not publicly reachable."
+msgstr ""
+
+#: includes/modules/class-sentrygate-debug-control.php:106
+msgid "Debug constants match the production recommendation."
+msgstr ""
+
+#: includes/modules/class-sentrygate-file-hardening.php:75
+msgid "The WordPress root should not be world-writable."
+msgstr ""
+
+#: includes/modules/class-sentrygate-file-hardening.php:80
+msgid "wp-config.php should ideally be 0440/0400/0640."
+msgstr ""
+
+#: includes/modules/class-sentrygate-file-hardening.php:85
+msgid "wp-content should not be 0777."
+msgstr ""
+
+#: includes/modules/class-sentrygate-file-hardening.php:94
+msgid "Check the uploads directory."
+msgstr ""
+
+#: includes/modules/class-sentrygate-file-hardening.php:141
+msgid "Some file permissions differ from the recommendation (display only)."
+msgstr ""
+
+#: includes/modules/class-sentrygate-file-hardening.php:148
+msgid "Permission check OK. .htaccess snippets are available in the admin."
+msgstr ""
+
+#. translators: %d: seconds
+#: includes/modules/class-sentrygate-form-challenge.php:104
+#: includes/modules/class-sentrygate-login-challenge.php:587
+#, php-format
+msgid "Too many failed attempts. Please try again in %d seconds."
+msgstr ""
+
+#: includes/modules/class-sentrygate-form-challenge.php:141
+#: includes/modules/class-sentrygate-form-challenge.php:175
+#: includes/modules/class-sentrygate-login-challenge.php:135
+#: includes/modules/class-sentrygate-login-challenge.php:305
+#: includes/modules/class-sentrygate-two-factor.php:475
+#: includes/modules/class-sentrygate-two-factor.php:533
+msgid "Too many failed attempts. Please try again later."
+msgstr ""
+
+#: includes/modules/class-sentrygate-form-challenge.php:166
+msgid "Security check is turned off."
+msgstr ""
+
+#: includes/modules/class-sentrygate-form-challenge.php:208
+msgid "Disabled – forms without a symbol choice."
+msgstr ""
+
+#: includes/modules/class-sentrygate-form-challenge.php:215
+msgid "Symbol choice before submitting (BlockForge and connected forms)."
+msgstr ""
+
+#: includes/modules/class-sentrygate-interface-hardening.php:83
+msgid "XML-RPC is disabled on this site."
+msgstr ""
+
+#: includes/modules/class-sentrygate-interface-hardening.php:84
+#: includes/modules/class-sentrygate-interface-hardening.php:154
+msgid "Access denied"
+msgstr ""
+
+#: includes/modules/class-sentrygate-interface-hardening.php:131
+msgid "User enumeration via the REST API is disabled."
+msgstr ""
+
+#: includes/modules/class-sentrygate-interface-hardening.php:153
+msgid "User enumeration is disabled."
+msgstr ""
+
+#: includes/modules/class-sentrygate-interface-hardening.php:253
+msgid "This REST route is blocked for anonymous users."
+msgstr ""
+
+#: includes/modules/class-sentrygate-interface-hardening.php:268
+msgid "Disabled – known attack paths are not blocked."
+msgstr ""
+
+#: includes/modules/class-sentrygate-interface-hardening.php:274
+msgid "XML-RPC is not disabled."
+msgstr ""
+
+#: includes/modules/class-sentrygate-interface-hardening.php:277
+msgid "User enumeration is not blocked."
+msgstr ""
+
+#: includes/modules/class-sentrygate-interface-hardening.php:291
+msgid "XML-RPC, enumeration, and version leaks are hardened."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:170
+msgid "<strong>Error:</strong> Please complete the security check first."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:337
+msgid "Disabled – login without extra protection against bots."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:343
+msgid "Check before login (honeypot + timing), then a session cookie."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:344
+msgid "Symbol choice before login, then a session cookie. Direct POSTs without a cookie are rejected."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:449
+msgid "Security check invalid. Please try again."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:456
+#: includes/modules/class-sentrygate-two-factor.php:153
+#: includes/modules/class-sentrygate-two-factor.php:696
+msgid "Security check failed."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:464
+msgid "Please slow down a little – the form was submitted too quickly."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:490
+msgid "Please briefly confirm that you are not a bot. The login will appear after that."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:505
+msgid "Website"
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:516
+msgid "Click Continue to go to the login."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:522
+msgid "Continue to login"
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-challenge.php:583
+msgid "Locked out"
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-path.php:347
+msgid "Page not found."
+msgstr ""
+
+#: includes/modules/class-sentrygate-login-path.php:401
+msgid "Disabled – the login is at the default address."
+msgstr ""
+
+#. translators: %s: custom login slug
+#: includes/modules/class-sentrygate-login-path.php:413
+#, php-format
+msgid "/%s/ redirects to the front-end login – original paths return 404."
+msgstr ""
+
+#. translators: %s: custom login slug
+#: includes/modules/class-sentrygate-login-path.php:423
+#, php-format
+msgid "Login at /%s/ – original paths return 404."
+msgstr ""
+
+#: includes/modules/class-sentrygate-security-headers.php:95
+msgid "Headers active (CSP in report-only mode)."
+msgstr ""
+
+#: includes/modules/class-sentrygate-security-headers.php:96
+msgid "Headers active (CSP enforcing)."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:105
+#: includes/modules/class-sentrygate-two-factor.php:439
+msgid "Please enter the code from the email."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:106
+#: includes/modules/class-sentrygate-two-factor.php:440
+msgid "Please enter the code from the authenticator app."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:483
+#: includes/modules/class-sentrygate-two-factor.php:488
+#: includes/modules/class-sentrygate-two-factor.php:541
+msgid "Session expired. Please log in again."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:494
+#: includes/modules/class-sentrygate-two-factor.php:632
+msgid "Code invalid or expired."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:546
+msgid "The code could not be sent."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:550
+msgid "Please wait a moment before requesting another code."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:555
+#: includes/modules/class-sentrygate-two-factor.php:635
+msgid "A code was sent by email (valid for 10 minutes)."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:629
+msgid "Two-factor authentication"
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:645
+msgid "Code from the email"
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:647
+msgid "Code from the authenticator app"
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:656
+msgid "Enter an email code or an emergency code."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:658
+msgid "Enter an app code or an emergency code."
+msgstr ""
+
+#. translators: %d: days
+#: includes/modules/class-sentrygate-two-factor.php:671
+#, php-format
+msgid "Trust this device for %d days"
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:678
+msgid "Confirm"
+msgstr ""
+
+#. translators: %s: site name
+#: includes/modules/class-sentrygate-two-factor.php:848
+#, php-format
+msgid "[%s] Your login code"
+msgstr ""
+
+#. translators: %s: code
+#: includes/modules/class-sentrygate-two-factor.php:853
+#, php-format
+msgid ""
+"Your one-time code is: %s\n"
+"\n"
+"The code is valid for 10 minutes."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:980
+msgid "SentryGate: Two-factor authentication is required for your role. Please choose an authenticator app or email."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:981
+msgid "Set up now"
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:995
+msgid "Disabled – password only, no second code."
+msgstr ""
+
+#: includes/modules/class-sentrygate-two-factor.php:1002
+msgid "App or email, set up under Users → Two-factor."
+msgstr ""
