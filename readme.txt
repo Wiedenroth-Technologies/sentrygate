@@ -4,7 +4,7 @@ Tags: security, 2fa, login, hardening, audit-log
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Author: Wiedenroth Technologies GmbH
@@ -87,6 +87,9 @@ This plugin may connect to external services as follows:
 
 == Changelog ==
 
+= 1.0.3 =
+* Fixed admin styles and scripts not loading on the two-factor authentication setup page and the user profile page.
+
 = 1.0.2 =
 * Updated plugin name in the directory listing.
 
@@ -101,6 +104,9 @@ This plugin may connect to external services as follows:
 * Config export/import and offline QR for authenticator setup
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+Fixes the layout of the two-factor authentication setup page.
 
 = 1.0.2 =
 Updated plugin name in the directory listing.
