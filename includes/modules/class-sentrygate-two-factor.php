@@ -111,13 +111,15 @@ class SentryGate_Two_Factor {
 	 * Dedicated setup page under Users / Profile.
 	 */
 	public function add_setup_page(): void {
-		add_users_page(
+		$hook = add_users_page(
 			__( 'Two-factor', 'wiedenroth-technologies-sentrygate' ),
 			__( 'Two-factor', 'wiedenroth-technologies-sentrygate' ),
 			'read',
 			self::PAGE_SLUG,
 			array( $this, 'render_setup_page' )
 		);
+
+		SentryGate_Admin_Ui::register_page_hook( $hook );
 	}
 
 	/**

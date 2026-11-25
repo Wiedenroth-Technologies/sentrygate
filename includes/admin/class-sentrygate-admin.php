@@ -36,7 +36,7 @@ class SentryGate_Admin {
 	public function add_menu(): void {
 		SentryGate_Admin_Ui::ensure_menu_separator();
 
-		add_menu_page(
+		$hook = add_menu_page(
 			'SentryGate',
 			'SentryGate',
 			'manage_options',
@@ -45,6 +45,8 @@ class SentryGate_Admin {
 			$this->menu_icon(),
 			SentryGate_Admin_Ui::MENU_POSITION
 		);
+
+		SentryGate_Admin_Ui::register_page_hook( $hook );
 	}
 
 	/**
@@ -94,7 +96,7 @@ class SentryGate_Admin {
 			);
 		}
 
-		if ( ! str_contains( $hook, SENTRYGATE_SLUG ) ) {
+		if ( ! SentryGate_Admin_Ui::is_registered_page_hook( $hook ) ) {
 			return;
 		}
 

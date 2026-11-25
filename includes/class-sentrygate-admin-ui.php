@@ -66,6 +66,13 @@ class SentryGate_Admin_Ui {
 	private string $captured_notices = '';
 
 	/**
+	 * Hook suffixes returned by add_*_page() for this plugin's screens.
+	 *
+	 * @var array<string, true>
+	 */
+	private static array $page_hooks = array();
+
+	/**
 	 * @param string $slug     Plugin slug, e.g. wiedenroth-technologies-sentrygate.
 	 * @param string $css_path Absolute path to wt-admin.css.
 	 * @param string $js_url   URL to wt-admin.js.
@@ -76,6 +83,26 @@ class SentryGate_Admin_Ui {
 		$this->css_path = $css_path;
 		$this->js_url   = $js_url;
 		$this->version  = $version;
+	}
+
+	/**
+	 * Remember a hook suffix from add_menu_page() / add_*_page().
+	 *
+	 * @param string|false $hook Hook suffix, or false when the current user cannot access the page.
+	 */
+	public static function register_page_hook( string|false $hook ): void {
+		if ( is_string( $hook ) && '' !== $hook ) {
+			self::$page_hooks[ $hook ] = true;
+		}
+	}
+
+	/**
+	 * Whether $hook is one of this plugin's registered admin pages.
+	 *
+	 * @param string $hook Hook suffix from admin_enqueue_scripts / screen id.
+	 */
+	public static function is_registered_page_hook( string $hook ): bool {
+		return isset( self::$page_hooks[ $hook ] );
 	}
 
 	/**
@@ -129,18 +156,12 @@ class SentryGate_Admin_Ui {
 	 * Whether the current request is this plugin's admin screen.
 	 */
 	public function is_own_screen(): bool {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$page = isset( $_GET['page'] ) ? sanitize_key( (string) wp_unslash( $_GET['page'] ) ) : '';
-		if ( $this->slug === $page || str_starts_with( $page, $this->slug . '-' ) ) {
-			return true;
-		}
-
 		if ( ! function_exists( 'get_current_screen' ) ) {
 			return false;
 		}
 
 		$screen = get_current_screen();
-		return $screen && str_contains( (string) $screen->id, $this->slug );
+		return $screen && self::is_registered_page_hook( (string) $screen->id );
 	}
 
 	/**
