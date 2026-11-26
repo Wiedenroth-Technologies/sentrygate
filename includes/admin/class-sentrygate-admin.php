@@ -242,7 +242,8 @@ class SentryGate_Admin {
 
 		$disabled_notice = '';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display-only flag after redirect.
-		if ( isset( $_GET['module_off'] ) && '1' === (string) wp_unslash( $_GET['module_off'] ) ) {
+		$module_off = isset( $_GET['module_off'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['module_off'] ) ) : '';
+		if ( '1' === $module_off ) {
 			$disabled_notice = __( 'This section is turned off. Turn the matching module back on under Modules on/off, or stay on the overview.', 'wiedenroth-technologies-sentrygate' );
 		}
 
