@@ -107,6 +107,9 @@ test.describe( 'Admin navigation and setup', () => {
 	} );
 
 	test( 'Setup step bar includes Two-factor when the module is on', async ( { page } ) => {
+		// Log in while 2FA is still off (beforeEach), then enable the module for the step bar only.
+		await loginAsAdmin( page );
+
 		const uid = adminUserId();
 		wpCli( [ 'option', 'update', 'sentrygate_setup_completed', '0' ] );
 		wpCli( [ 'eval', 'delete_option("sentrygate_setup_progress"); echo "1";' ] );
@@ -118,7 +121,6 @@ test.describe( 'Admin navigation and setup', () => {
 		] );
 		updateSentryGateOptions( { module_two_factor: true } );
 
-		await loginAsAdmin( page );
 		await page.goto(
 			'/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=setup&step=welcome'
 		);
