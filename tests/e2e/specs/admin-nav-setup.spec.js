@@ -18,26 +18,26 @@ test.describe( 'Admin navigation and setup', () => {
 		const nav = page.locator( '.wiedenroth-technologies-sentrygate-wt-tabs' );
 		await expect( nav.getByRole( 'link', { name: 'Overview' } ) ).toBeVisible();
 		await expect( nav.getByRole( 'link', { name: 'Modules on/off' } ) ).toBeVisible();
-		await expect( nav.getByRole( 'link', { name: 'Two-factor' } ) ).toHaveCount( 0 );
 		await expect( nav.getByRole( 'link', { name: 'Login URL' } ) ).toHaveCount( 0 );
 		await expect( nav.getByRole( 'link', { name: 'Form protection' } ) ).toHaveCount( 0 );
 
 		await page.goto(
-			'/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=tfa'
+			'/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=login_path'
 		);
 		await expect( page ).toHaveURL( /module_off=1/ );
-		await expect( page ).not.toHaveURL( /tab=tfa/ );
+		await expect( page ).not.toHaveURL( /tab=login_path/ );
 		await expect( page.getByText( 'Section unavailable' ) ).toBeVisible();
 		await expect(
 			page.getByRole( 'heading', { name: 'Status', exact: true } )
 		).toBeVisible();
 
-		updateSentryGateOptions( { module_two_factor: true } );
+		// Prefer login_path over two_factor: enabling 2FA redirects admins without a method to Users → Two-factor.
+		updateSentryGateOptions( { module_login_path: true } );
 		await page.goto( '/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate' );
 		await expect(
 			page
 				.locator( '.wiedenroth-technologies-sentrygate-wt-tabs' )
-				.getByRole( 'link', { name: 'Two-factor' } )
+				.getByRole( 'link', { name: 'Login URL' } )
 		).toBeVisible();
 	} );
 
