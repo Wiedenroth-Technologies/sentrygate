@@ -26,11 +26,21 @@ test.describe( 'Admin navigation and setup', () => {
 			'/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=tfa'
 		);
 		await expect( page.getByText( 'Section unavailable' ) ).toBeVisible();
-		await expect( page.getByRole( 'heading', { name: 'Status' } ) ).toBeVisible();
+		await expect(
+			page.locator( '.wiedenroth-technologies-sentrygate-wt-card__title', {
+				hasText: 'Status',
+			} )
+		).toBeVisible();
+		await expect( page ).toHaveURL( /page=wiedenroth-technologies-sentrygate/ );
+		await expect( page ).not.toHaveURL( /tab=tfa/ );
 
 		updateSentryGateOptions( { module_two_factor: true } );
 		await page.goto( '/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate' );
-		await expect( nav.getByRole( 'link', { name: 'Two-factor' } ) ).toBeVisible();
+		await expect(
+			page
+				.locator( '.wiedenroth-technologies-sentrygate-wt-tabs' )
+				.getByRole( 'link', { name: 'Two-factor' } )
+		).toBeVisible();
 	} );
 
 	test( 'Setup wizard is reachable from overview and can be skipped', async ( { page } ) => {
