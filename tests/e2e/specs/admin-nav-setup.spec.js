@@ -27,9 +27,7 @@ test.describe( 'Admin navigation and setup', () => {
 		);
 		await expect( page.getByText( 'Section unavailable' ) ).toBeVisible();
 		await expect(
-			page.locator( '.wiedenroth-technologies-sentrygate-wt-card__title', {
-				hasText: 'Status',
-			} )
+			page.getByRole( 'heading', { name: 'Status', exact: true } )
 		).toBeVisible();
 		await expect( page ).toHaveURL( /page=wiedenroth-technologies-sentrygate/ );
 		await expect( page ).not.toHaveURL( /tab=tfa/ );
