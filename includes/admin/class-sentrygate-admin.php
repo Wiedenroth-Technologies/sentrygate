@@ -283,6 +283,41 @@ class SentryGate_Admin {
 	}
 
 	/**
+	 * Keep setup wizard URLs on the first unfinished step (no false “done” markers).
+	 */
+	public function maybe_redirect_setup_step(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$page = isset( $_GET['page'] ) ? sanitize_key( (string) wp_unslash( $_GET['page'] ) ) : '';
+		if ( SENTRYGATE_SLUG !== $page ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( (string) wp_unslash( $_GET['tab'] ) ) : '';
+		if ( 'setup' !== $tab ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$step = isset( $_GET['step'] ) ? sanitize_key( (string) wp_unslash( $_GET['step'] ) ) : 'welcome';
+		$allowed = SentryGate_Options::wizard_step_slugs();
+		if ( ! in_array( $step, $allowed, true ) ) {
+			$step = 'welcome';
+		}
+
+		if ( SentryGate_Options::can_view_setup_step( $step ) ) {
+			return;
+		}
+
+		wp_safe_redirect( self::setup_url( SentryGate_Options::furthest_allowed_setup_step() ) );
+		exit;
+	}
+
+	/**
 	 * After single-plugin activation, open the first-run setup once.
 	 */
 	public function maybe_redirect_setup(): void {
@@ -450,18 +485,19 @@ class SentryGate_Admin {
 			$next = 'modules';
 		}
 
+		SentryGate_Options::set_setup_progress( $step );
+
+		// Skip two-factor step when the module was not enabled.
+		if ( 'two_factor' === $next && ! SentryGate_Options::module_enabled( 'two_factor' ) ) {
+			$next = 'done';
+		}
+
 		if ( 'done' === $step || 'done' === $next ) {
 			SentryGate_Options::mark_setup_completed();
 			if ( 'done' === $next ) {
 				wp_safe_redirect( self::setup_url( 'done' ) );
 				exit;
 			}
-		}
-
-		// Skip two-factor step when the module was not enabled.
-		if ( 'two_factor' === $next && ! SentryGate_Options::module_enabled( 'two_factor' ) ) {
-			$next = 'done';
-			SentryGate_Options::mark_setup_completed();
 		}
 
 		wp_safe_redirect( self::setup_url( $next ) );

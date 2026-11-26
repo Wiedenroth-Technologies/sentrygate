@@ -90,6 +90,7 @@ final class SentryGate {
 		$this->loader->add_action( 'admin_init', $admin, 'register_settings' );
 		$this->loader->add_action( 'admin_init', $admin, 'maybe_redirect_setup' );
 		$this->loader->add_action( 'admin_init', $admin, 'maybe_redirect_disabled_tab' );
+		$this->loader->add_action( 'admin_init', $admin, 'maybe_redirect_setup_step' );
 		$this->loader->add_action( 'admin_notices', $admin, 'maybe_setup_notice' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_assets' );
 		$this->loader->add_action( 'in_admin_footer', $admin, 'render_wp_footer_brand' );

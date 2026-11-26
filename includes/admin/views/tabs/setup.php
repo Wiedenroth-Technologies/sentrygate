@@ -16,12 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $step = isset( $_GET['step'] ) ? sanitize_key( (string) wp_unslash( $_GET['step'] ) ) : 'welcome';
-$allowed_steps = array( 'welcome', 'modules', 'settings', 'two_factor', 'done' );
+$allowed_steps = SentryGate_Options::wizard_step_slugs();
 if ( ! in_array( $step, $allowed_steps, true ) ) {
 	$step = 'welcome';
 }
 
-$steps = array(
+$step_labels = array(
 	'welcome'    => __( 'Welcome', 'wiedenroth-technologies-sentrygate' ),
 	'modules'    => __( 'Modules', 'wiedenroth-technologies-sentrygate' ),
 	'settings'   => __( 'Settings', 'wiedenroth-technologies-sentrygate' ),
@@ -29,12 +29,20 @@ $steps = array(
 	'done'       => __( 'Done', 'wiedenroth-technologies-sentrygate' ),
 );
 
+$steps = array();
+foreach ( $allowed_steps as $slug ) {
+	if ( isset( $step_labels[ $slug ] ) ) {
+		$steps[ $slug ] = $step_labels[ $slug ];
+	}
+}
+
 $post_url   = admin_url( 'admin-post.php' );
 $skip_url   = wp_nonce_url( admin_url( 'admin-post.php?action=sentrygate_skip_setup' ), 'sentrygate_skip_setup' );
 $overview   = admin_url( 'admin.php?page=' . SENTRYGATE_SLUG );
 $tfa_setup  = admin_url( 'users.php?page=' . SentryGate_Two_Factor::PAGE_SLUG );
 $visible    = SentryGate_Modules::visible_definitions();
 $blockforge = SentryGate_Modules::is_blockforge_active();
+$include_tfa = SentryGate_Options::module_enabled( 'two_factor' );
 ?>
 
 <div class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
@@ -47,15 +55,13 @@ $blockforge = SentryGate_Modules::is_blockforge_active();
 
 	<ol class="<?php echo esc_attr( $ui->cls( 'steps' ) ); ?>">
 		<?php
-		$seen_current = false;
-		$step_index   = 0;
+		$step_index = 0;
 		foreach ( $steps as $slug => $label ) :
 			++$step_index;
 			$mod = '';
 			if ( $slug === $step ) {
-				$mod          = 'current';
-				$seen_current = true;
-			} elseif ( ! $seen_current ) {
+				$mod = 'current';
+			} elseif ( SentryGate_Options::is_setup_step_done( $slug ) ) {
 				$mod = 'done';
 			}
 			?>
@@ -156,7 +162,7 @@ $blockforge = SentryGate_Modules::is_blockforge_active();
 		<form method="post" action="<?php echo esc_url( $post_url ); ?>">
 			<input type="hidden" name="action" value="sentrygate_setup_step" />
 			<input type="hidden" name="sentrygate_setup_step" value="settings" />
-			<input type="hidden" name="sentrygate_setup_next" value="<?php echo SentryGate_Options::module_enabled( 'two_factor' ) ? 'two_factor' : 'done'; ?>" />
+			<input type="hidden" name="sentrygate_setup_next" value="<?php echo esc_attr( $include_tfa ? 'two_factor' : 'done' ); ?>" />
 			<?php wp_nonce_field( 'sentrygate_setup_step' ); ?>
 
 			<?php if ( SentryGate_Options::module_enabled( 'login_challenge' ) ) : ?>

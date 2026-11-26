@@ -360,6 +360,133 @@ class SentryGate_Options {
 	}
 
 	/**
+	 * Canonical wizard step order (two_factor may be omitted when inactive).
+	 *
+	 * @return list<string>
+	 */
+	public static function wizard_step_slugs(): array {
+		$steps = array( 'welcome', 'modules', 'settings' );
+		if ( self::module_enabled( 'two_factor' ) ) {
+			$steps[] = 'two_factor';
+		}
+		$steps[] = 'done';
+		return $steps;
+	}
+
+	/**
+	 * Full wizard order including optional two_factor (for progress comparisons).
+	 *
+	 * @return list<string>
+	 */
+	private static function wizard_step_order(): array {
+		return array( 'welcome', 'modules', 'settings', 'two_factor', 'done' );
+	}
+
+	/**
+	 * Last completed wizard step slug, or empty when none yet.
+	 */
+	public static function setup_progress(): string {
+		$progress = sanitize_key( (string) get_option( 'sentrygate_setup_progress', '' ) );
+		$allowed  = self::wizard_step_order();
+		return in_array( $progress, $allowed, true ) ? $progress : '';
+	}
+
+	/**
+	 * Record a completed wizard step (never moves progress backwards).
+	 *
+	 * @param string $step Completed step slug.
+	 */
+	public static function set_setup_progress( string $step ): void {
+		$step  = sanitize_key( $step );
+		$order = self::wizard_step_order();
+		if ( ! in_array( $step, $order, true ) ) {
+			return;
+		}
+
+		$current = self::setup_progress();
+		$cur_i   = '' === $current ? -1 : (int) array_search( $current, $order, true );
+		$new_i   = (int) array_search( $step, $order, true );
+		if ( $new_i <= $cur_i ) {
+			return;
+		}
+
+		update_option( 'sentrygate_setup_progress', $step, false );
+	}
+
+	/**
+	 * Clear stored wizard progress.
+	 */
+	public static function clear_setup_progress(): void {
+		delete_option( 'sentrygate_setup_progress' );
+	}
+
+	/**
+	 * Furthest step the user may open (next after last completed, or welcome).
+	 */
+	public static function furthest_allowed_setup_step(): string {
+		$slugs    = self::wizard_step_slugs();
+		$progress = self::setup_progress();
+		$order    = self::wizard_step_order();
+
+		if ( '' === $progress ) {
+			return $slugs[0];
+		}
+
+		$pi = (int) array_search( $progress, $order, true );
+		foreach ( $slugs as $slug ) {
+			$si = (int) array_search( $slug, $order, true );
+			if ( $si > $pi ) {
+				return $slug;
+			}
+		}
+
+		return $slugs[ count( $slugs ) - 1 ];
+	}
+
+	/**
+	 * Whether a wizard step may be viewed given saved progress.
+	 *
+	 * @param string $step Step slug.
+	 */
+	public static function can_view_setup_step( string $step ): bool {
+		$step  = sanitize_key( $step );
+		$slugs = self::wizard_step_slugs();
+		if ( ! in_array( $step, $slugs, true ) ) {
+			return false;
+		}
+
+		$order    = self::wizard_step_order();
+		$furthest = self::furthest_allowed_setup_step();
+		$fi       = (int) array_search( $furthest, $order, true );
+		$si       = (int) array_search( $step, $order, true );
+
+		return $si <= $fi;
+	}
+
+	/**
+	 * Whether a wizard step was actually completed (saved progress).
+	 *
+	 * @param string $step Step slug.
+	 */
+	public static function is_setup_step_done( string $step ): bool {
+		$progress = self::setup_progress();
+		if ( '' === $progress ) {
+			return false;
+		}
+
+		$order = self::wizard_step_order();
+		$step  = sanitize_key( $step );
+		if ( ! in_array( $step, $order, true ) ) {
+			return false;
+		}
+
+		$pi = (int) array_search( $progress, $order, true );
+		$si = (int) array_search( $step, $order, true );
+
+		return $si <= $pi;
+	}
+
+	/**
 	 * Whether the first-run setup was finished or skipped.
 	 */
 	public static function setup_completed(): bool {
@@ -371,6 +498,7 @@ class SentryGate_Options {
 	 */
 	public static function mark_setup_completed(): void {
 		update_option( 'sentrygate_setup_completed', '1', false );
+		self::set_setup_progress( 'done' );
 	}
 
 	/**
@@ -378,6 +506,7 @@ class SentryGate_Options {
 	 */
 	public static function reset_setup(): void {
 		update_option( 'sentrygate_setup_completed', '0', false );
+		self::clear_setup_progress();
 	}
 
 	/**

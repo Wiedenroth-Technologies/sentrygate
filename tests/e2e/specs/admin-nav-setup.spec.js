@@ -1,6 +1,6 @@
 const { test, expect } = require( '@playwright/test' );
 const { loginAsAdmin } = require( '../helpers/auth' );
-const { wpCli, updateSentryGateOptions } = require( '../helpers/wp-cli' );
+const { wpCli, updateSentryGateOptions, adminUserId, resetUserTfa } = require( '../helpers/wp-cli' );
 
 test.describe( 'Admin navigation and setup', () => {
 	test.beforeEach( () => {
@@ -55,6 +55,86 @@ test.describe( 'Admin navigation and setup', () => {
 
 		const completed = wpCli( [ 'option', 'get', 'sentrygate_setup_completed' ] );
 		expect( completed.trim() ).toBe( '1' );
+	} );
+
+	test( 'Setup step bar omits Two-factor when inactive and ignores skipped URL jumps', async ( {
+		page,
+	} ) => {
+		wpCli( [ 'option', 'update', 'sentrygate_setup_completed', '0' ] );
+		wpCli( [ 'eval', 'delete_option("sentrygate_setup_progress"); echo "1";' ] );
+		updateSentryGateOptions( { module_two_factor: false } );
+
+		await loginAsAdmin( page );
+		await page.goto(
+			'/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=setup&step=done'
+		);
+
+		await expect( page ).toHaveURL( /tab=setup/ );
+		await expect( page ).toHaveURL( /step=welcome/ );
+		await expect( page.getByRole( 'heading', { name: 'Welcome to SentryGate' } ) ).toBeVisible();
+
+		const bar = page.locator( '.wiedenroth-technologies-sentrygate-wt-steps' );
+		const titles = bar.locator( '.wiedenroth-technologies-sentrygate-wt-step__title' );
+		await expect( titles ).toHaveCount( 4 );
+		await expect( titles.nth( 0 ) ).toHaveText( 'Welcome' );
+		await expect( titles.nth( 1 ) ).toHaveText( 'Modules' );
+		await expect( titles.nth( 2 ) ).toHaveText( 'Settings' );
+		await expect( titles.nth( 3 ) ).toHaveText( 'Done' );
+		await expect( bar.getByText( 'Two-factor' ) ).toHaveCount( 0 );
+
+		const nums = bar.locator( '.wiedenroth-technologies-sentrygate-wt-step__num' );
+		await expect( nums.nth( 0 ) ).toHaveText( '1' );
+		await expect( nums.nth( 1 ) ).toHaveText( '2' );
+		await expect( nums.nth( 2 ) ).toHaveText( '3' );
+		await expect( nums.nth( 3 ) ).toHaveText( '4' );
+
+		await expect(
+			bar.locator( '.wiedenroth-technologies-sentrygate-wt-step--done' )
+		).toHaveCount( 0 );
+		await expect(
+			bar.locator( '.wiedenroth-technologies-sentrygate-wt-step--current' )
+		).toHaveCount( 1 );
+
+		await page.goto(
+			'/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=setup&step=settings'
+		);
+		await expect( page ).toHaveURL( /step=welcome/ );
+		await expect(
+			page.locator( '.wiedenroth-technologies-sentrygate-wt-step--done' )
+		).toHaveCount( 0 );
+
+		wpCli( [ 'option', 'update', 'sentrygate_setup_completed', '1' ] );
+	} );
+
+	test( 'Setup step bar includes Two-factor when the module is on', async ( { page } ) => {
+		const uid = adminUserId();
+		wpCli( [ 'option', 'update', 'sentrygate_setup_completed', '0' ] );
+		wpCli( [ 'eval', 'delete_option("sentrygate_setup_progress"); echo "1";' ] );
+		// Avoid force-redirect to Users → Two-factor while asserting the wizard chrome.
+		wpCli( [
+			'eval',
+			`update_user_meta(${ uid },'sentrygate_tfa_enabled','1');` +
+				`update_user_meta(${ uid },'sentrygate_tfa_method','email'); echo '1';`,
+		] );
+		updateSentryGateOptions( { module_two_factor: true } );
+
+		await loginAsAdmin( page );
+		await page.goto(
+			'/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=setup&step=welcome'
+		);
+
+		const bar = page.locator( '.wiedenroth-technologies-sentrygate-wt-steps' );
+		const titles = bar.locator( '.wiedenroth-technologies-sentrygate-wt-step__title' );
+		await expect( titles ).toHaveCount( 5 );
+		await expect( titles.nth( 3 ) ).toHaveText( 'Two-factor' );
+		await expect( titles.nth( 4 ) ).toHaveText( 'Done' );
+		await expect( bar.locator( '.wiedenroth-technologies-sentrygate-wt-step__num' ).nth( 4 ) ).toHaveText(
+			'5'
+		);
+
+		updateSentryGateOptions( { module_two_factor: false } );
+		resetUserTfa( uid );
+		wpCli( [ 'option', 'update', 'sentrygate_setup_completed', '1' ] );
 	} );
 
 	test( 'Form protection stays hidden without BlockForge', async ( { page } ) => {
