@@ -228,16 +228,22 @@ class SentryGate_Admin {
 
 		$tabs = SentryGate_Modules::navigation_tabs();
 
-		$disabled_notice = '';
 		if ( 'setup' === $tab ) {
 			$tabs = array( 'setup' => __( 'Setup', 'wiedenroth-technologies-sentrygate' ) ) + $tabs;
 		}
 
 		if ( ! isset( $tabs[ $tab ] ) ) {
 			if ( 'setup' !== $tab && '' !== SentryGate_Modules::module_for_tab( $tab ) ) {
-				$disabled_notice = __( 'This section is turned off. Turn the matching module back on under Modules on/off, or stay on the overview.', 'wiedenroth-technologies-sentrygate' );
+				wp_safe_redirect( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG . '&module_off=1' ) );
+				exit;
 			}
 			$tab = 'dashboard';
+		}
+
+		$disabled_notice = '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display-only flag after redirect.
+		if ( isset( $_GET['module_off'] ) && '1' === (string) wp_unslash( $_GET['module_off'] ) ) {
+			$disabled_notice = __( 'This section is turned off. Turn the matching module back on under Modules on/off, or stay on the overview.', 'wiedenroth-technologies-sentrygate' );
 		}
 
 		$ui      = $this->ui;

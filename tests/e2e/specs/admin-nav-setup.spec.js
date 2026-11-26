@@ -25,12 +25,12 @@ test.describe( 'Admin navigation and setup', () => {
 		await page.goto(
 			'/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=tfa'
 		);
+		await expect( page ).toHaveURL( /module_off=1/ );
+		await expect( page ).not.toHaveURL( /tab=tfa/ );
 		await expect( page.getByText( 'Section unavailable' ) ).toBeVisible();
 		await expect(
 			page.getByRole( 'heading', { name: 'Status', exact: true } )
 		).toBeVisible();
-		await expect( page ).toHaveURL( /page=wiedenroth-technologies-sentrygate/ );
-		await expect( page ).not.toHaveURL( /tab=tfa/ );
 
 		updateSentryGateOptions( { module_two_factor: true } );
 		await page.goto( '/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate' );
@@ -69,6 +69,7 @@ test.describe( 'Admin navigation and setup', () => {
 		await page.goto(
 			'/wp-admin/admin.php?page=wiedenroth-technologies-sentrygate&tab=forms'
 		);
+		await expect( page ).toHaveURL( /module_off=1/ );
 		await expect( page.getByText( 'Section unavailable' ) ).toBeVisible();
 	} );
 } );
