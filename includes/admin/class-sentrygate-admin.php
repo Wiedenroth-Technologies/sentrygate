@@ -233,10 +233,6 @@ class SentryGate_Admin {
 		}
 
 		if ( ! isset( $tabs[ $tab ] ) ) {
-			if ( 'setup' !== $tab && '' !== SentryGate_Modules::module_for_tab( $tab ) ) {
-				wp_safe_redirect( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG . '&module_off=1' ) );
-				exit;
-			}
 			$tab = 'dashboard';
 		}
 
@@ -251,6 +247,39 @@ class SentryGate_Admin {
 		$options = SentryGate_Options::all();
 
 		include SENTRYGATE_PLUGIN_DIR . 'includes/admin/views/settings-page.php';
+	}
+
+	/**
+	 * Redirect direct links to disabled module tabs before admin output starts.
+	 */
+	public function maybe_redirect_disabled_tab(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$page = isset( $_GET['page'] ) ? sanitize_key( (string) wp_unslash( $_GET['page'] ) ) : '';
+		if ( SENTRYGATE_SLUG !== $page ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( (string) wp_unslash( $_GET['tab'] ) ) : 'dashboard';
+		if ( 'dashboard' === $tab || 'setup' === $tab ) {
+			return;
+		}
+
+		$tabs = SentryGate_Modules::navigation_tabs();
+		if ( isset( $tabs[ $tab ] ) ) {
+			return;
+		}
+
+		if ( '' === SentryGate_Modules::module_for_tab( $tab ) ) {
+			return;
+		}
+
+		wp_safe_redirect( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG . '&module_off=1' ) );
+		exit;
 	}
 
 	/**
