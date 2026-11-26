@@ -8,6 +8,7 @@
  * @var string               $tab
  * @var array<string,string> $tabs
  * @var array<string,mixed>  $options
+ * @var string               $disabled_notice
  */
 
 declare(strict_types=1);
@@ -57,6 +58,14 @@ $sentrygate_product_url = 'https://wiedenroth.tech/software/sentrygate';
 
 	<div class="<?php echo esc_attr( $ui->cls( 'content' ) ); ?>">
 		<?php
+		if ( ! empty( $disabled_notice ) ) {
+			$ui->notice(
+				'info',
+				$disabled_notice,
+				__( 'Section unavailable', 'wiedenroth-technologies-sentrygate' )
+			);
+		}
+
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Settings API success flag after manage_options screen.
 		$sentrygate_settings_updated = isset( $_GET['settings-updated'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['settings-updated'] ) ) : '';
 		if ( '' !== $sentrygate_settings_updated ) {

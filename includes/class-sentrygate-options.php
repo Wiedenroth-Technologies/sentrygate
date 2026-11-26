@@ -358,4 +358,38 @@ class SentryGate_Options {
 			'settings'   => $data,
 		);
 	}
+
+	/**
+	 * Whether the first-run setup was finished or skipped.
+	 */
+	public static function setup_completed(): bool {
+		return '1' === (string) get_option( 'sentrygate_setup_completed', '0' );
+	}
+
+	/**
+	 * Mark first-run setup as done.
+	 */
+	public static function mark_setup_completed(): void {
+		update_option( 'sentrygate_setup_completed', '1', false );
+	}
+
+	/**
+	 * Run the first-run setup again.
+	 */
+	public static function reset_setup(): void {
+		update_option( 'sentrygate_setup_completed', '0', false );
+	}
+
+	/**
+	 * Existing installs without the setup option skip the wizard.
+	 */
+	public static function maybe_complete_legacy_setup(): void {
+		if ( false !== get_option( 'sentrygate_setup_completed', false ) ) {
+			return;
+		}
+
+		// Settings already present means this is an upgrade, not a fresh site.
+		$done = false !== get_option( SENTRYGATE_OPTION_KEY, false ) ? '1' : '0';
+		add_option( 'sentrygate_setup_completed', $done, '', false );
+	}
 }

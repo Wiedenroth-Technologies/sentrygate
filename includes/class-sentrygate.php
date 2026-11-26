@@ -88,10 +88,15 @@ final class SentryGate {
 		$admin = new SentryGate_Admin( $this->ui );
 		$this->loader->add_action( 'admin_menu', $admin, 'add_menu' );
 		$this->loader->add_action( 'admin_init', $admin, 'register_settings' );
+		$this->loader->add_action( 'admin_init', $admin, 'maybe_redirect_setup' );
+		$this->loader->add_action( 'admin_notices', $admin, 'maybe_setup_notice' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_assets' );
 		$this->loader->add_action( 'in_admin_footer', $admin, 'render_wp_footer_brand' );
 		$this->loader->add_action( 'admin_post_sentrygate_export_config', $admin, 'handle_export' );
 		$this->loader->add_action( 'admin_post_sentrygate_import_config', $admin, 'handle_import' );
+		$this->loader->add_action( 'admin_post_sentrygate_setup_step', $admin, 'handle_setup_step' );
+		$this->loader->add_action( 'admin_post_sentrygate_restart_setup', $admin, 'handle_restart_setup' );
+		$this->loader->add_action( 'admin_post_sentrygate_skip_setup', $admin, 'handle_skip_setup' );
 		$this->loader->add_filter( 'plugin_action_links_' . SENTRYGATE_PLUGIN_BASENAME, $admin, 'action_links' );
 
 		$dashboard = new SentryGate_Dashboard();
@@ -154,6 +159,8 @@ final class SentryGate {
 		add_action(
 			'init',
 			static function (): void {
+				SentryGate_Options::maybe_complete_legacy_setup();
+
 				if ( get_option( 'sentrygate_flush_rewrite' ) ) {
 					flush_rewrite_rules();
 					delete_option( 'sentrygate_flush_rewrite' );

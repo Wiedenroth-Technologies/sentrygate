@@ -39,21 +39,35 @@ $critical_off = array_filter(
 
 $tiles = array(
 	array(
-		'tab'  => 'modules',
+		'tab'   => 'modules',
 		'title' => __( 'Modules on/off', 'wiedenroth-technologies-sentrygate' ),
 		'text'  => __( 'Enable or pause the protection building blocks.', 'wiedenroth-technologies-sentrygate' ),
 	),
-	array(
-		'tab'  => 'interface',
+);
+
+if ( SentryGate_Modules::is_effectively_enabled( 'interface_hardening' ) ) {
+	$tiles[] = array(
+		'tab'   => 'interface',
 		'title' => __( 'Basic protection', 'wiedenroth-technologies-sentrygate' ),
 		'text'  => __( 'XML-RPC, username guessing, file editor.', 'wiedenroth-technologies-sentrygate' ),
-	),
-	array(
-		'tab'  => 'challenge',
+	);
+}
+
+if ( SentryGate_Modules::is_effectively_enabled( 'login_challenge' ) ) {
+	$tiles[] = array(
+		'tab'   => 'challenge',
 		'title' => __( 'Bot protection', 'wiedenroth-technologies-sentrygate' ),
-		'text'  => __( 'Symbol choice at login and in forms, session cookie, rate limit.', 'wiedenroth-technologies-sentrygate' ),
-	),
-);
+		'text'  => __( 'Symbol choice at login, session cookie, rate limit.', 'wiedenroth-technologies-sentrygate' ),
+	);
+}
+
+if ( SentryGate_Modules::is_effectively_enabled( 'form_challenge' ) ) {
+	$tiles[] = array(
+		'tab'   => 'forms',
+		'title' => __( 'Form protection', 'wiedenroth-technologies-sentrygate' ),
+		'text'  => __( 'Symbol choice in BlockForge forms.', 'wiedenroth-technologies-sentrygate' ),
+	);
+}
 ?>
 
 <section class="<?php echo esc_attr( $ui->cls( 'card' ) ); ?>">
@@ -61,7 +75,7 @@ $tiles = array(
 	$ui->heading(
 		__( 'Status', 'wiedenroth-technologies-sentrygate' ),
 		__( 'Green = protection active. Yellow = please check. Red = off or critical.', 'wiedenroth-technologies-sentrygate' ),
-		__( 'First, turn on the recommended modules under "Modules on/off" – then fine-tune each section as needed.', 'wiedenroth-technologies-sentrygate' )
+		__( 'First, turn on the recommended modules under "Modules on/off" – then fine-tune each section as needed. Navigation only lists modules that are on.', 'wiedenroth-technologies-sentrygate' )
 	);
 	?>
 
@@ -74,6 +88,10 @@ $tiles = array(
 		SentryGate_Admin::stat( $ui, (string) $counts['inactive'], __( 'Off or risky', 'wiedenroth-technologies-sentrygate' ), 'x', 'off' );
 		?>
 	</div>
+
+	<p class="<?php echo esc_attr( $ui->cls( 'actions' ) ); ?>">
+		<?php SentryGate_Admin::restart_setup_form( $ui, 'secondary' ); ?>
+	</p>
 </section>
 
 <?php if ( $critical_off ) : ?>
@@ -87,7 +105,7 @@ $tiles = array(
 <?php endif; ?>
 
 <div class="<?php echo esc_attr( $ui->cls( 'card', 'flush' ) ); ?>">
-	<?php $ui->heading( __( 'Security status', 'wiedenroth-technologies-sentrygate' ), __( 'All protection sections at a glance.', 'wiedenroth-technologies-sentrygate' ) ); ?>
+	<?php $ui->heading( __( 'Security status', 'wiedenroth-technologies-sentrygate' ), __( 'All available protection sections at a glance.', 'wiedenroth-technologies-sentrygate' ) ); ?>
 	<div class="<?php echo esc_attr( $ui->cls( 'table-wrap' ) ); ?>">
 		<table class="<?php echo esc_attr( $ui->cls( 'table' ) ); ?>">
 			<thead>
@@ -111,7 +129,7 @@ $tiles = array(
 </div>
 
 <section class="<?php echo esc_attr( $ui->cls( 'card', 'intro' ) ); ?>">
-	<?php $ui->heading( __( 'Next steps', 'wiedenroth-technologies-sentrygate' ), __( 'The most important settings in three steps.', 'wiedenroth-technologies-sentrygate' ) ); ?>
+	<?php $ui->heading( __( 'Next steps', 'wiedenroth-technologies-sentrygate' ), __( 'Jump to the most important settings.', 'wiedenroth-technologies-sentrygate' ) ); ?>
 	<div class="<?php echo esc_attr( $ui->cls( 'tiles' ) ); ?>">
 		<?php foreach ( $tiles as $tile ) : ?>
 			<a class="<?php echo esc_attr( $ui->cls( 'tile' ) ); ?>" href="<?php echo esc_url( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG . '&tab=' . $tile['tab'] ) ); ?>">

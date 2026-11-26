@@ -28,6 +28,7 @@ class SentryGate_Autoloader {
 		'SentryGate_Loader'             => 'includes/class-sentrygate-loader.php',
 		'SentryGate_i18n'               => 'includes/class-sentrygate-i18n.php',
 		'SentryGate_Options'            => 'includes/class-sentrygate-options.php',
+		'SentryGate_Modules'            => 'includes/class-sentrygate-modules.php',
 		'SentryGate_Admin'              => 'includes/admin/class-sentrygate-admin.php',
 		'SentryGate_Dashboard'          => 'includes/admin/class-sentrygate-dashboard.php',
 		'SentryGate_Interface_Hardening'=> 'includes/modules/class-sentrygate-interface-hardening.php',

@@ -42,12 +42,16 @@ class SentryGate_Dashboard {
 			SentryGate_Debug_Control::status(),
 			SentryGate_Login_Path::status(),
 			SentryGate_Login_Challenge::status(),
-			SentryGate_Form_Challenge::status(),
 			SentryGate_Two_Factor::status(),
 			SentryGate_Security_Headers::status(),
 			SentryGate_File_Hardening::status(),
 			SentryGate_Audit_Log::status(),
 		);
+
+		$form = SentryGate_Form_Challenge::status();
+		if ( null !== $form ) {
+			array_splice( $statuses, 4, 0, array( $form ) );
+		}
 
 		if ( SentryGate_Options::get( 'core_check_on_dashboard', true ) ) {
 			$statuses[] = SentryGate_Core_Integrity::status();

@@ -31,7 +31,7 @@ class SentryGate_Admin {
 	}
 
 	/**
-	 * Add top-level menu.
+	 * Add top-level menu and module-aware submenus.
 	 */
 	public function add_menu(): void {
 		SentryGate_Admin_Ui::ensure_menu_separator();
@@ -47,6 +47,29 @@ class SentryGate_Admin {
 		);
 
 		SentryGate_Admin_Ui::register_page_hook( $hook );
+
+		// Replace the auto-generated first submenu (same slug as parent) with a clear Overview label.
+		global $submenu;
+		if ( isset( $submenu[ SENTRYGATE_SLUG ][0][0] ) ) {
+			$submenu[ SENTRYGATE_SLUG ][0][0] = __( 'Overview', 'wiedenroth-technologies-sentrygate' );
+		}
+
+		$tabs = SentryGate_Modules::navigation_tabs();
+		foreach ( $tabs as $slug => $label ) {
+			if ( 'dashboard' === $slug ) {
+				continue;
+			}
+
+			$sub_hook = add_submenu_page(
+				SENTRYGATE_SLUG,
+				$label,
+				$label,
+				'manage_options',
+				SENTRYGATE_SLUG . '&tab=' . $slug,
+				array( $this, 'render_page' )
+			);
+			SentryGate_Admin_Ui::register_page_hook( $sub_hook );
+		}
 	}
 
 	/**
@@ -203,22 +226,17 @@ class SentryGate_Admin {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['tab'] ) ? sanitize_key( (string) wp_unslash( $_GET['tab'] ) ) : 'dashboard';
 
-		$tabs = array(
-			'dashboard'  => __( 'Overview', 'wiedenroth-technologies-sentrygate' ),
-			'modules'    => __( 'Modules on/off', 'wiedenroth-technologies-sentrygate' ),
-			'interface'  => __( 'Basic protection', 'wiedenroth-technologies-sentrygate' ),
-			'debug'      => __( 'Error display', 'wiedenroth-technologies-sentrygate' ),
-			'login_path' => __( 'Login URL', 'wiedenroth-technologies-sentrygate' ),
-			'challenge'  => __( 'Bot protection', 'wiedenroth-technologies-sentrygate' ),
-			'tfa'        => __( 'Two-factor', 'wiedenroth-technologies-sentrygate' ),
-			'headers'    => __( 'Browser protection', 'wiedenroth-technologies-sentrygate' ),
-			'files'      => __( 'Files & server', 'wiedenroth-technologies-sentrygate' ),
-			'audit'      => __( 'Audit log', 'wiedenroth-technologies-sentrygate' ),
-			'integrity'  => __( 'WordPress check', 'wiedenroth-technologies-sentrygate' ),
-			'export'     => __( 'Backup / transfer', 'wiedenroth-technologies-sentrygate' ),
-		);
+		$tabs = SentryGate_Modules::navigation_tabs();
+
+		$disabled_notice = '';
+		if ( 'setup' === $tab ) {
+			$tabs = array( 'setup' => __( 'Setup', 'wiedenroth-technologies-sentrygate' ) ) + $tabs;
+		}
 
 		if ( ! isset( $tabs[ $tab ] ) ) {
+			if ( 'setup' !== $tab && '' !== SentryGate_Modules::module_for_tab( $tab ) ) {
+				$disabled_notice = __( 'This section is turned off. Turn the matching module back on under Modules on/off, or stay on the overview.', 'wiedenroth-technologies-sentrygate' );
+			}
 			$tab = 'dashboard';
 		}
 
@@ -226,6 +244,192 @@ class SentryGate_Admin {
 		$options = SentryGate_Options::all();
 
 		include SENTRYGATE_PLUGIN_DIR . 'includes/admin/views/settings-page.php';
+	}
+
+	/**
+	 * After single-plugin activation, open the first-run setup once.
+	 */
+	public function maybe_redirect_setup(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		if ( ! get_transient( 'sentrygate_activation_redirect' ) ) {
+			return;
+		}
+
+		delete_transient( 'sentrygate_activation_redirect' );
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['activate-multi'] ) ) {
+			return;
+		}
+		if ( wp_doing_ajax() || is_network_admin() ) {
+			return;
+		}
+		if ( SentryGate_Options::setup_completed() ) {
+			return;
+		}
+
+		wp_safe_redirect( self::setup_url( 'welcome' ) );
+		exit;
+	}
+
+	/**
+	 * Admin notice when setup is still unfinished (e.g. after bulk activation).
+	 */
+	public function maybe_setup_notice(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		if ( SentryGate_Options::setup_completed() ) {
+			return;
+		}
+		if ( ! $this->ui->is_own_screen() ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$page = isset( $_GET['page'] ) ? sanitize_key( (string) wp_unslash( $_GET['page'] ) ) : '';
+			if ( SENTRYGATE_SLUG === $page ) {
+				return;
+			}
+			// Only show on Plugins / Dashboard after activation, not on every admin screen.
+			$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+			if ( ! $screen || ! in_array( $screen->id, array( 'plugins', 'dashboard' ), true ) ) {
+				return;
+			}
+		} else {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$tab = isset( $_GET['tab'] ) ? sanitize_key( (string) wp_unslash( $_GET['tab'] ) ) : 'dashboard';
+			if ( 'setup' === $tab ) {
+				return;
+			}
+		}
+
+		$url = self::setup_url( 'welcome' );
+		echo '<div class="notice notice-info is-dismissible"><p>';
+		echo wp_kses(
+			sprintf(
+				/* translators: %s: URL to setup wizard */
+				__( 'SentryGate is ready. <a href="%s">Run the short setup</a> or configure modules from the overview anytime.', 'wiedenroth-technologies-sentrygate' ),
+				esc_url( $url )
+			),
+			array( 'a' => array( 'href' => array() ) )
+		);
+		echo '</p></div>';
+	}
+
+	/**
+	 * Setup wizard URL.
+	 *
+	 * @param string $step welcome|modules|settings|two_factor|done.
+	 */
+	public static function setup_url( string $step = 'welcome' ): string {
+		$allowed = array( 'welcome', 'modules', 'settings', 'two_factor', 'done' );
+		$step    = in_array( $step, $allowed, true ) ? $step : 'welcome';
+
+		return admin_url( 'admin.php?page=' . SENTRYGATE_SLUG . '&tab=setup&step=' . $step );
+	}
+
+	/**
+	 * Nonce URL to restart onboarding.
+	 */
+	public static function restart_setup_url(): string {
+		return wp_nonce_url(
+			admin_url( 'admin-post.php?action=sentrygate_restart_setup' ),
+			'sentrygate_restart_setup'
+		);
+	}
+
+	/**
+	 * POST form to restart onboarding.
+	 *
+	 * @param SentryGate_Admin_Ui $ui      UI helper.
+	 * @param string              $variant Button style.
+	 */
+	public static function restart_setup_form( SentryGate_Admin_Ui $ui, string $variant = 'secondary' ): void {
+		printf(
+			'<form method="post" action="%s" class="%s">',
+			esc_url( admin_url( 'admin-post.php' ) ),
+			esc_attr( $ui->cls( 'inline-form' ) )
+		);
+		echo '<input type="hidden" name="action" value="sentrygate_restart_setup" />';
+		wp_nonce_field( 'sentrygate_restart_setup' );
+		$ui->button( __( 'Run setup again', 'wiedenroth-technologies-sentrygate' ), $variant, 'submit' );
+		echo '</form>';
+	}
+
+	/**
+	 * Restart first-run setup.
+	 */
+	public function handle_restart_setup(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission.', 'wiedenroth-technologies-sentrygate' ) );
+		}
+
+		check_admin_referer( 'sentrygate_restart_setup' );
+		SentryGate_Options::reset_setup();
+		wp_safe_redirect( self::setup_url( 'welcome' ) );
+		exit;
+	}
+
+	/**
+	 * Skip setup and mark it complete.
+	 */
+	public function handle_skip_setup(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission.', 'wiedenroth-technologies-sentrygate' ) );
+		}
+
+		check_admin_referer( 'sentrygate_skip_setup' );
+		SentryGate_Options::mark_setup_completed();
+		wp_safe_redirect( admin_url( 'admin.php?page=' . SENTRYGATE_SLUG ) );
+		exit;
+	}
+
+	/**
+	 * Persist one setup wizard step via the Settings sanitize path.
+	 */
+	public function handle_setup_step(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission.', 'wiedenroth-technologies-sentrygate' ) );
+		}
+
+		check_admin_referer( 'sentrygate_setup_step' );
+
+		$step = isset( $_POST['sentrygate_setup_step'] ) ? sanitize_key( (string) wp_unslash( $_POST['sentrygate_setup_step'] ) ) : 'welcome';
+		$next = isset( $_POST['sentrygate_setup_next'] ) ? sanitize_key( (string) wp_unslash( $_POST['sentrygate_setup_next'] ) ) : 'modules';
+
+		$input = array();
+		if ( isset( $_POST[ SENTRYGATE_OPTION_KEY ] ) && is_array( $_POST[ SENTRYGATE_OPTION_KEY ] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via SentryGate_Options::sanitize().
+			$input = wp_unslash( $_POST[ SENTRYGATE_OPTION_KEY ] );
+		}
+
+		if ( ! empty( $input ) ) {
+			$sanitized = SentryGate_Options::sanitize( $input );
+			update_option( SENTRYGATE_OPTION_KEY, $sanitized );
+			SentryGate_Options::flush_cache();
+		}
+
+		$allowed_next = array( 'welcome', 'modules', 'settings', 'two_factor', 'done' );
+		if ( ! in_array( $next, $allowed_next, true ) ) {
+			$next = 'modules';
+		}
+
+		if ( 'done' === $step || 'done' === $next ) {
+			SentryGate_Options::mark_setup_completed();
+			if ( 'done' === $next ) {
+				wp_safe_redirect( self::setup_url( 'done' ) );
+				exit;
+			}
+		}
+
+		// Skip two-factor step when the module was not enabled.
+		if ( 'two_factor' === $next && ! SentryGate_Options::module_enabled( 'two_factor' ) ) {
+			$next = 'done';
+			SentryGate_Options::mark_setup_completed();
+		}
+
+		wp_safe_redirect( self::setup_url( $next ) );
+		exit;
 	}
 
 	/**

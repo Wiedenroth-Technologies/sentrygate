@@ -1,6 +1,8 @@
 <?php
 /**
- * Symbol challenge for public forms (BlockForge and other plugins).
+ * Symbol challenge for BlockForge public forms.
+ *
+ * Only loads when BlockForge is active and the module is enabled.
  *
  * @package SentryGate
  */
@@ -31,9 +33,20 @@ class SentryGate_Form_Challenge {
 	}
 
 	/**
+	 * Whether form protection can be used (BlockForge present).
+	 */
+	public static function is_available(): bool {
+		return SentryGate_Modules::is_blockforge_active();
+	}
+
+	/**
 	 * Whether public forms must pass the symbol check.
 	 */
 	public static function is_enabled(): bool {
+		if ( ! self::is_available() ) {
+			return false;
+		}
+
 		if ( ! SentryGate_Options::module_enabled( 'form_challenge' ) ) {
 			return false;
 		}
@@ -198,21 +211,25 @@ class SentryGate_Form_Challenge {
 	/**
 	 * Module status.
 	 *
-	 * @return array{status: string, label: string, message: string}
+	 * @return array{status: string, label: string, message: string}|null Null when BlockForge is not available.
 	 */
-	public static function status(): array {
+	public static function status(): ?array {
+		if ( ! self::is_available() ) {
+			return null;
+		}
+
 		if ( ! SentryGate_Options::module_enabled( 'form_challenge' ) ) {
 			return array(
 				'status'  => 'inactive',
 				'label'   => __( 'Form protection', 'wiedenroth-technologies-sentrygate' ),
-				'message' => __( 'Disabled – forms without a symbol choice.', 'wiedenroth-technologies-sentrygate' ),
+				'message' => __( 'Disabled – BlockForge forms without a symbol choice.', 'wiedenroth-technologies-sentrygate' ),
 			);
 		}
 
 		return array(
 			'status'  => 'active',
 			'label'   => __( 'Form protection', 'wiedenroth-technologies-sentrygate' ),
-			'message' => __( 'Symbol choice before submitting (BlockForge and connected forms).', 'wiedenroth-technologies-sentrygate' ),
+			'message' => __( 'Symbol choice before submitting BlockForge forms.', 'wiedenroth-technologies-sentrygate' ),
 		);
 	}
 }

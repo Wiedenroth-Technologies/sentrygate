@@ -20,8 +20,11 @@ class SentryGate_Activator {
 	 * Run on plugin activation.
 	 */
 	public static function activate(): void {
+		$had_settings = false !== get_option( SENTRYGATE_OPTION_KEY, false );
+
 		self::create_tables();
 		self::set_defaults();
+		self::prepare_setup( $had_settings );
 		self::schedule_events();
 
 		update_option( 'sentrygate_db_version', SENTRYGATE_DB_VERSION );
@@ -82,6 +85,43 @@ class SentryGate_Activator {
 		if ( false === get_option( SENTRYGATE_OPTION_KEY ) ) {
 			add_option( SENTRYGATE_OPTION_KEY, SentryGate_Options::defaults() );
 		}
+	}
+
+	/**
+	 * First-run setup: fresh installs open the wizard; upgrades skip it.
+	 *
+	 * No activation redirect for network-wide or bulk activation.
+	 *
+	 * @param bool $had_settings Whether settings already existed before this activation.
+	 */
+	private static function prepare_setup( bool $had_settings ): void {
+		if ( false === get_option( 'sentrygate_setup_completed', false ) ) {
+			add_option( 'sentrygate_setup_completed', $had_settings ? '1' : '0', '', false );
+		}
+
+		if ( '1' === (string) get_option( 'sentrygate_setup_completed', '0' ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Activation context only.
+		if ( ! empty( $_GET['networkwide'] ) || is_network_admin() ) {
+			return;
+		}
+
+		// Bulk plugin activation sends multiple "checked" plugins.
+		$checked = array();
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Activation context only.
+		if ( isset( $_REQUEST['checked'] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via array_map below.
+			$checked_raw = wp_unslash( $_REQUEST['checked'] );
+			$checked     = is_array( $checked_raw ) ? array_map( 'sanitize_text_field', $checked_raw ) : array();
+		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+		if ( count( $checked ) > 1 ) {
+			return;
+		}
+
+		set_transient( 'sentrygate_activation_redirect', '1', 60 );
 	}
 
 	/**
