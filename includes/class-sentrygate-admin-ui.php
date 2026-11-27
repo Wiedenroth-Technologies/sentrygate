@@ -148,8 +148,35 @@ class SentryGate_Admin_Ui {
 	 */
 	public function register_admin_hooks(): void {
 		add_action( 'admin_notices', array( $this, 'start_notice_capture' ), -1000 );
+		add_action( 'admin_notices', array( $this, 'suppress_core_settings_saved_notice' ), -999 );
 		add_action( 'all_admin_notices', array( $this, 'finish_notice_capture' ), PHP_INT_MAX );
 		add_filter( 'admin_body_class', array( $this, 'admin_body_class' ) );
+	}
+
+	/**
+	 * Drop WordPress core “Settings saved.” so only the styled wt-notice remains.
+	 */
+	public function suppress_core_settings_saved_notice(): void {
+		if ( ! $this->is_own_screen() ) {
+			return;
+		}
+
+		// Ensure the settings_errors transient is loaded into $wp_settings_errors.
+		get_settings_errors();
+
+		global $wp_settings_errors;
+		if ( empty( $wp_settings_errors ) || ! is_array( $wp_settings_errors ) ) {
+			return;
+		}
+
+		$wp_settings_errors = array_values(
+			array_filter(
+				$wp_settings_errors,
+				static function ( $error ): bool {
+					return ! ( is_array( $error ) && isset( $error['code'] ) && 'settings_updated' === $error['code'] );
+				}
+			)
+		);
 	}
 
 	/**
@@ -196,9 +223,30 @@ class SentryGate_Admin_Ui {
 			return;
 		}
 
-		$html                      = ob_get_clean();
-		$this->capturing_notices   = false;
-		$this->captured_notices    = is_string( $html ) ? trim( $html ) : '';
+		$html                    = ob_get_clean();
+		$this->capturing_notices = false;
+		$html                    = is_string( $html ) ? $html : '';
+		$html                    = $this->strip_core_settings_saved_notice_html( $html );
+		$this->captured_notices  = trim( $html );
+	}
+
+	/**
+	 * Remove the core settings_updated notice from captured admin HTML.
+	 *
+	 * @param string $html Captured admin_notices buffer.
+	 */
+	private function strip_core_settings_saved_notice_html( string $html ): string {
+		if ( '' === $html ) {
+			return $html;
+		}
+
+		$stripped = preg_replace(
+			'/<div\b[^>]*\bid=(["\'])setting-error-settings_updated\1[^>]*>.*?<\/div>/is',
+			'',
+			$html
+		);
+
+		return is_string( $stripped ) ? $stripped : $html;
 	}
 
 	/**

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: SentryGate – Security Firewall, Login Protection and Two-Factor Authentication (2FA) 1.0.3\n"
+"Project-Id-Version: SentryGate – Security Firewall, Login Protection and Two-Factor Authentication (2FA) 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wiedenroth.tech\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-25T13:54:22+00:00\n"
+"POT-Creation-Date: 2026-11-27T12:17:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wiedenroth-technologies-sentrygate\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #. Description of the plugin
 #: sentrygate.php
-msgid "Production-ready WordPress security plugin by Wiedenroth Technologies GmbH."
+msgid "Lock down your WordPress login: symbol challenge, hidden login URL, two-factor authentication and an audit log. Runs on your own server."
 msgstr ""
 
 #. Author of the plugin
@@ -39,237 +39,187 @@ msgstr ""
 msgid "https://wiedenroth.tech"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:119
+#: includes/admin/class-sentrygate-admin.php:54
+#: includes/class-sentrygate-modules.php:236
+msgid "Overview"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:144
 msgid "Checking…"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:120
+#: includes/admin/class-sentrygate-admin.php:145
 msgid "Check complete"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:121
+#: includes/admin/class-sentrygate-admin.php:146
 msgid "The check failed."
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:122
+#: includes/admin/class-sentrygate-admin.php:147
 #: includes/admin/views/tabs/integrity.php:66
 msgid "Files checked"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:123
+#: includes/admin/class-sentrygate-admin.php:148
 #: includes/admin/views/tabs/integrity.php:70
 msgid "Mismatch"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:124
+#: includes/admin/class-sentrygate-admin.php:149
 #: includes/admin/views/tabs/integrity.php:77
 msgid "Missing"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:125
+#: includes/admin/class-sentrygate-admin.php:150
 #: includes/admin/views/tabs/integrity.php:56
 msgid "Core matches"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:126
+#: includes/admin/class-sentrygate-admin.php:151
 #: includes/admin/views/tabs/integrity.php:57
 msgid "No mismatched or missing core files."
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:127
+#: includes/admin/class-sentrygate-admin.php:152
 #: includes/admin/views/tabs/integrity.php:59
 msgid "Mismatches found"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:128
+#: includes/admin/class-sentrygate-admin.php:153
 #: includes/admin/views/tabs/integrity.php:60
 msgid "SentryGate does not repair anything automatically. Create a backup and reinstall core if needed, or tell a developer."
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:129
+#: includes/admin/class-sentrygate-admin.php:154
 #: includes/admin/views/tabs/integrity.php:106
 msgid "Mismatched files"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:130
+#: includes/admin/class-sentrygate-admin.php:155
 #: includes/admin/views/tabs/integrity.php:109
 msgid "Missing files"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:131
+#: includes/admin/class-sentrygate-admin.php:156
 #: includes/admin/views/tabs/integrity.php:123
 msgid "File"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:132
+#: includes/admin/class-sentrygate-admin.php:157
 #: includes/admin/views/tabs/integrity.php:54
 msgid "Last result"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:133
+#: includes/admin/class-sentrygate-admin.php:158
 #: includes/admin/views/tabs/integrity.php:29
 msgid "No check yet"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:134
+#: includes/admin/class-sentrygate-admin.php:159
 #: includes/admin/views/tabs/integrity.php:31
 msgid "Run the check to compare the WordPress core files with the official list from wordpress.org."
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:135
+#: includes/admin/class-sentrygate-admin.php:160
 #: includes/admin/views/tabs/integrity.php:87
 msgid "Last checked"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:136
+#: includes/admin/class-sentrygate-admin.php:161
 #: includes/admin/views/tabs/integrity.php:93
 msgid "WordPress"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:152
+#: includes/admin/class-sentrygate-admin.php:177
+#: includes/admin/views/tabs/setup.php:27
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:182
+#: includes/admin/class-sentrygate-admin.php:207
 msgid "Imprint"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:183
+#: includes/admin/class-sentrygate-admin.php:208
 msgid "Privacy"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:205
-msgid "Overview"
+#: includes/admin/class-sentrygate-admin.php:232
+#: includes/admin/views/tabs/setup.php:51
+msgid "Setup"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:206
-#: includes/admin/views/tabs/dashboard.php:43
-msgid "Modules on/off"
+#: includes/admin/class-sentrygate-admin.php:243
+msgid "This section is turned off. Turn the matching module back on under Modules on/off, or stay on the overview."
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:207
-#: includes/admin/views/tabs/dashboard.php:48
-#: includes/admin/views/tabs/modules.php:19
-#: includes/modules/class-sentrygate-interface-hardening.php:267
-#: includes/modules/class-sentrygate-interface-hardening.php:283
-#: includes/modules/class-sentrygate-interface-hardening.php:290
-msgid "Basic protection"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:208
-#: includes/modules/class-sentrygate-debug-control.php:89
-#: includes/modules/class-sentrygate-debug-control.php:98
-#: includes/modules/class-sentrygate-debug-control.php:105
-msgid "Error display"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:209
-#: includes/modules/class-sentrygate-login-path.php:400
-#: includes/modules/class-sentrygate-login-path.php:410
-#: includes/modules/class-sentrygate-login-path.php:421
-msgid "Login URL"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:210
-#: includes/admin/views/tabs/dashboard.php:53
-msgid "Bot protection"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:211
-#: includes/admin/views/tfa-setup.php:35
-#: includes/modules/class-sentrygate-two-factor.php:115
-#: includes/modules/class-sentrygate-two-factor.php:116
-#: includes/modules/class-sentrygate-two-factor.php:994
-#: includes/modules/class-sentrygate-two-factor.php:1001
-msgid "Two-factor"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:212
-#: includes/admin/views/tabs/modules.php:43
-#: includes/modules/class-sentrygate-security-headers.php:85
-#: includes/modules/class-sentrygate-security-headers.php:93
-msgid "Browser protection"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:213
-#: includes/admin/views/tabs/modules.php:47
-#: includes/modules/class-sentrygate-file-hardening.php:129
-#: includes/modules/class-sentrygate-file-hardening.php:140
-#: includes/modules/class-sentrygate-file-hardening.php:147
-msgid "Files & server"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:214
-#: includes/admin/views/tabs/modules.php:51
-#: includes/modules/class-sentrygate-audit-log.php:447
-#: includes/modules/class-sentrygate-audit-log.php:454
-msgid "Audit log"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:215
-#: includes/admin/views/tabs/modules.php:55
-#: includes/modules/class-sentrygate-core-integrity.php:170
-#: includes/modules/class-sentrygate-core-integrity.php:179
-#: includes/modules/class-sentrygate-core-integrity.php:187
-#: includes/modules/class-sentrygate-core-integrity.php:195
-#: includes/modules/class-sentrygate-core-integrity.php:207
-msgid "WordPress check"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:216
-msgid "Backup / transfer"
-msgstr ""
-
-#: includes/admin/class-sentrygate-admin.php:234
-#: includes/admin/class-sentrygate-admin.php:255
-#: includes/modules/class-sentrygate-core-integrity.php:151
-#: includes/modules/class-sentrygate-two-factor.php:158
-#: includes/modules/class-sentrygate-two-factor.php:249
-msgid "You do not have permission."
+#. translators: %s: URL to setup wizard
+#: includes/admin/class-sentrygate-admin.php:382
+#, php-format
+msgid "SentryGate is ready. <a href=\"%s\">Run the short setup</a> or configure modules from the overview anytime."
 msgstr ""
 
 #: includes/admin/class-sentrygate-admin.php:426
+msgid "Run setup again"
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:435
+#: includes/admin/class-sentrygate-admin.php:449
+#: includes/admin/class-sentrygate-admin.php:463
+#: includes/admin/class-sentrygate-admin.php:512
+#: includes/admin/class-sentrygate-admin.php:533
+#: includes/modules/class-sentrygate-core-integrity.php:151
+#: includes/modules/class-sentrygate-two-factor.php:160
+#: includes/modules/class-sentrygate-two-factor.php:251
+msgid "You do not have permission."
+msgstr ""
+
+#: includes/admin/class-sentrygate-admin.php:704
 msgid "Save settings"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:442
+#: includes/admin/class-sentrygate-admin.php:720
 msgid "Active"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:443
+#: includes/admin/class-sentrygate-admin.php:721
 #: includes/admin/views/tabs/files.php:100
 msgid "Check"
 msgstr ""
 
-#: includes/admin/class-sentrygate-admin.php:444
+#: includes/admin/class-sentrygate-admin.php:722
 msgid "Off"
 msgstr ""
 
-#: includes/admin/class-sentrygate-dashboard.php:63
+#: includes/admin/class-sentrygate-dashboard.php:67
 msgid "Green = active, yellow = check, red = off. See details under SentryGate."
 msgstr ""
 
-#: includes/admin/class-sentrygate-dashboard.php:75
+#: includes/admin/class-sentrygate-dashboard.php:79
 msgid "Open all settings"
 msgstr ""
 
-#: includes/admin/views/settings-page.php:36
+#: includes/admin/views/settings-page.php:37
 msgid "Protects login, forms, and the site."
 msgstr ""
 
-#: includes/admin/views/settings-page.php:42
+#: includes/admin/views/settings-page.php:43
 msgid "Documentation"
 msgstr ""
 
-#: includes/admin/views/settings-page.php:46
+#: includes/admin/views/settings-page.php:47
 msgid "SentryGate sections"
 msgstr ""
 
-#: includes/admin/views/settings-page.php:63
+#: includes/admin/views/settings-page.php:65
+msgid "Section unavailable"
+msgstr ""
+
+#: includes/admin/views/settings-page.php:72
 msgid "Settings saved."
 msgstr ""
 
-#: includes/admin/views/settings-page.php:70
+#: includes/admin/views/settings-page.php:79
 msgid "Section not found."
 msgstr ""
 
@@ -449,102 +399,110 @@ msgstr ""
 msgid "Turn this on only if a trusted proxy or CDN is in front. Otherwise leave it off."
 msgstr ""
 
-#: includes/admin/views/tabs/challenge.php:96
-msgid "Forms"
-msgstr ""
-
-#: includes/admin/views/tabs/challenge.php:97
-msgid "The same symbol choice as at login, right in the form before submitting. No cookie; each submission needs a fresh check."
-msgstr ""
-
-#: includes/admin/views/tabs/challenge.php:98
-msgid "BlockForge forms use this automatically. Other plugins can use SentryGate_Form_Challenge::widget() and ::verify()."
-msgstr ""
-
-#: includes/admin/views/tabs/challenge.php:105
-msgid "Symbol choice in forms"
-msgstr ""
-
-#: includes/admin/views/tabs/challenge.php:106
-#: includes/admin/views/tabs/modules.php:79
-msgid "Enable"
-msgstr ""
-
-#: includes/admin/views/tabs/challenge.php:107
-msgid "Without this module, or without SentryGate, forms are submitted as before (the honeypot and wait time stay in the form plugin)."
+#: includes/admin/views/tabs/dashboard.php:43
+#: includes/class-sentrygate-modules.php:237
+msgid "Modules on/off"
 msgstr ""
 
 #: includes/admin/views/tabs/dashboard.php:44
 msgid "Enable or pause the protection building blocks."
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:49
+#: includes/admin/views/tabs/dashboard.php:51
+#: includes/class-sentrygate-modules.php:42
+#: includes/class-sentrygate-modules.php:241
+#: includes/modules/class-sentrygate-interface-hardening.php:267
+#: includes/modules/class-sentrygate-interface-hardening.php:283
+#: includes/modules/class-sentrygate-interface-hardening.php:290
+msgid "Basic protection"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:52
 msgid "XML-RPC, username guessing, file editor."
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:54
-msgid "Symbol choice at login and in forms, session cookie, rate limit."
+#: includes/admin/views/tabs/dashboard.php:59
+#: includes/class-sentrygate-modules.php:244
+msgid "Bot protection"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:62
-#: includes/admin/views/tabs/dashboard.php:95
+#: includes/admin/views/tabs/dashboard.php:60
+msgid "Symbol choice at login, session cookie, rate limit."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:67
+#: includes/admin/views/tabs/forms.php:23
+#: includes/class-sentrygate-modules.php:74
+#: includes/class-sentrygate-modules.php:245
+#: includes/modules/class-sentrygate-form-challenge.php:224
+#: includes/modules/class-sentrygate-form-challenge.php:231
+msgid "Form protection"
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:68
+msgid "Symbol choice in BlockForge forms."
+msgstr ""
+
+#: includes/admin/views/tabs/dashboard.php:76
+#: includes/admin/views/tabs/dashboard.php:113
 #: includes/admin/views/tabs/files.php:86
+#: includes/admin/views/tabs/setup.php:277
 msgid "Status"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:63
+#: includes/admin/views/tabs/dashboard.php:77
 msgid "Green = protection active. Yellow = please check. Red = off or critical."
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:64
-msgid "First, turn on the recommended modules under \"Modules on/off\" – then fine-tune each section as needed."
+#: includes/admin/views/tabs/dashboard.php:78
+msgid "First, turn on the recommended modules under \"Modules on/off\" – then fine-tune each section as needed. Navigation only lists modules that are on."
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:71
+#: includes/admin/views/tabs/dashboard.php:85
 msgid "Protection sections"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:72
+#: includes/admin/views/tabs/dashboard.php:86
 msgid "Active / OK"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:73
+#: includes/admin/views/tabs/dashboard.php:87
 msgid "Notice / check"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:74
+#: includes/admin/views/tabs/dashboard.php:88
 msgid "Off or risky"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:84
+#: includes/admin/views/tabs/dashboard.php:102
 msgid "Recommended first steps"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:90
+#: includes/admin/views/tabs/dashboard.php:108
 msgid "Security status"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:90
-msgid "All protection sections at a glance."
+#: includes/admin/views/tabs/dashboard.php:108
+msgid "All available protection sections at a glance."
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:96
+#: includes/admin/views/tabs/dashboard.php:114
 msgid "Section"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:97
+#: includes/admin/views/tabs/dashboard.php:115
 msgid "Summary"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:114
+#: includes/admin/views/tabs/dashboard.php:132
 msgid "Next steps"
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:114
-msgid "The most important settings in three steps."
+#: includes/admin/views/tabs/dashboard.php:132
+msgid "Jump to the most important settings."
 msgstr ""
 
-#: includes/admin/views/tabs/dashboard.php:126
+#: includes/admin/views/tabs/dashboard.php:144
 msgid "Not included in this version: automatic updates, malware scanning, and Multisite management."
 msgstr ""
 
@@ -696,6 +654,32 @@ msgstr ""
 
 #: includes/admin/views/tabs/files.php:98
 msgid "OK"
+msgstr ""
+
+#: includes/admin/views/tabs/forms.php:24
+msgid "The same symbol choice as at login, right in the BlockForge form before submitting. No cookie; each submission needs a fresh check."
+msgstr ""
+
+#: includes/admin/views/tabs/forms.php:25
+msgid "BlockForge forms use this automatically. Other plugins can use SentryGate_Form_Challenge::widget() and ::verify()."
+msgstr ""
+
+#: includes/admin/views/tabs/forms.php:28
+msgid "BlockForge detected"
+msgstr ""
+
+#: includes/admin/views/tabs/forms.php:34
+msgid "Symbol choice in forms"
+msgstr ""
+
+#: includes/admin/views/tabs/forms.php:35
+#: includes/admin/views/tabs/modules.php:58
+#: includes/admin/views/tabs/setup.php:138
+msgid "Enable"
+msgstr ""
+
+#: includes/admin/views/tabs/forms.php:36
+msgid "Without this module, BlockForge forms are submitted without the SentryGate symbol check (honeypot and wait time in BlockForge still apply)."
 msgstr ""
 
 #: includes/admin/views/tabs/headers.php:23
@@ -988,84 +972,187 @@ msgstr ""
 msgid "Recovery path"
 msgstr ""
 
-#: includes/admin/views/tabs/modules.php:20
-msgid "Blocks known attack paths (XML-RPC, username guessing, file editor, version leaks)."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:23
-msgid "Check error display"
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:24
-msgid "Warns you when WordPress shows debug messages on a live site – it does not change your wp-config.php."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:27
-msgid "Hide the login URL"
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:28
-msgid "Replaces /wp-login.php with a custom address. Unknown visitors see \"Page not found\"."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:31
-#: includes/modules/class-sentrygate-login-challenge.php:336
-#: includes/modules/class-sentrygate-login-challenge.php:348
-msgid "Login protection"
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:32
-msgid "A check before login (symbol choice), then a session cookie. Direct POSTs without a cookie are rejected."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:35
-#: includes/modules/class-sentrygate-form-challenge.php:207
-#: includes/modules/class-sentrygate-form-challenge.php:214
-msgid "Form protection"
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:36
-msgid "The same symbol choice before submitting BlockForge forms and other connected forms."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:39
-msgid "Two-factor login"
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:40
-msgid "An extra code via authenticator app or email. Set up under Users → Two-factor."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:44
-msgid "Tells the browser how the page may be loaded (for example, no embedding on other sites)."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:48
-msgid "Shows recommendations for file permissions and upload protection. Does not write anything to the server automatically."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:52
-msgid "Logs logins, lockouts, and important security events."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:56
-msgid "Compares WordPress files with the original from wordpress.org. No automatic repair."
-msgstr ""
-
-#: includes/admin/views/tabs/modules.php:66
+#: includes/admin/views/tabs/modules.php:25
 msgid "Modules are the protection building blocks"
 msgstr ""
 
-#: includes/admin/views/tabs/modules.php:67
-msgid "Here, turn on what should be active on this site. Turned-off modules do nothing – their settings stay saved."
+#: includes/admin/views/tabs/modules.php:26
+msgid "Here, turn on what should be active on this site. Turned-off modules do nothing – their settings stay saved. Navigation only shows sections for modules that are on."
 msgstr ""
 
-#: includes/admin/views/tabs/modules.php:68
+#: includes/admin/views/tabs/modules.php:27
 msgid "For most client sites: leave Basic protection, Login protection, Browser protection, and Audit log on."
 msgstr ""
 
-#: includes/admin/views/tabs/modules.php:86
+#: includes/admin/views/tabs/modules.php:35
+msgid "Form protection appears here when BlockForge is installed and active. Saved form-protection settings are kept."
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:36
+msgid "BlockForge not detected"
+msgstr ""
+
+#: includes/admin/views/tabs/modules.php:66
 msgid "Save modules"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:25
+msgid "Welcome"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:26
+msgid "Modules"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:28
+#: includes/admin/views/tfa-setup.php:35
+#: includes/class-sentrygate-modules.php:246
+#: includes/modules/class-sentrygate-two-factor.php:115
+#: includes/modules/class-sentrygate-two-factor.php:116
+#: includes/modules/class-sentrygate-two-factor.php:996
+#: includes/modules/class-sentrygate-two-factor.php:1003
+msgid "Two-factor"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:29
+msgid "Done"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:52
+msgid "A short walkthrough for the most important protection modules. You can skip anytime and change everything later."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:80
+msgid "Welcome to SentryGate"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:81
+msgid "SentryGate protects login, forms (with BlockForge), and common WordPress attack paths. Recommended defaults are already selected – confirm or adjust them in the next steps."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:90
+msgid "Start setup"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:92
+#: includes/admin/views/tabs/setup.php:146
+#: includes/admin/views/tabs/setup.php:230
+#: includes/admin/views/tabs/setup.php:257
+msgid "Skip setup"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:103
+msgid "Choose modules"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:104
+msgid "Turn on the building blocks you want. Recommended ones are preselected. Form protection only appears when BlockForge is active."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:112
+msgid "BlockForge is not active, so form protection is hidden for now. Install and activate BlockForge later to enable it – saved settings stay."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:134
+msgid "Recommended"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:144
+#: includes/admin/views/tabs/setup.php:228
+msgid "Continue"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:157
+msgid "Important settings"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:158
+msgid "Fine-tune a few defaults for the modules you enabled. You can change everything later in each section."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:170
+msgid "Login protection type"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:173
+msgid "Full – symbol choice + session cookie (recommended)"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:174
+msgid "Light – confirm only + traps + cookie"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:182
+msgid "Custom login path"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:185
+msgid "Write this URL down. The default /wp-login.php will show “Page not found”."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:196
+msgid "Content Security Policy"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:197
+msgid "Start in report-only mode (recommended)"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:198
+msgid "Browsers report issues without blocking content. Switch to enforce later when ready."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:209
+msgid "Audit log retention (days)"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:210
+msgid "Older entries are removed automatically. 90 days suits most sites."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:223
+msgid "No extra settings for the modules you chose. Continue to finish."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:241
+msgid "Protect your own account"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:242
+msgid "Two-factor is on for required roles. Set up your authenticator app or email method now so you can still sign in."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:243
+msgid "Open Users → Two-factor (or the button below) after setup if you prefer to do this later."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:252
+msgid "Finish setup"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:254
+msgid "Open two-factor setup"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:268
+#: includes/admin/views/tfa-setup.php:61
+msgid "Setup complete"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:269
+msgid "Here is what is active. Open any section from the overview to fine-tune."
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:278
+msgid "Module"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:279
+msgid "Notes"
+msgstr ""
+
+#: includes/admin/views/tabs/setup.php:297
+msgid "Go to overview"
 msgstr ""
 
 #: includes/admin/views/tabs/tfa.php:26
@@ -1156,10 +1243,6 @@ msgstr ""
 
 #: includes/admin/views/tfa-setup.php:61
 msgid "Two-factor is active. Keep the emergency codes safe – they are shown only once."
-msgstr ""
-
-#: includes/admin/views/tfa-setup.php:61
-msgid "Setup complete"
 msgstr ""
 
 #. translators: %s: email address
@@ -1297,64 +1380,172 @@ msgid "Confirm email"
 msgstr ""
 
 #: includes/admin/views/tfa-setup.php:213
-#: includes/modules/class-sentrygate-two-factor.php:663
+#: includes/modules/class-sentrygate-two-factor.php:665
 msgid "Resend code"
 msgstr ""
 
-#: includes/class-sentrygate-admin-ui.php:192
+#: includes/class-sentrygate-admin-ui.php:261
 msgid "WordPress notices"
 msgstr ""
 
-#: includes/class-sentrygate-admin-ui.php:260
+#: includes/class-sentrygate-admin-ui.php:329
 msgid "Class name copied."
 msgstr ""
 
-#: includes/class-sentrygate-admin-ui.php:261
+#: includes/class-sentrygate-admin-ui.php:330
 msgid "1 notice"
 msgstr ""
 
 #. translators: %d: number of admin notices
-#: includes/class-sentrygate-admin-ui.php:263
+#: includes/class-sentrygate-admin-ui.php:332
 #, php-format
 msgid "%d notices"
 msgstr ""
 
-#: includes/class-sentrygate-admin-ui.php:312
+#: includes/class-sentrygate-admin-ui.php:381
 msgid "Tip:"
 msgstr ""
 
 #. translators: 1: first item on page, 2: last item on page, 3: total items
-#: includes/class-sentrygate-admin-ui.php:460
+#: includes/class-sentrygate-admin-ui.php:529
 #, php-format
 msgid "%1$s–%2$s of %3$s entries"
 msgstr ""
 
-#: includes/class-sentrygate-admin-ui.php:466
+#: includes/class-sentrygate-admin-ui.php:535
 msgid "Pages"
 msgstr ""
 
 #. translators: %d: total number of pages
-#: includes/class-sentrygate-admin-ui.php:473
+#: includes/class-sentrygate-admin-ui.php:542
 #, php-format
 msgid "%d page"
 msgid_plural "%d pages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-sentrygate-admin-ui.php:486
+#: includes/class-sentrygate-admin-ui.php:555
 msgid "Previous"
 msgstr ""
 
-#: includes/class-sentrygate-admin-ui.php:487
+#: includes/class-sentrygate-admin-ui.php:556
 msgid "Next"
 msgstr ""
 
-#: includes/class-sentrygate-admin-ui.php:526
+#: includes/class-sentrygate-admin-ui.php:595
 msgid "Legal"
 msgstr ""
 
-#: includes/class-sentrygate-admin-ui.php:545
+#: includes/class-sentrygate-admin-ui.php:614
 msgid "A product of"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:43
+msgid "Blocks known attack paths (XML-RPC, username guessing, file editor, version leaks)."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:50
+msgid "Check error display"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:51
+msgid "Warns you when WordPress shows debug messages on a live site – it does not change your wp-config.php."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:58
+msgid "Hide the login URL"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:59
+msgid "Replaces /wp-login.php with a custom address. Unknown visitors see \"Page not found\"."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:66
+#: includes/modules/class-sentrygate-login-challenge.php:336
+#: includes/modules/class-sentrygate-login-challenge.php:348
+msgid "Login protection"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:67
+msgid "A check before login (symbol choice), then a session cookie. Direct POSTs without a cookie are rejected."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:75
+msgid "The same symbol choice before submitting BlockForge forms."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:82
+msgid "Two-factor login"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:83
+msgid "An extra code via authenticator app or email. Set up under Users → Two-factor."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:90
+#: includes/class-sentrygate-modules.php:247
+#: includes/modules/class-sentrygate-security-headers.php:85
+#: includes/modules/class-sentrygate-security-headers.php:93
+msgid "Browser protection"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:91
+msgid "Tells the browser how the page may be loaded (for example, no embedding on other sites)."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:98
+#: includes/class-sentrygate-modules.php:248
+#: includes/modules/class-sentrygate-file-hardening.php:129
+#: includes/modules/class-sentrygate-file-hardening.php:140
+#: includes/modules/class-sentrygate-file-hardening.php:147
+msgid "Files & server"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:99
+msgid "Shows recommendations for file permissions and upload protection. Does not write anything to the server automatically."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:106
+#: includes/class-sentrygate-modules.php:249
+#: includes/modules/class-sentrygate-audit-log.php:447
+#: includes/modules/class-sentrygate-audit-log.php:454
+msgid "Audit log"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:107
+msgid "Logs logins, lockouts, and important security events."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:114
+#: includes/class-sentrygate-modules.php:250
+#: includes/modules/class-sentrygate-core-integrity.php:170
+#: includes/modules/class-sentrygate-core-integrity.php:179
+#: includes/modules/class-sentrygate-core-integrity.php:187
+#: includes/modules/class-sentrygate-core-integrity.php:195
+#: includes/modules/class-sentrygate-core-integrity.php:207
+msgid "WordPress check"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:115
+msgid "Compares WordPress files with the original from wordpress.org. No automatic repair."
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:242
+#: includes/modules/class-sentrygate-debug-control.php:89
+#: includes/modules/class-sentrygate-debug-control.php:98
+#: includes/modules/class-sentrygate-debug-control.php:105
+msgid "Error display"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:243
+#: includes/modules/class-sentrygate-login-path.php:400
+#: includes/modules/class-sentrygate-login-path.php:410
+#: includes/modules/class-sentrygate-login-path.php:421
+msgid "Login URL"
+msgstr ""
+
+#: includes/class-sentrygate-modules.php:264
+msgid "Backup / transfer"
 msgstr ""
 
 #. translators: 1: IP, 2: username
@@ -1556,31 +1747,31 @@ msgid "Permission check OK. .htaccess snippets are available in the admin."
 msgstr ""
 
 #. translators: %d: seconds
-#: includes/modules/class-sentrygate-form-challenge.php:104
+#: includes/modules/class-sentrygate-form-challenge.php:117
 #: includes/modules/class-sentrygate-login-challenge.php:587
 #, php-format
 msgid "Too many failed attempts. Please try again in %d seconds."
 msgstr ""
 
-#: includes/modules/class-sentrygate-form-challenge.php:141
-#: includes/modules/class-sentrygate-form-challenge.php:175
+#: includes/modules/class-sentrygate-form-challenge.php:154
+#: includes/modules/class-sentrygate-form-challenge.php:188
 #: includes/modules/class-sentrygate-login-challenge.php:135
 #: includes/modules/class-sentrygate-login-challenge.php:305
-#: includes/modules/class-sentrygate-two-factor.php:475
-#: includes/modules/class-sentrygate-two-factor.php:533
+#: includes/modules/class-sentrygate-two-factor.php:477
+#: includes/modules/class-sentrygate-two-factor.php:535
 msgid "Too many failed attempts. Please try again later."
 msgstr ""
 
-#: includes/modules/class-sentrygate-form-challenge.php:166
+#: includes/modules/class-sentrygate-form-challenge.php:179
 msgid "Security check is turned off."
 msgstr ""
 
-#: includes/modules/class-sentrygate-form-challenge.php:208
-msgid "Disabled – forms without a symbol choice."
+#: includes/modules/class-sentrygate-form-challenge.php:225
+msgid "Disabled – BlockForge forms without a symbol choice."
 msgstr ""
 
-#: includes/modules/class-sentrygate-form-challenge.php:215
-msgid "Symbol choice before submitting (BlockForge and connected forms)."
+#: includes/modules/class-sentrygate-form-challenge.php:232
+msgid "Symbol choice before submitting BlockForge forms."
 msgstr ""
 
 #: includes/modules/class-sentrygate-interface-hardening.php:83
@@ -1641,8 +1832,8 @@ msgid "Security check invalid. Please try again."
 msgstr ""
 
 #: includes/modules/class-sentrygate-login-challenge.php:456
-#: includes/modules/class-sentrygate-two-factor.php:153
-#: includes/modules/class-sentrygate-two-factor.php:696
+#: includes/modules/class-sentrygate-two-factor.php:155
+#: includes/modules/class-sentrygate-two-factor.php:698
 msgid "Security check failed."
 msgstr ""
 
@@ -1699,77 +1890,77 @@ msgid "Headers active (CSP enforcing)."
 msgstr ""
 
 #: includes/modules/class-sentrygate-two-factor.php:105
-#: includes/modules/class-sentrygate-two-factor.php:439
+#: includes/modules/class-sentrygate-two-factor.php:441
 msgid "Please enter the code from the email."
 msgstr ""
 
 #: includes/modules/class-sentrygate-two-factor.php:106
-#: includes/modules/class-sentrygate-two-factor.php:440
+#: includes/modules/class-sentrygate-two-factor.php:442
 msgid "Please enter the code from the authenticator app."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:483
-#: includes/modules/class-sentrygate-two-factor.php:488
-#: includes/modules/class-sentrygate-two-factor.php:541
+#: includes/modules/class-sentrygate-two-factor.php:485
+#: includes/modules/class-sentrygate-two-factor.php:490
+#: includes/modules/class-sentrygate-two-factor.php:543
 msgid "Session expired. Please log in again."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:494
-#: includes/modules/class-sentrygate-two-factor.php:632
+#: includes/modules/class-sentrygate-two-factor.php:496
+#: includes/modules/class-sentrygate-two-factor.php:634
 msgid "Code invalid or expired."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:546
+#: includes/modules/class-sentrygate-two-factor.php:548
 msgid "The code could not be sent."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:550
+#: includes/modules/class-sentrygate-two-factor.php:552
 msgid "Please wait a moment before requesting another code."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:555
-#: includes/modules/class-sentrygate-two-factor.php:635
+#: includes/modules/class-sentrygate-two-factor.php:557
+#: includes/modules/class-sentrygate-two-factor.php:637
 msgid "A code was sent by email (valid for 10 minutes)."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:629
+#: includes/modules/class-sentrygate-two-factor.php:631
 msgid "Two-factor authentication"
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:645
+#: includes/modules/class-sentrygate-two-factor.php:647
 msgid "Code from the email"
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:647
+#: includes/modules/class-sentrygate-two-factor.php:649
 msgid "Code from the authenticator app"
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:656
+#: includes/modules/class-sentrygate-two-factor.php:658
 msgid "Enter an email code or an emergency code."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:658
+#: includes/modules/class-sentrygate-two-factor.php:660
 msgid "Enter an app code or an emergency code."
 msgstr ""
 
 #. translators: %d: days
-#: includes/modules/class-sentrygate-two-factor.php:671
+#: includes/modules/class-sentrygate-two-factor.php:673
 #, php-format
 msgid "Trust this device for %d days"
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:678
+#: includes/modules/class-sentrygate-two-factor.php:680
 msgid "Confirm"
 msgstr ""
 
 #. translators: %s: site name
-#: includes/modules/class-sentrygate-two-factor.php:848
+#: includes/modules/class-sentrygate-two-factor.php:850
 #, php-format
 msgid "[%s] Your login code"
 msgstr ""
 
 #. translators: %s: code
-#: includes/modules/class-sentrygate-two-factor.php:853
+#: includes/modules/class-sentrygate-two-factor.php:855
 #, php-format
 msgid ""
 "Your one-time code is: %s\n"
@@ -1777,18 +1968,18 @@ msgid ""
 "The code is valid for 10 minutes."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:980
+#: includes/modules/class-sentrygate-two-factor.php:982
 msgid "SentryGate: Two-factor authentication is required for your role. Please choose an authenticator app or email."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:981
+#: includes/modules/class-sentrygate-two-factor.php:983
 msgid "Set up now"
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:995
+#: includes/modules/class-sentrygate-two-factor.php:997
 msgid "Disabled – password only, no second code."
 msgstr ""
 
-#: includes/modules/class-sentrygate-two-factor.php:1002
+#: includes/modules/class-sentrygate-two-factor.php:1004
 msgid "App or email, set up under Users → Two-factor."
 msgstr ""

@@ -717,3 +717,84 @@ button.__SLUG__-wt-tile:focus {
 		width: 100%;
 	}
 }
+
+/* Module cards + setup wizard extras */
+
+.__SLUG__-wt-module-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+	gap: 14px;
+	margin: 8px 0 4px;
+}
+
+.__SLUG__-wt-module-card {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 0;
+	padding: 16px 16px 14px;
+	background: var(--wt-surface-muted);
+	border: 1px solid var(--wt-border);
+	border-radius: 14px;
+}
+
+.__SLUG__-wt-module-card--on {
+	border-color: color-mix(in srgb, var(--wt-ok) 35%, var(--wt-border));
+	background: color-mix(in srgb, var(--wt-ok-soft) 55%, var(--wt-surface));
+}
+
+.__SLUG__-wt-module-card__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.__SLUG__-wt-module-card__title {
+	margin: 0;
+	font-size: 15px;
+	font-weight: 650;
+	line-height: 1.3;
+}
+
+.__SLUG__-wt-module-card__desc {
+	margin: 0;
+	color: var(--wt-muted);
+	font-size: 13px;
+	line-height: 1.45;
+	flex: 1 1 auto;
+}
+
+.__SLUG__-wt-inline-form {
+	display: inline-flex;
+	margin: 0;
+}
+
+.__SLUG__-wt-card .__SLUG__-wt-steps {
+	grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+	margin-top: 8px;
+}
+
+.__SLUG__-wt-step--current {
+	border-color: var(--wt-primary);
+	background: var(--wt-surface);
+}
+
+.__SLUG__-wt-step--done .__SLUG__-wt-step__num {
+	background: var(--wt-ok-soft);
+	color: var(--wt-ok);
+}
+
+.__SLUG__-wt-content > .__SLUG__-wt-card + .__SLUG__-wt-card,
+.__SLUG__-wt-content > .__SLUG__-wt-notice + .__SLUG__-wt-card {
+	margin-top: 16px;
+}
+
+.__SLUG__-wt-card .__SLUG__-wt-badge {
+	margin: 0 0 12px;
+}
+
+.__SLUG__-wt-tabs {
+	flex-wrap: wrap;
+	row-gap: 6px;
+}

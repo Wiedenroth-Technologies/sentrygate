@@ -49,6 +49,8 @@ try {
 	wp(
 		`eval 'SentryGate_Options::update( json_decode( base64_decode( "${ patch }" ), true ) ); SentryGate_Options::flush_cache(); echo "ok";'`
 	);
+	// Skip first-run wizard so existing specs land on the overview.
+	wp( 'option update sentrygate_setup_completed 1' );
 	console.log( 'SentryGate E2E afterStart: ready' );
 } catch ( error ) {
 	console.error( 'afterStart failed:', error.message || error );

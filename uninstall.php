@@ -17,9 +17,13 @@ delete_option( 'sentrygate_settings' );
 delete_option( 'sentrygate_db_version' );
 delete_option( 'sentrygate_core_checksum_cache' );
 delete_option( 'sentrygate_flush_rewrite' );
+delete_option( 'sentrygate_setup_completed' );
+delete_option( 'sentrygate_setup_progress' );
 
 delete_site_option( 'sentrygate_settings' );
 delete_site_option( 'sentrygate_db_version' );
+delete_site_option( 'sentrygate_setup_completed' );
+delete_site_option( 'sentrygate_setup_progress' );
 
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}sentrygate_audit_log" );
