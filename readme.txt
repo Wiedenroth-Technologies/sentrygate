@@ -2,43 +2,43 @@
 Contributors: wiedenrothtechnologies
 Tags: security, 2fa, login, hardening, audit-log
 Requires at least: 6.4
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 8.1
-Stable tag: 1.0.3
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Author: Wiedenroth Technologies GmbH
 Author URI: https://wiedenroth.tech
 Plugin URI: https://wiedenroth.tech/software/sentrygate
 
-Production-ready WordPress security plugin by Wiedenroth Technologies GmbH.
+Lock down your WordPress login: symbol challenge, hidden login URL, two-factor authentication and an audit log. Runs on your own server.
 
 == Description ==
 
-SentryGate hardens WordPress with modular protection:
+SentryGate protects your WordPress site against brute-force logins, user enumeration and common attack paths. Every module can be switched on and off individually, and a setup wizard guides you through the first steps. Everything runs on your own server: no external account, no third-party tracking, no cloud dependency.
 
-* Interface hardening (XML-RPC, user enumeration, file editor, version leaks, REST whitelist)
-* WP debug checks (warnings only; does not overwrite wp-config.php)
-* Custom login path (404 on the original login URLs)
-* Self-hosted login challenge (symbol choice / honeypot / timing / rate limit)
-* Form symbol challenge for connected public forms
-* Two-factor authentication (authenticator app or email, dedicated setup page, recovery codes, trusted device)
-* Security headers (including CSP report-only)
-* File / server hardening hints (.htaccess snippets, permission display)
-* Audit log with optional IP truncation and webhook / email
-* Core integrity check against api.wordpress.org
-
-No hard third-party runtime dependencies (offline QR via an MIT library). Prefixes: sentrygate_ / SentryGate.
-
-Not in v1: automatic updates, malware scanning, multisite network management.
+* Basic protection: blocks XML-RPC abuse, username guessing, the file editor and version leaks
+* Error display check: warns when debug messages are shown on a live site (does not change wp-config.php)
+* Hidden login URL: replace /wp-login.php with your own address; strangers see a 404
+* Login protection: a symbol check before the password form, plus rate limiting
+* Form protection for BlockForge forms: the same symbol check before submit (only available when BlockForge is active)
+* Two-factor login: authenticator app or email, recovery codes and optional trusted device
+* Browser protection: security headers, including Content Security Policy in report-only mode
+* Files & server: clear tips for permissions and upload protection (nothing is written automatically)
+* Audit log: logins, lockouts and important security events, with optional email or webhook alerts
+* WordPress check: compare core files with the originals from wordpress.org (no automatic repair)
 
 == Installation ==
 
 1. Upload the `wiedenroth-technologies-sentrygate` folder to `/wp-content/plugins/` (or install the ZIP).
 2. Activate the plugin under Plugins.
-3. Open SentryGate in the admin menu and configure the modules.
+3. Follow the short setup wizard, or open SentryGate in the admin menu and turn modules on as needed. You can skip the wizard and run it again later from the overview.
 
 == Frequently Asked Questions ==
+
+= Does SentryGate scan for malware? =
+
+No. SentryGate focuses on login hardening, form protection (with BlockForge), two-factor authentication and related security modules. It does not scan for malware or install automatic updates.
 
 = Does SentryGate work alongside Orbance? =
 
@@ -87,6 +87,14 @@ This plugin may connect to external services as follows:
 
 == Changelog ==
 
+= 1.1.0 =
+* Setup wizard for first activation (skippable, restartable from the overview)
+* Admin navigation follows module switches; disabled sections redirect to the overview
+* Form protection only when BlockForge is active (saved settings are kept)
+* Clearer admin layout and module status on the overview
+* New short description and directory readme
+* Tested with WordPress 7.2
+
 = 1.0.3 =
 * Fixed admin styles and scripts not loading on the two-factor authentication setup page and the user profile page.
 
@@ -104,6 +112,9 @@ This plugin may connect to external services as follows:
 * Config export/import and offline QR for authenticator setup
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Admin overhaul: setup wizard, navigation follows modules, form protection only with BlockForge, and a new short description. Tested with WordPress 7.2.
 
 = 1.0.3 =
 Fixes the layout of the two-factor authentication setup page.

@@ -37,6 +37,16 @@
 			return;
 		}
 
+		function isCoreSettingsSaved(node) {
+			if (!node || node.nodeType !== 1) {
+				return false;
+			}
+			if (node.id === 'setting-error-settings_updated') {
+				return true;
+			}
+			return !!(node.classList && node.classList.contains('settings-error') && node.id && node.id.indexOf('settings_updated') !== -1);
+		}
+
 		function isForeignNotice(node) {
 			if (!node || node.nodeType !== 1) {
 				return false;
@@ -47,12 +57,21 @@
 			if (node.classList.contains(ownNotice)) {
 				return false;
 			}
+			if (isCoreSettingsSaved(node)) {
+				return false;
+			}
 			return node.matches('div.notice, div.updated, div.error');
 		}
 
 		function collect() {
 			var nodes = document.querySelectorAll('#wpbody-content div.notice, #wpbody-content div.updated, #wpbody-content div.error');
 			nodes.forEach(function (node) {
+				if (isCoreSettingsSaved(node)) {
+					if (node.parentNode) {
+						node.parentNode.removeChild(node);
+					}
+					return;
+				}
 				if (isForeignNotice(node)) {
 					panel.appendChild(node);
 				}
